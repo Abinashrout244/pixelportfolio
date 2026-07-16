@@ -1,9 +1,14 @@
 import { useState } from "react";
 import "./App.css";
+import Loader from "./components/Loader";
 
 function App() {
+  const [loader, setLoader] = useState(false);
   return (
-    <p className="text-3xl font-semibold bg-red-200 text-blue-500 ">Hi jilu</p>
+    <div>
+      {!loader && <Loader onComplete={() => setLoader(true)} />}
+      <p className="text-center text-5xl font-smeibold justify-center">AVI</p>
+    </div>
   );
 }
 
