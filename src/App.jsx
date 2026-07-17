@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Loader from "./components/Loader";
 import Hero from "./components/Hero";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   const [loader, setLoader] = useState(false);
@@ -40,6 +41,8 @@ function App() {
   return (
     <div>
       {!loader && <Loader onComplete={() => setLoader(true)} />}
+      {/* Persistent navbar — visible once the loader completes */}
+      {loader && <Navbar />}
       <Hero isLoaded={loader} />
     </div>
   );

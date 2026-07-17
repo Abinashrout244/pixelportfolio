@@ -26,7 +26,7 @@ export default function Hero({ isLoaded }) {
       <FilmGrain />
 
       {/* ── Main Content Area ── */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 flex items-center h-full">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 flex items-center h-full pt-20">
         <div className="flex w-full items-center">
           {/* Left: Content */}
           <HeroContent isLoaded={isLoaded} />
