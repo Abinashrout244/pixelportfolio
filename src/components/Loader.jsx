@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SHUTTER_BARS = 14;
@@ -9,6 +9,14 @@ const Loader = ({ onComplete }) => {
   const [showSecond, setShowSecond] = useState(false);
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState("loading"); // loading -> explode -> shutter -> done
+  const showFirstRef = useRef(false);
+  const showSecondRef = useRef(false);
+  const hasCompletedRef = useRef(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     let start = null;
@@ -27,8 +35,14 @@ const Loader = ({ onComplete }) => {
       const elapsed = timestamp - start;
 
       // 1. Text Entry Sequence Triggers
-      if (elapsed >= T_FIRST_NAME && !showFirst) setShowFirst(true);
-      if (elapsed >= T_LAST_NAME && !showSecond) setShowSecond(true);
+      if (elapsed >= T_FIRST_NAME && !showFirstRef.current) {
+        showFirstRef.current = true;
+        setShowFirst(true);
+      }
+      if (elapsed >= T_LAST_NAME && !showSecondRef.current) {
+        showSecondRef.current = true;
+        setShowSecond(true);
+      }
 
       // 2. Linear Counter Interpolation mapping 0 -> 100 up to the 2.0s mark
       if (elapsed <= T_MAX_LOAD) {
@@ -44,7 +58,10 @@ const Loader = ({ onComplete }) => {
       } else if (elapsed >= T_SHUTTER && elapsed < T_COMPLETE) {
         setPhase("shutter");
       } else if (elapsed >= T_COMPLETE) {
-        setPhase("done");
+        if (!hasCompletedRef.current) {
+          hasCompletedRef.current = true;
+          onCompleteRef.current();
+        }
         return; // Break animation loop execution
       }
 
@@ -53,7 +70,7 @@ const Loader = ({ onComplete }) => {
 
     animationFrameId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [showFirst, showSecond]);
+  }, []);
 
   // UI Split Mapping
   const firstName = ["A", "B", "I", "N", "A", "S", "H"];
@@ -121,12 +138,6 @@ const Loader = ({ onComplete }) => {
       };
     });
   }, []);
-
-  if (phase === "done") {
-    // Notify parent App context structure that the timeline loop is fully finished
-    setTimeout(onComplete, 10);
-    return null;
-  }
 
   const bgColor = "#060608";
 
