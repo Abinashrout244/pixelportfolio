@@ -41,7 +41,7 @@ export default function NavItem({ href = "#", label, isActive = false, onClick }
         // No default underline
         "no-underline",
         // Focus
-        "focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30 rounded-sm",
+        "focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30 rounded-none",
       ].join(" ")}
     >
       {/* Label text */}

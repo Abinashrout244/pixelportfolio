@@ -5,7 +5,6 @@ import "./App.css";
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar/Navbar";
 import LiquidGlassBackground from "./components/LiquidGlassBackground";
-import BackgroundName from "./components/BackgroundName";
 import Particles from "./components/Particles";
 import FilmGrain from "./components/FilmGrain";
 import Home from "./pages/Home";
@@ -16,7 +15,6 @@ function AppBackground() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none">
       <LiquidGlassBackground />
-      <BackgroundName />
       <Particles />
       <FilmGrain />
     </div>

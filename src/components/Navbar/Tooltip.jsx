@@ -23,7 +23,7 @@ export default function Tooltip({ content, children }) {
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
             className="absolute top-full mt-2 z-50 pointer-events-none"
           >
-            <div className="px-2.5 py-1 bg-[#111] border border-white/10 text-[#A1A1AA] font-mono text-[9px] uppercase tracking-[0.15em] whitespace-nowrap rounded shadow-lg">
+            <div className="px-2.5 py-1 bg-[#111] border border-white/10 text-[#A1A1AA] font-mono text-[9px] uppercase tracking-[0.15em] whitespace-nowrap rounded-none shadow-lg">
               {content}
             </div>
           </motion.div>

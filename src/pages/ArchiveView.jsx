@@ -262,7 +262,7 @@ export default function ArchiveView() {
   return (
     <motion.div
       className="min-h-screen relative w-full pt-28 pb-32 "
-      style={{ backgroundColor: "#050505" }}
+      style={{ backgroundColor: "transparent" }}
       {...mp({ opacity: 0 }, { opacity: 1 }, { opacity: 0 }, { duration: 0.6, ease: "easeInOut" })}
     >
       {/* ── Background Elements ── */}

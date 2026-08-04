@@ -88,7 +88,7 @@ export default function Navbar() {
         <a
           href="#"
           aria-label="Home"
-          className="flex-shrink-0 no-underline focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30 rounded-sm"
+          className="flex-shrink-0 no-underline focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30 rounded-none"
           onClick={() => setActiveLink("#")}
         >
           <span

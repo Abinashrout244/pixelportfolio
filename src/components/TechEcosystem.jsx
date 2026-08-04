@@ -151,7 +151,7 @@ function TechPill({ label, index, inView }) {
 function CardMouseGlow({ active, position }) {
   return (
     <div
-      className="pointer-events-none absolute inset-0 rounded-[24px] overflow-hidden"
+      className="pointer-events-none absolute inset-0 rounded-none overflow-hidden"
       aria-hidden="true"
     >
       <div
@@ -208,7 +208,7 @@ function CategoryCard({ category, index, inView }) {
     >
       {/* Outer hover glow ring */}
       <motion.div
-        className="absolute -inset-px rounded-[26px] pointer-events-none"
+        className="absolute -inset-px rounded-none pointer-events-none"
         animate={{
           opacity: hovered ? 1 : 0,
           boxShadow: hovered
@@ -220,7 +220,7 @@ function CategoryCard({ category, index, inView }) {
 
       {/* Glass surface */}
       <div
-        className="relative flex flex-col h-full rounded-[24px] overflow-hidden"
+        className="relative flex flex-col h-full rounded-none overflow-hidden"
         style={{
           background: hovered
             ? "rgba(255,255,255,0.038)"
@@ -270,7 +270,7 @@ function CategoryCard({ category, index, inView }) {
 
             {/* Category index badge */}
             <motion.div
-              className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+              className="flex-shrink-0 w-10 h-10 rounded-none flex items-center justify-center"
               animate={{
                 background: hovered
                   ? "rgba(255,255,255,0.07)"
@@ -396,7 +396,7 @@ export default function TechEcosystem() {
       id="tech-ecosystem"
       ref={sectionRef}
       className="relative w-full"
-      style={{ backgroundColor: "#060606" }}
+      style={{ backgroundColor: "transparent" }}
       aria-labelledby="tech-ecosystem-heading"
     >
       {/* ── Seamless top blend from StatsSection ── */}
@@ -404,7 +404,7 @@ export default function TechEcosystem() {
         className="absolute top-0 left-0 right-0 h-40 pointer-events-none z-10"
         style={{
           background:
-            "linear-gradient(to bottom, #080808 0%, transparent 100%)",
+            "linear-gradient(to bottom, rgba(8,8,8,0.25) 0%, transparent 100%)",
         }}
         aria-hidden="true"
       />
@@ -592,7 +592,7 @@ export default function TechEcosystem() {
       <div
         className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
         style={{
-          background: "linear-gradient(to top, #060606 0%, transparent 100%)",
+          background: "linear-gradient(to top, rgba(6,6,6,0.25) 0%, transparent 100%)",
         }}
         aria-hidden="true"
       />

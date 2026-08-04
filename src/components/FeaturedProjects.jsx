@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "motion/react";
+import { motion, useInView, useMotionValue, useSpring, useTransform } from "motion/react";
 import { Link, useNavigate } from "react-router-dom";
+import { Eye } from "lucide-react";
 import { PROJECTS } from "../data/projectsData";
 
 // ─── Deterministic RNG ───────────────────────────────────────────────────────
@@ -100,10 +101,124 @@ function TechPill({ label }) {
 }
 
 // ─── Featured Project Card ──────────────────────────────────────────────────
+function ProjectImageSlide({ project, reduced, onOpen }) {
+  const imageRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const lift = useMotionValue(0);
+  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [12, -12]), {
+    stiffness: 150,
+    damping: 20,
+  });
+  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-12, 12]), {
+    stiffness: 150,
+    damping: 20,
+  });
+  const translateY = useSpring(lift, { stiffness: 150, damping: 20 });
+  const borderColor = {
+    "netflix-clone": "rgba(229, 9, 20, 0.7)",
+    devtinder: "rgba(96, 165, 250, 0.7)",
+    noteflow: "rgba(192, 132, 252, 0.7)",
+    shopcart: "rgba(52, 211, 153, 0.7)",
+  }[project?.slug] || "rgba(255,255,255,0.35)";
+  const badgePathId = `discover-path-${project?.slug || "project"}`;
+
+  const handlePointerMove = (event) => {
+    const element = imageRef.current;
+    if (!element || reduced) return;
+
+    const bounds = element.getBoundingClientRect();
+    pointerX.set((event.clientX - bounds.left) / bounds.width - 0.5);
+    pointerY.set((event.clientY - bounds.top) / bounds.height - 0.5);
+  };
+
+  const handlePointerEnter = () => {
+    setHovered(true);
+    if (!reduced) lift.set(-8);
+  };
+
+  const handlePointerLeave = () => {
+    setHovered(false);
+    pointerX.set(0);
+    pointerY.set(0);
+    lift.set(0);
+  };
+
+  return (
+    <div className="w-full max-w-[1500px] border border-white/10 bg-[#18181b] p-6 sm:p-10 lg:p-14">
+      <div className="[perspective:1200px]">
+      <motion.div
+        ref={imageRef}
+        role="button"
+        tabIndex={0}
+        aria-label={`Open ${project?.title || "project"}`}
+        onMouseMove={handlePointerMove}
+        onMouseEnter={handlePointerEnter}
+        onMouseLeave={handlePointerLeave}
+        onClick={onOpen}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") onOpen();
+        }}
+        className="group relative aspect-[16/9] w-full cursor-pointer overflow-hidden border border-white/10 bg-black focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+        style={{
+          rotateX,
+          rotateY,
+          y: translateY,
+          transformStyle: "preserve-3d",
+          borderColor: hovered ? borderColor : "rgba(255,255,255,0.1)",
+          boxShadow: hovered
+            ? "0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.08)"
+            : "0 10px 30px rgba(0,0,0,0.4)",
+          transition: "border-color 300ms ease, box-shadow 300ms ease",
+        }}
+      >
+        <div className="relative h-full w-full">
+          {project?.image ? (
+            <motion.img
+              src={project.image}
+              alt={project?.title || "Project preview"}
+              className="relative z-10 h-full w-full object-cover"
+              loading="lazy"
+              animate={{ scale: 1 }}
+              whileHover={reduced ? undefined : { scale: 1.04 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-[0.2em] text-white/40">
+              Image unavailable
+            </div>
+          )}
+
+          <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+          <motion.div
+            className="absolute right-4 top-4 z-30 flex h-20 w-20 items-center justify-center sm:h-24 sm:w-24"
+            animate={reduced ? undefined : { rotate: 360 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          >
+            <svg viewBox="0 0 120 120" className="absolute inset-0 h-full w-full fill-white">
+              <defs>
+                <path id={badgePathId} d="M 60,60 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
+              </defs>
+              <text className="font-mono text-[9px] uppercase tracking-[0.12em]">
+                <textPath href={`#${badgePathId}`}>DISCOVER • OPEN • EXPLORE • </textPath>
+              </text>
+            </svg>
+            <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white text-black">
+              <Eye size={16} strokeWidth={2.2} />
+            </span>
+          </motion.div>
+        </div>
+      </motion.div>
+      </div>
+    </div>
+  );
+}
+
 function FeaturedProjectCard({ project, index, inView, reduced }) {
   const isImageRight = index % 2 === 0;
   const navigate = useNavigate();
-  const [hovered, setHovered] = useState(false);
 
   return (
     <motion.article
@@ -143,7 +258,7 @@ function FeaturedProjectCard({ project, index, inView, reduced }) {
         <div className="flex flex-wrap items-center gap-4">
           <button
             onClick={() => navigate(`/projects/${project.slug}`)}
-            className="group relative px-6 py-3 bg-white text-black font-mono text-[11px] tracking-[0.15em] uppercase rounded-sm overflow-hidden transition-transform active:scale-95"
+            className="group relative px-6 py-3 bg-white text-black font-mono text-[11px] tracking-[0.15em] uppercase rounded-none overflow-hidden transition-transform active:scale-95"
           >
             <span className="relative z-10 font-bold">Case Study</span>
             <div className="absolute inset-0 bg-white/90 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out" />
@@ -154,7 +269,7 @@ function FeaturedProjectCard({ project, index, inView, reduced }) {
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 border border-white/10 text-white font-mono text-[11px] tracking-[0.15em] uppercase rounded-sm hover:border-white/30 hover:bg-white/5 transition-colors"
+              className="px-6 py-3 border border-white/10 text-white font-mono text-[11px] tracking-[0.15em] uppercase rounded-none hover:border-white/30 hover:bg-white/5 transition-colors"
             >
               Live Demo
             </a>
@@ -164,7 +279,7 @@ function FeaturedProjectCard({ project, index, inView, reduced }) {
               href={project.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 border border-white/10 text-white font-mono text-[11px] tracking-[0.15em] uppercase rounded-sm hover:border-white/30 hover:bg-white/5 transition-colors"
+              className="px-6 py-3 border border-white/10 text-white font-mono text-[11px] tracking-[0.15em] uppercase rounded-none hover:border-white/30 hover:bg-white/5 transition-colors"
             >
               Source
             </a>
@@ -173,39 +288,12 @@ function FeaturedProjectCard({ project, index, inView, reduced }) {
       </div>
 
       {/* Image Side */}
-      <div 
-        className="flex-1 w-full relative group cursor-pointer"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onClick={() => navigate(`/projects/${project.slug}`)}
-      >
-        <motion.div
-          animate={{
-            y: hovered && !reduced ? -8 : 0,
-            boxShadow: hovered 
-              ? "0 30px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255,255,255,0.05)" 
-              : "0 10px 30px rgba(0,0,0,0.4), 0 0 0 transparent"
-          }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="relative rounded-[24px] overflow-hidden border border-white/10 bg-white/5 aspect-[4/3] lg:aspect-[16/10]"
-        >
-          {/* Inner glow line on hover */}
-          <div 
-            className="absolute inset-0 pointer-events-none z-20 border border-white/0 rounded-[24px] transition-colors duration-300"
-            style={{ borderColor: hovered ? "rgba(255,255,255,0.15)" : "transparent" }}
-          />
-
-          <motion.img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover relative z-10"
-            animate={{ scale: hovered && !reduced ? 1.03 : 1 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          />
-          
-          {/* Subtle overlay gradient */}
-          <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#050505]/60 via-transparent to-transparent opacity-60" />
-        </motion.div>
+      <div className="flex-1 w-full">
+        <ProjectImageSlide
+          project={project}
+          reduced={reduced}
+          onOpen={() => navigate(`/projects/${project.slug}`)}
+        />
       </div>
     </motion.article>
   );
@@ -229,13 +317,13 @@ export default function FeaturedProjects() {
       id="projects"
       ref={sectionRef}
       className="relative w-full overflow-hidden"
-      style={{ backgroundColor: "#050505" }}
+      style={{ backgroundColor: "transparent" }}
       aria-labelledby="featured-projects-heading"
     >
       {/* ── Top blend from Education ── */}
       <div
         className="absolute top-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to bottom, #060606 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, transparent 100%)" }}
         aria-hidden="true"
       />
 
@@ -377,3 +465,4 @@ export default function FeaturedProjects() {
     </section>
   );
 }
+

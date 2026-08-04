@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "motion/react";
+import { motion, useInView, useMotionValue, useScroll, useSpring } from "motion/react";
 
 // ─── Deterministic RNG ───────────────────────────────────────────────────────
 const rng = (n, salt) => {
@@ -151,7 +151,7 @@ function SectionSpotlight({ sectionRef }) {
 }
 
 // ─── Timeline dot with pulse ─────────────────────────────────────────────────
-function TimelineDot({ inView, delay = 0 }) {
+function TimelineDot({ inView, delay = 0, active = false }) {
   return (
     <motion.div
       className="relative flex-shrink-0 flex items-center justify-center"
@@ -166,21 +166,26 @@ function TimelineDot({ inView, delay = 0 }) {
         style={{
           width: "20px",
           height: "20px",
-          border: "1px solid rgba(255,255,255,0.18)",
-          background: "transparent",
+          border: active ? "1px solid rgba(134,239,172,0.55)" : "1px solid rgba(255,255,255,0.18)",
+          background: active ? "rgba(34,197,94,0.08)" : "transparent",
         }}
-        animate={{ scale: [1, 1.7, 1], opacity: [0.5, 0, 0.5] }}
+        animate={{
+          scale: active ? [1, 1.9, 1] : [1, 1.7, 1],
+          opacity: active ? [0.85, 0, 0.85] : [0.5, 0, 0.5],
+        }}
         transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: delay + 0.8 }}
       />
       {/* Core dot */}
-      <div
+      <motion.div
         className="rounded-full"
-        style={{
-          width: "8px",
-          height: "8px",
-          background: "rgba(255,255,255,0.75)",
-          boxShadow: "0 0 10px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.15)",
+        animate={{
+          backgroundColor: active ? "rgba(134,239,172,0.95)" : "rgba(255,255,255,0.75)",
+          boxShadow: active
+            ? "0 0 14px rgba(34,197,94,0.75), 0 0 32px rgba(34,197,94,0.35)"
+            : "0 0 10px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.15)",
         }}
+        style={{ width: "8px", height: "8px" }}
+        transition={{ duration: 0.25 }}
       />
     </motion.div>
   );
@@ -190,14 +195,14 @@ function TimelineDot({ inView, delay = 0 }) {
 function LeftPanel({ panel, inView, cardIndex }) {
   return (
     <div
-      className="flex flex-col h-full rounded-[16px] p-5 sm:p-6"
+      className="flex flex-col h-full rounded-none p-5 sm:p-6"
       style={{
         background: "rgba(255,255,255,0.02)",
         border: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="flex items-center gap-2 mb-4">
-        <div style={{ width: "3px", height: "14px", background: "rgba(255,255,255,0.25)", borderRadius: "2px" }} />
+        <div style={{ width: "3px", height: "14px", background: "rgba(255,255,255,0.25)", borderRadius: "0px" }} />
         <span
           className="font-mono text-[9px] tracking-[0.22em] uppercase"
           style={{ color: "rgba(255,255,255,0.35)" }}
@@ -241,7 +246,7 @@ function RightPanel({ panel, inView, cardIndex }) {
 
   return (
     <div
-      className="flex flex-col h-full rounded-[16px] overflow-hidden"
+      className="flex flex-col h-full rounded-none overflow-hidden"
       style={{
         background: "rgba(255,255,255,0.022)",
         border: "1px solid rgba(255,255,255,0.07)",
@@ -345,7 +350,7 @@ function RightPanel({ panel, inView, cardIndex }) {
             }}
           >
             <span
-              className="flex-shrink-0 rounded-sm"
+              className="flex-shrink-0 rounded-none"
               style={{
                 width: "2px",
                 height: "12px",
@@ -366,7 +371,7 @@ function RightPanel({ panel, inView, cardIndex }) {
 }
 
 // ─── Education card ──────────────────────────────────────────────────────────
-function EducationCard({ entry, index, inView }) {
+function EducationCard({ entry, index, inView, active }) {
   const cardRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -401,33 +406,81 @@ function EducationCard({ entry, index, inView }) {
     >
       {/* Outer glow ring */}
       <motion.div
-        className="absolute -inset-px rounded-[26px] pointer-events-none"
+        className="absolute -inset-px rounded-none pointer-events-none"
         animate={{
-          opacity: hovered ? 1 : 0,
-          boxShadow: hovered
-            ? "0 0 0 1px rgba(255,255,255,0.1), 0 24px 80px rgba(0,0,0,0.7), 0 8px 30px rgba(255,255,255,0.04)"
-            : "0 0 0 0px transparent",
+          opacity: active || hovered ? 1 : 0,
+          boxShadow: active
+            ? "0 0 0 1px rgba(134,239,172,0.24), 0 22px 90px rgba(0,0,0,0.75), 0 0 42px rgba(34,197,94,0.14)"
+            : hovered
+              ? "0 0 0 1px rgba(255,255,255,0.1), 0 24px 80px rgba(0,0,0,0.7), 0 8px 30px rgba(255,255,255,0.04)"
+              : "0 0 0 0px transparent",
+        }}
+        transition={{ duration: 0.3 }}
+      />
+
+      <motion.div
+        className="absolute -left-4 top-8 bottom-8 w-px pointer-events-none hidden sm:block"
+        animate={{
+          opacity: active ? 1 : 0,
+          backgroundColor: active ? "rgba(134,239,172,0.75)" : "rgba(255,255,255,0)",
+          boxShadow: active ? "0 0 18px rgba(34,197,94,0.5)" : "0 0 0 transparent",
         }}
         transition={{ duration: 0.3 }}
       />
 
       {/* Glass surface */}
-      <div
-        className="relative rounded-[24px] overflow-hidden"
+      <motion.div
+        className="relative rounded-none overflow-hidden"
+        animate={{
+          backgroundColor: active
+            ? "rgba(0,0,0,0.72)"
+            : hovered
+              ? "rgba(255,255,255,0.036)"
+              : "rgba(255,255,255,0.024)",
+          borderColor: active
+            ? "rgba(134,239,172,0.22)"
+            : hovered
+              ? "rgba(255,255,255,0.13)"
+              : "rgba(255,255,255,0.07)",
+          boxShadow: active
+            ? "inset 0 1px 0 rgba(134,239,172,0.14), inset 0 -1px 0 rgba(0,0,0,0.4)"
+            : "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.2)",
+        }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
         style={{
-          background: hovered ? "rgba(255,255,255,0.036)" : "rgba(255,255,255,0.024)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          border: hovered
-            ? "1px solid rgba(255,255,255,0.13)"
-            : "1px solid rgba(255,255,255,0.07)",
-          transition: "background 0.35s ease, border-color 0.35s ease",
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.2)",
+          border: "1px solid rgba(255,255,255,0.07)",
         }}
       >
+        <motion.div
+          className="absolute inset-x-0 top-0 h-px pointer-events-none"
+          animate={{
+            opacity: active ? 1 : 0,
+            background:
+              "linear-gradient(90deg, transparent, rgba(134,239,172,0.7), transparent)",
+          }}
+          transition={{ duration: 0.3 }}
+          aria-hidden="true"
+        />
+
+        <motion.div
+          className="absolute -right-20 -top-20 h-64 w-64 rounded-full pointer-events-none"
+          animate={{
+            opacity: active ? 1 : 0,
+            scale: active ? 1 : 0.85,
+          }}
+          transition={{ duration: 0.35 }}
+          style={{
+            background: "radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%)",
+            filter: "blur(12px)",
+          }}
+          aria-hidden="true"
+        />
+
         {/* Mouse follow inner glow */}
         <div
-          className="absolute inset-0 pointer-events-none rounded-[24px]"
+          className="absolute inset-0 pointer-events-none rounded-none"
           style={{
             background: hovered
               ? `radial-gradient(280px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.05) 0%, transparent 70%)`
@@ -512,7 +565,7 @@ function EducationCard({ entry, index, inView }) {
 
             {/* Index badge */}
             <div
-              className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center self-start"
+              className="flex-shrink-0 w-10 h-10 rounded-none flex items-center justify-center self-start"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
@@ -539,7 +592,7 @@ function EducationCard({ entry, index, inView }) {
             <RightPanel panel={entry.rightPanel} inView={inView} cardIndex={index} />
           </div>
         </div>
-      </div>
+      </motion.div>
     </motion.article>
   );
 }
@@ -569,6 +622,33 @@ export default function EducationSection() {
   const inView = useInView(sectionRef, { once: true, margin: "-60px" });
   const headingInView = useInView(headingRef, { once: true, margin: "-40px" });
   const timelineInView = useInView(timelineRef, { once: true, margin: "-40px" });
+  const [activeEducationIndex, setActiveEducationIndex] = useState(-1);
+  const { scrollYProgress: timelineProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 70%", "end 45%"],
+  });
+  const timelineScaleY = useSpring(timelineProgress, {
+    stiffness: 120,
+    damping: 28,
+    mass: 0.2,
+  });
+
+  useEffect(() => {
+    const unsubscribe = timelineProgress.on("change", (latest) => {
+      if (latest <= 0.02 || latest >= 0.98) {
+        setActiveEducationIndex(-1);
+        return;
+      }
+
+      const nextIndex = Math.min(
+        EDUCATION.length - 1,
+        Math.floor(latest * EDUCATION.length)
+      );
+      setActiveEducationIndex(nextIndex);
+    });
+
+    return unsubscribe;
+  }, [timelineProgress]);
 
   const reduced = useReducedMotion();
 
@@ -580,13 +660,13 @@ export default function EducationSection() {
       id="education"
       ref={sectionRef}
       className="relative w-full"
-      style={{ backgroundColor: "#060606" }}
+      style={{ backgroundColor: "transparent" }}
       aria-labelledby="education-heading"
     >
       {/* ── Top blend from TechEcosystem ── */}
       <div
         className="absolute top-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to bottom, #060606 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, transparent 100%)" }}
         aria-hidden="true"
       />
 
@@ -725,6 +805,16 @@ export default function EducationSection() {
             transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           />
 
+          <motion.div
+            className="absolute left-[9px] top-5 bottom-5 w-px hidden sm:block"
+            style={{
+              scaleY: reduced ? 1 : timelineScaleY,
+              background: "linear-gradient(to bottom, rgba(134,239,172,0.95), rgba(34,197,94,0.45))",
+              boxShadow: "0 0 14px rgba(34,197,94,0.45)",
+              transformOrigin: "top",
+            }}
+          />
+
           {/* Timeline items */}
           <div className="flex flex-col gap-10 sm:gap-12">
             {EDUCATION.map((entry, i) => (
@@ -732,12 +822,21 @@ export default function EducationSection() {
 
                 {/* Timeline dot — hidden on very small mobile */}
                 <div className="hidden sm:flex flex-col items-center pt-1 flex-shrink-0" style={{ width: "20px" }}>
-                  <TimelineDot inView={timelineInView} delay={0.35 + i * 0.22} />
+                  <TimelineDot
+                    inView={timelineInView}
+                    delay={0.35 + i * 0.22}
+                    active={activeEducationIndex === i}
+                  />
                 </div>
 
                 {/* Card */}
                 <div className="flex-1 min-w-0">
-                  <EducationCard entry={entry} index={i} inView={inView} />
+                  <EducationCard
+                    entry={entry}
+                    index={i}
+                    inView={inView}
+                    active={activeEducationIndex === i}
+                  />
                 </div>
               </div>
             ))}
@@ -767,7 +866,7 @@ export default function EducationSection() {
       {/* ── Bottom fade ── */}
       <div
         className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to top, #060606 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to top, rgba(6,6,6,0.25) 0%, transparent 100%)" }}
         aria-hidden="true"
       />
     </section>

@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
+import BackgroundName from "./BackgroundName";
 import HeroContent from "./HeroContent";
 import PortraitCard from "./PortraitCard";
 
@@ -9,6 +10,8 @@ export default function Hero({ isLoaded }) {
       id="hero"
       className="hero-section relative w-full h-screen overflow-hidden flex items-center justify-center bg-transparent"
     >
+      <BackgroundName />
+
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 flex items-center h-full pt-20">
         <motion.div
           className="flex w-full items-center"

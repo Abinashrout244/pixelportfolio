@@ -131,7 +131,7 @@ function StatCard({ stat, index, sectionInView }) {
     >
       {/* Outer glow on hover */}
       <motion.div
-        className="absolute -inset-px rounded-[24px] pointer-events-none"
+        className="absolute -inset-px rounded-none pointer-events-none"
         animate={{
           opacity: hovered ? 1 : 0,
           boxShadow: hovered
@@ -143,7 +143,7 @@ function StatCard({ stat, index, sectionInView }) {
 
       {/* Glass card */}
       <div
-        className="relative flex flex-col h-full rounded-[24px] p-10 overflow-hidden"
+        className="relative flex flex-col h-full rounded-none p-10 overflow-hidden"
         style={{
           background: "rgba(255,255,255,0.028)",
           backdropFilter: "blur(20px)",
@@ -157,7 +157,7 @@ function StatCard({ stat, index, sectionInView }) {
       >
         {/* Mouse-reactive inner glow */}
         <div
-          className="absolute inset-0 pointer-events-none rounded-[24px]"
+          className="absolute inset-0 pointer-events-none rounded-none"
           style={{
             background: hovered
               ? `radial-gradient(circle at ${glowPos.x}% ${glowPos.y}%, rgba(255,255,255,0.06) 0%, transparent 60%)`
@@ -178,7 +178,7 @@ function StatCard({ stat, index, sectionInView }) {
 
         {/* Icon */}
         <motion.div
-          className="mb-8 w-11 h-11 rounded-xl flex items-center justify-center"
+          className="mb-8 w-11 h-11 rounded-none flex items-center justify-center"
           style={{
             background: "rgba(255,255,255,0.05)",
             border: "1px solid rgba(255,255,255,0.08)",
@@ -283,14 +283,14 @@ export default function StatsSection() {
       id="stats"
       ref={sectionRef}
       className="relative w-full"
-      style={{ backgroundColor: "#080808" }}
+      style={{ backgroundColor: "transparent" }}
     >
       {/* ── Hero-to-section transition gradient ── */}
       <div
         className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-10"
         style={{
           background:
-            "linear-gradient(to bottom, #0B0B0B 0%, transparent 100%)",
+            "linear-gradient(to bottom, rgba(11,11,11,0.35) 0%, transparent 100%)",
         }}
         aria-hidden="true"
       />
@@ -422,7 +422,7 @@ export default function StatsSection() {
       <div
         className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
         style={{
-          background: "linear-gradient(to top, #080808 0%, transparent 100%)",
+          background: "linear-gradient(to top, rgba(8,8,8,0.35) 0%, transparent 100%)",
         }}
         aria-hidden="true"
       />

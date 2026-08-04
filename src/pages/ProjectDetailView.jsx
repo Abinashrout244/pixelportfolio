@@ -49,7 +49,7 @@ export default function ProjectDetailView() {
 
   return (
     <motion.div
-      className="min-h-screen relative w-full pt-28 pb-32 px-64 bg-[#050505]"
+      className="min-h-screen relative w-full pt-28 pb-32 px-64 bg-transparent"
       {...mp({ opacity: 0 }, { opacity: 1 }, { opacity: 0 }, { duration: 0.6, ease: "easeInOut" })}
     >
       {/* ── Background Elements ── */}
@@ -139,7 +139,7 @@ export default function ProjectDetailView() {
 
           {/* Right Sticky Sidebar */}
           <div className="w-full lg:w-[320px] flex-shrink-0">
-            <div className="sticky top-32 flex flex-col gap-8 p-8 rounded-[24px] bg-white/[0.02] border border-white/10">
+            <div className="sticky top-32 flex flex-col gap-8 p-8 rounded-none bg-white/[0.02] border border-white/10">
               
               <div>
                 <h4 className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/30 mb-3">Tech Stack</h4>
@@ -177,12 +177,12 @@ export default function ProjectDetailView() {
 
               <div className="flex flex-col gap-3">
                 {project.liveUrl !== "#" && (
-                  <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 w-full py-3 bg-white text-black font-mono text-[11px] tracking-[0.1em] uppercase rounded-sm hover:bg-white/90 transition-colors">
+                  <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 w-full py-3 bg-white text-black font-mono text-[11px] tracking-[0.1em] uppercase rounded-none hover:bg-white/90 transition-colors">
                     Live Demo ↗
                   </a>
                 )}
                 {project.githubUrl !== "#" && (
-                  <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 w-full py-3 border border-white/20 text-white font-mono text-[11px] tracking-[0.1em] uppercase rounded-sm hover:bg-white/5 transition-colors">
+                  <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 w-full py-3 border border-white/20 text-white font-mono text-[11px] tracking-[0.1em] uppercase rounded-none hover:bg-white/5 transition-colors">
                     Source Code ↗
                   </a>
                 )}
@@ -197,7 +197,7 @@ export default function ProjectDetailView() {
             <h3 className="font-mono text-[12px] tracking-[0.2em] uppercase text-white/40 mb-8 text-center">Gallery</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
               {project.gallery.map((img, i) => (
-                <div key={i} className="rounded-[20px] overflow-hidden border border-white/10 bg-white/5 group cursor-pointer aspect-video relative">
+                <div key={i} className="rounded-none overflow-hidden border border-white/10 bg-white/5 group cursor-pointer aspect-video relative">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
                   <img src={img} alt={`${project.title} screenshot ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
                 </div>

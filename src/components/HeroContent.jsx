@@ -51,7 +51,7 @@ export default function HeroContent({ isLoaded }) {
         custom={0.2}
       >
         <span
-          className="font-mono text-[11px] tracking-[0.15em] uppercase text-text-secondary border border-white/[0.08] px-4 py-1.5 rounded-sm"
+          className="font-mono text-[11px] tracking-[0.15em] uppercase text-text-secondary border border-white/[0.08] px-4 py-1.5 rounded-none"
         >
           Frontend Engineer
         </span>
@@ -107,7 +107,7 @@ export default function HeroContent({ isLoaded }) {
         <a
           href="#projects"
           id="cta-view-projects"
-          className="group font-mono text-[12px] tracking-[0.12em] uppercase px-7 py-3.5 bg-white text-[#0B0B0B] rounded-sm transition-all duration-300 glow-soft-hover hover:bg-white/90"
+          className="group font-mono text-[12px] tracking-[0.12em] uppercase px-7 py-3.5 bg-white text-[#0B0B0B] rounded-none transition-all duration-300 glow-soft-hover hover:bg-white/90"
         >
           View Projects
         </a>
@@ -118,7 +118,7 @@ export default function HeroContent({ isLoaded }) {
           target="_blank"
           rel="noopener noreferrer"
           id="cta-github"
-          className="group font-mono text-[12px] tracking-[0.12em] uppercase px-7 py-3.5 border border-white/[0.12] text-text-primary rounded-sm transition-all duration-300 hover:border-white/30 glow-soft-hover"
+          className="group font-mono text-[12px] tracking-[0.12em] uppercase px-7 py-3.5 border border-white/[0.12] text-text-primary rounded-none transition-all duration-300 hover:border-white/30 glow-soft-hover"
         >
           GitHub
         </a>

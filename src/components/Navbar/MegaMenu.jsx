@@ -122,7 +122,7 @@ export default function MegaMenu({ isOpen, onMouseEnter, onMouseLeave, isActive 
           isActive || isOpen ? "text-[#F5F5F5]" : "text-[#A1A1AA]",
           "transition-colors duration-300 hover:text-[#FFFFFF]",
           "bg-transparent border-0 cursor-pointer p-0",
-          "focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30 rounded-sm",
+          "focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30 rounded-none",
         ].join(" ")}
       >
         More
