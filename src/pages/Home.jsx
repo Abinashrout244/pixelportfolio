@@ -4,6 +4,7 @@ import StatsSection from "../components/StatsSection";
 import TechEcosystem from "../components/TechEcosystem";
 import EducationSection from "../components/EducationSection";
 import FeaturedProjects from "../components/FeaturedProjects";
+import PreFooterCTA from "./PreFooterCTA";
 
 export default function Home({ isLoaded }) {
   return (
@@ -13,6 +14,7 @@ export default function Home({ isLoaded }) {
       <TechEcosystem />
       <EducationSection />
       <FeaturedProjects />
+      <PreFooterCTA />
     </div>
   );
 }
