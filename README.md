@@ -1,16 +1,142 @@
-# React + Vite
+# 🚀 Abinash Rout Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern, responsive, and interactive portfolio website built with **React** and **Vite** to showcase my projects, technical skills, and journey as a Full-Stack Developer.
 
-Currently, two official plugins are available:
+> **🚧 Status:** Currently under development.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📖 About
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This portfolio is designed to highlight my work, experience, and skills through a clean, modern interface with smooth animations and responsive layouts.
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## ✨ Features
+
+- 🎨 Modern UI/UX
+- 📱 Fully Responsive Design
+- ⚡ Fast Performance with Vite
+- 🌙 Dark Theme
+- 🎭 Smooth Animations
+- 💼 Projects Showcase
+- 🛠️ Skills Section
+- 👨‍💻 About Me
+- 📄 Resume Section
+- 📬 Contact Section
+- 🤖 AI Portfolio Assistant _(Coming Soon)_
+- 🚀 Optimized Code Structure
+
+---
+
+## 🛠️ Built With
+
+- React
+- Vite
+- JavaScript (ES6+)
+- HTML5
+- CSS3
+- Tailwind CSS
+- Framer Motion
+- React Router DOM
+- Lucide React
+
+---
+
+## 📂 Project Structure
+
+```text
+portfolio/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── pages/
+│   ├── utils/
+│   ├── App.jsx
+│   └── main.jsx
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/Abinashrout244/pixelportfolio.git
+```
+
+### Navigate to the project
+
+```bash
+cd pixelportfolio
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+---
+
+# 📌 Development Progress
+
+- [x] Project Setup
+- [x] React + Vite Configuration
+- [x] Responsive Navbar
+- [x] Hero Section
+- [ ] About Section
+- [x] Skills Section
+- [x] Projects Section
+- [ ] Footer
+- [ ] Experience Timeline
+- [ ] AI Portfolio Assistant
+- [ ] Contact Form Backend
+- [ ] Blog Section
+- [ ] SEO Optimization
+- [ ] Performance Optimization
+- [ ] Deploy to Vercel
+
+---
+
+## 🤝 Contributing
+
+Contributions, ideas, and suggestions are always welcome. Feel free to fork the repository and submit a pull request.
+
+---
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+---
+
+<!--
+## 📬 Contact
+
+If you'd like to connect or collaborate, feel free to reach out.
+
+- GitHub: https://github.com/yourusername
+- LinkedIn: https://linkedin.com/in/yourusername
+- Email: [your-email@example.com](mailto:your-email@example.com)
+
+--- -->
+
+### ⭐ If you like this project, don't forget to star the repository!
