@@ -1,5 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView, useMotionValue, useScroll, useSpring } from "motion/react";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
 
 // ─── Deterministic RNG ───────────────────────────────────────────────────────
 const rng = (n, salt) => {
@@ -20,10 +27,46 @@ const BG_STARS = Array.from({ length: 45 }, (_, i) => ({
 
 // ─── Ambient orbs ────────────────────────────────────────────────────────────
 const ORBS = [
-  { id: 0, left: "5%",  top: "15%", w: 350, h: 350, alpha: 0.015, dur: 24, delay: 0   },
-  { id: 1, left: "65%", top: "55%", w: 290, h: 290, alpha: 0.012, dur: 30, delay: -12 },
-  { id: 2, left: "40%", top: "85%", w: 220, h: 220, alpha: 0.010, dur: 20, delay: -7  },
-  { id: 3, left: "88%", top: "10%", w: 170, h: 170, alpha: 0.008, dur: 35, delay: -22 },
+  {
+    id: 0,
+    left: "5%",
+    top: "15%",
+    w: 350,
+    h: 350,
+    alpha: 0.015,
+    dur: 24,
+    delay: 0,
+  },
+  {
+    id: 1,
+    left: "65%",
+    top: "55%",
+    w: 290,
+    h: 290,
+    alpha: 0.012,
+    dur: 30,
+    delay: -12,
+  },
+  {
+    id: 2,
+    left: "40%",
+    top: "85%",
+    w: 220,
+    h: 220,
+    alpha: 0.01,
+    dur: 20,
+    delay: -7,
+  },
+  {
+    id: 3,
+    left: "88%",
+    top: "10%",
+    w: 170,
+    h: 170,
+    alpha: 0.008,
+    dur: 35,
+    delay: -22,
+  },
 ];
 
 // ─── Education data ──────────────────────────────────────────────────────────
@@ -111,10 +154,6 @@ function useReducedMotion() {
 // ─── Section-level mouse spotlight ──────────────────────────────────────────
 function SectionSpotlight({ sectionRef }) {
   const [pos, setPos] = useState({ x: 50, y: 30 });
-  const rawX = useMotionValue(50);
-  const rawY = useMotionValue(30);
-  useSpring(rawX, { stiffness: 50, damping: 22 });
-  useSpring(rawY, { stiffness: 50, damping: 22 });
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -131,7 +170,10 @@ function SectionSpotlight({ sectionRef }) {
   }, [sectionRef]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+    <div
+      className="absolute inset-0 pointer-events-none overflow-hidden"
+      aria-hidden="true"
+    >
       <div
         style={{
           position: "absolute",
@@ -140,7 +182,8 @@ function SectionSpotlight({ sectionRef }) {
           width: "750px",
           height: "750px",
           transform: "translate(-50%, -50%)",
-          background: "radial-gradient(circle, rgba(255,255,255,0.016) 0%, transparent 65%)",
+          background:
+            "radial-gradient(circle, rgba(255,255,255,0.016) 0%, transparent 65%)",
           filter: "blur(45px)",
           transition: "left 0.2s ease, top 0.2s ease",
           pointerEvents: "none",
@@ -150,62 +193,88 @@ function SectionSpotlight({ sectionRef }) {
   );
 }
 
-// ─── Timeline dot with pulse ─────────────────────────────────────────────────
-function TimelineDot({ inView, delay = 0, active = false }) {
+// ─── Square Timeline Node ────────────────────────────────────────────────────
+function TimelineSquareNode({ inView, delay = 0, active = false }) {
   return (
     <motion.div
-      className="relative flex-shrink-0 flex items-center justify-center"
-      style={{ width: "20px", height: "20px" }}
+      className="relative flex-shrink-0 flex items-center justify-center rounded-none"
+      style={{ width: "22px", height: "22px" }}
       initial={{ opacity: 0, scale: 0 }}
       animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Pulse ring */}
+      {/* Square pulse ring */}
       <motion.div
-        className="absolute rounded-full"
+        className="absolute rounded-none"
         style={{
-          width: "20px",
-          height: "20px",
-          border: active ? "1px solid rgba(134,239,172,0.55)" : "1px solid rgba(255,255,255,0.18)",
-          background: active ? "rgba(34,197,94,0.08)" : "transparent",
+          width: "22px",
+          height: "22px",
+          border: active
+            ? "1px solid rgba(134,239,172,0.6)"
+            : "1px solid rgba(255,255,255,0.18)",
+          background: active ? "rgba(34,197,94,0.1)" : "transparent",
         }}
         animate={{
-          scale: active ? [1, 1.9, 1] : [1, 1.7, 1],
-          opacity: active ? [0.85, 0, 0.85] : [0.5, 0, 0.5],
+          scale: active ? [1, 1.6, 1] : [1, 1.4, 1],
+          opacity: active ? [0.85, 0, 0.85] : [0.4, 0, 0.4],
         }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: delay + 0.8 }}
+        transition={{
+          duration: 2.8,
+          repeat: Infinity,
+          ease: "easeOut",
+          delay: delay + 0.8,
+        }}
       />
-      {/* Core dot */}
+
+      {/* Core square */}
       <motion.div
-        className="rounded-full"
+        className="rounded-none border"
         animate={{
-          backgroundColor: active ? "rgba(134,239,172,0.95)" : "rgba(255,255,255,0.75)",
+          backgroundColor: active
+            ? "rgba(134,239,172,1)"
+            : "rgba(255,255,255,0.85)",
+          borderColor: active
+            ? "rgba(134,239,172,0.9)"
+            : "rgba(255,255,255,0.3)",
           boxShadow: active
-            ? "0 0 14px rgba(34,197,94,0.75), 0 0 32px rgba(34,197,94,0.35)"
-            : "0 0 10px rgba(255,255,255,0.4), 0 0 20px rgba(255,255,255,0.15)",
+            ? "0 0 16px rgba(34,197,94,0.8), 0 0 32px rgba(34,197,94,0.4)"
+            : "0 0 10px rgba(255,255,255,0.3)",
         }}
-        style={{ width: "8px", height: "8px" }}
-        transition={{ duration: 0.25 }}
+        style={{ width: "10px", height: "10px" }}
+        transition={{ duration: 0.3 }}
       />
     </motion.div>
   );
 }
 
-// ─── Left info panel (Core Learning / Subjects) ──────────────────────────────
-function LeftPanel({ panel, inView, cardIndex }) {
+// ─── Left info panel ─────────────────────────────────────────────────────────
+function LeftPanel({ panel, inView, cardIndex, active }) {
   return (
     <div
-      className="flex flex-col h-full rounded-none p-5 sm:p-6"
+      className="flex flex-col h-full rounded-none p-5 sm:p-6 transition-colors duration-500"
       style={{
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid rgba(255,255,255,0.06)",
+        background: active ? "rgba(34,197,94,0.03)" : "rgba(255,255,255,0.02)",
+        border: active
+          ? "1px solid rgba(134,239,172,0.18)"
+          : "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="flex items-center gap-2 mb-4">
-        <div style={{ width: "3px", height: "14px", background: "rgba(255,255,255,0.25)", borderRadius: "0px" }} />
+        <div
+          className="transition-colors duration-500"
+          style={{
+            width: "3px",
+            height: "14px",
+            background: active
+              ? "rgba(134,239,172,0.8)"
+              : "rgba(255,255,255,0.25)",
+          }}
+        />
         <span
-          className="font-mono text-[9px] tracking-[0.22em] uppercase"
-          style={{ color: "rgba(255,255,255,0.35)" }}
+          className="font-mono text-[9px] tracking-[0.22em] uppercase transition-colors duration-500"
+          style={{
+            color: active ? "rgba(134,239,172,0.8)" : "rgba(255,255,255,0.35)",
+          }}
         >
           {panel.title}
         </span>
@@ -224,12 +293,22 @@ function LeftPanel({ panel, inView, cardIndex }) {
             }}
           >
             <span
-              className="mt-[5px] flex-shrink-0 rounded-full"
-              style={{ width: "4px", height: "4px", background: "rgba(255,255,255,0.25)" }}
+              className="mt-[6px] flex-shrink-0 rounded-none transition-colors duration-500"
+              style={{
+                width: "4px",
+                height: "4px",
+                background: active
+                  ? "rgba(134,239,172,0.7)"
+                  : "rgba(255,255,255,0.25)",
+              }}
             />
             <span
-              className="font-geist text-[13px] sm:text-[14px] leading-snug"
-              style={{ color: "rgba(255,255,255,0.48)" }}
+              className="font-geist text-[13px] sm:text-[14px] leading-snug transition-colors duration-500"
+              style={{
+                color: active
+                  ? "rgba(255,255,255,0.8)"
+                  : "rgba(255,255,255,0.48)",
+              }}
             >
               {item}
             </span>
@@ -241,56 +320,58 @@ function LeftPanel({ panel, inView, cardIndex }) {
 }
 
 // ─── Right dashboard panel ───────────────────────────────────────────────────
-function RightPanel({ panel, inView, cardIndex }) {
+function RightPanel({ panel, inView, cardIndex, active }) {
   const hasScore = !!panel.score;
 
   return (
     <div
-      className="flex flex-col h-full rounded-none overflow-hidden"
+      className="flex flex-col h-full rounded-none overflow-hidden transition-colors duration-500"
       style={{
-        background: "rgba(255,255,255,0.022)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: active ? "rgba(34,197,94,0.03)" : "rgba(255,255,255,0.022)",
+        border: active
+          ? "1px solid rgba(134,239,172,0.18)"
+          : "1px solid rgba(255,255,255,0.07)",
       }}
     >
       {/* Panel header bar */}
       <div
-        className="flex items-center justify-between px-5 py-3.5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+        className="flex items-center justify-between px-5 py-3.5 transition-colors duration-500"
+        style={{
+          borderBottom: active
+            ? "1px solid rgba(134,239,172,0.12)"
+            : "1px solid rgba(255,255,255,0.05)",
+        }}
       >
         <span
-          className="font-mono text-[9px] tracking-[0.22em] uppercase"
-          style={{ color: "rgba(255,255,255,0.35)" }}
+          className="font-mono text-[9px] tracking-[0.22em] uppercase transition-colors duration-500"
+          style={{
+            color: active ? "rgba(134,239,172,0.8)" : "rgba(255,255,255,0.35)",
+          }}
         >
           {panel.title}
         </span>
         <motion.span
-          className="font-mono text-[8px] tracking-[0.18em] uppercase px-2 py-0.5 rounded-full"
+          className="font-mono text-[8px] tracking-[0.18em] uppercase px-2 py-0.5 rounded-none"
           style={{
             background:
-              panel.status === "ACTIVE"
-                ? "rgba(134,239,172,0.08)"
+              panel.status === "ACTIVE" || active
+                ? "rgba(134,239,172,0.1)"
                 : "rgba(255,255,255,0.06)",
             border:
-              panel.status === "ACTIVE"
-                ? "1px solid rgba(134,239,172,0.2)"
+              panel.status === "ACTIVE" || active
+                ? "1px solid rgba(134,239,172,0.3)"
                 : "1px solid rgba(255,255,255,0.1)",
             color:
-              panel.status === "ACTIVE"
-                ? "rgba(134,239,172,0.8)"
+              panel.status === "ACTIVE" || active
+                ? "rgba(134,239,172,0.9)"
                 : "rgba(255,255,255,0.4)",
           }}
-          animate={
-            panel.status === "ACTIVE"
-              ? { opacity: [1, 0.6, 1] }
-              : { opacity: 1 }
-          }
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           ● {panel.status}
         </motion.span>
       </div>
 
-      {/* Score widget (HSC only) */}
+      {/* Score widget */}
       {hasScore && (
         <div
           className="flex items-center gap-4 px-5 py-4"
@@ -299,24 +380,31 @@ function RightPanel({ panel, inView, cardIndex }) {
           <div>
             <div
               className="font-geist font-[800] text-white leading-none"
-              style={{ fontSize: "clamp(28px, 3vw, 36px)", letterSpacing: "-0.03em" }}
+              style={{
+                fontSize: "clamp(28px, 3vw, 36px)",
+                letterSpacing: "-0.03em",
+              }}
             >
               {panel.score}
             </div>
             <div
               className="font-mono text-[9px] tracking-[0.18em] uppercase mt-1"
-              style={{ color: "rgba(255,255,255,0.28)" }}
+              style={{ color: "rgba(255,255,255,0.35)" }}
             >
               {panel.scoreLabel}
             </div>
           </div>
           <div
-            className="flex-1 h-1.5 rounded-full overflow-hidden"
+            className="flex-1 h-1.5 rounded-none overflow-hidden"
             style={{ background: "rgba(255,255,255,0.06)" }}
           >
             <motion.div
-              className="h-full rounded-full"
-              style={{ background: "rgba(255,255,255,0.3)" }}
+              className="h-full rounded-none"
+              style={{
+                background: active
+                  ? "rgba(134,239,172,0.8)"
+                  : "rgba(255,255,255,0.3)",
+              }}
               initial={{ width: "0%" }}
               animate={inView ? { width: "86%" } : { width: "0%" }}
               transition={{
@@ -350,16 +438,22 @@ function RightPanel({ panel, inView, cardIndex }) {
             }}
           >
             <span
-              className="flex-shrink-0 rounded-none"
+              className="flex-shrink-0 rounded-none transition-colors duration-500"
               style={{
                 width: "2px",
                 height: "12px",
-                background: "rgba(255,255,255,0.18)",
+                background: active
+                  ? "rgba(134,239,172,0.6)"
+                  : "rgba(255,255,255,0.18)",
               }}
             />
             <span
-              className="font-geist text-[12px] sm:text-[13px] leading-snug"
-              style={{ color: "rgba(255,255,255,0.42)" }}
+              className="font-geist text-[12px] sm:text-[13px] leading-snug transition-colors duration-500"
+              style={{
+                color: active
+                  ? "rgba(255,255,255,0.75)"
+                  : "rgba(255,255,255,0.42)",
+              }}
             >
               {item}
             </span>
@@ -374,242 +468,227 @@ function RightPanel({ panel, inView, cardIndex }) {
 function EducationCard({ entry, index, inView, active }) {
   const cardRef = useRef(null);
   const [hovered, setHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const reduced = useReducedMotion();
 
+  // 3D Tilt Motion Values
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Map mouse positions to rotational degrees (-8 to 8 degrees for a refined tilt)
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), {
+    stiffness: 300,
+    damping: 25,
+  });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), {
+    stiffness: 300,
+    damping: 25,
+  });
+
   const handleMouseMove = (e) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+
+    // Calculate normalized pointer position from -0.5 to 0.5 relative to center
+    const posX = (e.clientX - rect.left) / rect.width - 0.5;
+    const posY = (e.clientY - rect.top) / rect.height - 0.5;
+
+    x.set(posX);
+    y.set(posY);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    x.set(0);
+    y.set(0);
   };
 
   return (
     <motion.article
       ref={cardRef}
       id={`edu-card-${entry.id}`}
-      aria-label={`${entry.degree}, ${entry.institution}`}
-      className="relative"
-      initial={reduced ? {} : { opacity: 0, y: 52 }}
+      className="relative max-w-[1100px] mx-auto [perspective:1000px]"
+      initial={reduced ? {} : { opacity: 0, y: 35 }}
       animate={
-        reduced ? {} : inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 52 }
+        reduced ? {} : inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 35 }
       }
       transition={{
-        duration: 0.78,
-        delay: 0.22 + index * 0.18,
+        duration: 0.6,
+        delay: 0.15 + index * 0.15,
         ease: [0.22, 1, 0.36, 1],
       }}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
-      whileHover={reduced ? {} : { y: -4 }}
-      style={{ transformOrigin: "center bottom" }}
     >
-      {/* Outer glow ring */}
+      {/* 3D Tilted Wrapper */}
       <motion.div
-        className="absolute -inset-px rounded-none pointer-events-none"
-        animate={{
-          opacity: active || hovered ? 1 : 0,
-          boxShadow: active
-            ? "0 0 0 1px rgba(134,239,172,0.24), 0 22px 90px rgba(0,0,0,0.75), 0 0 42px rgba(34,197,94,0.14)"
-            : hovered
-              ? "0 0 0 1px rgba(255,255,255,0.1), 0 24px 80px rgba(0,0,0,0.7), 0 8px 30px rgba(255,255,255,0.04)"
-              : "0 0 0 0px transparent",
-        }}
-        transition={{ duration: 0.3 }}
-      />
-
-      <motion.div
-        className="absolute -left-4 top-8 bottom-8 w-px pointer-events-none hidden sm:block"
-        animate={{
-          opacity: active ? 1 : 0,
-          backgroundColor: active ? "rgba(134,239,172,0.75)" : "rgba(255,255,255,0)",
-          boxShadow: active ? "0 0 18px rgba(34,197,94,0.5)" : "0 0 0 transparent",
-        }}
-        transition={{ duration: 0.3 }}
-      />
-
-      {/* Glass surface */}
-      <motion.div
-        className="relative rounded-none overflow-hidden"
-        animate={{
-          backgroundColor: active
-            ? "rgba(0,0,0,0.72)"
-            : hovered
-              ? "rgba(255,255,255,0.036)"
-              : "rgba(255,255,255,0.024)",
-          borderColor: active
-            ? "rgba(134,239,172,0.22)"
-            : hovered
-              ? "rgba(255,255,255,0.13)"
-              : "rgba(255,255,255,0.07)",
-          boxShadow: active
-            ? "inset 0 1px 0 rgba(134,239,172,0.14), inset 0 -1px 0 rgba(0,0,0,0.4)"
-            : "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.2)",
-        }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
         style={{
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          rotateX: reduced ? 0 : rotateX,
+          rotateY: reduced ? 0 : rotateY,
+          transformStyle: "preserve-3d",
         }}
+        className="relative rounded-none overflow-hidden bg-gradient-to-b from-[#161616] to-[#0c0c0c] border border-white/10 transition-shadow duration-300"
       >
-        <motion.div
-          className="absolute inset-x-0 top-0 h-px pointer-events-none"
-          animate={{
-            opacity: active ? 1 : 0,
-            background:
-              "linear-gradient(90deg, transparent, rgba(134,239,172,0.7), transparent)",
-          }}
-          transition={{ duration: 0.3 }}
-          aria-hidden="true"
-        />
-
-        <motion.div
-          className="absolute -right-20 -top-20 h-64 w-64 rounded-full pointer-events-none"
-          animate={{
-            opacity: active ? 1 : 0,
-            scale: active ? 1 : 0.85,
-          }}
-          transition={{ duration: 0.35 }}
-          style={{
-            background: "radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%)",
-            filter: "blur(12px)",
-          }}
-          aria-hidden="true"
-        />
-
-        {/* Mouse follow inner glow */}
+        {/* Top Shimmer Line */}
         <div
-          className="absolute inset-0 pointer-events-none rounded-none"
+          className="absolute inset-x-0 top-0 h-px pointer-events-none transition-opacity duration-300"
+          style={{
+            background: active
+              ? "linear-gradient(90deg, transparent, rgba(134,239,172,0.6), transparent)"
+              : "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
+          }}
+        />
+
+        {/* Dynamic Light Reflection Layer */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
           style={{
             background: hovered
-              ? `radial-gradient(280px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.05) 0%, transparent 70%)`
+              ? `radial-gradient(400px circle at ${
+                  (x.get() + 0.5) * 100
+                }% ${(y.get() + 0.5) * 100}%, rgba(255,255,255,0.04) 0%, transparent 80%)`
               : "none",
-            transition: "background 0.08s ease",
           }}
-          aria-hidden="true"
         />
 
-        {/* Top shimmer */}
-        <div
-          className="absolute top-0 left-10 right-10 h-px pointer-events-none"
-          style={{
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent)",
-            opacity: hovered ? 1 : 0.45,
-            transition: "opacity 0.35s ease",
-          }}
-          aria-hidden="true"
-        />
-
-        <div className="p-7 sm:p-9 lg:p-10">
-          {/* ── Card top: degree + metadata ── */}
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6 mb-7">
+        {/* Compact Card Content Container */}
+        <div className="p-5 sm:p-7 [transform:translateZ(20px)]">
+          {/* Header Row */}
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
             <div className="flex-1 min-w-0">
-              {/* Status badge */}
-              {entry.status && (
-                <motion.div
-                  className="inline-flex items-center gap-1.5 mb-3"
-                  animate={{ opacity: [1, 0.65, 1] }}
-                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              {/* Status Badge */}
+              <div className="inline-flex items-center gap-1.5 mb-2">
+                <span
+                  className={`font-mono text-[8px] tracking-[0.18em] uppercase px-2 py-0.5 border rounded-none transition-colors duration-300 ${
+                    active || entry.rightPanel?.status === "COMPLETED"
+                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                      : "bg-white/5 border-white/10 text-white/50"
+                  }`}
                 >
-                  <span
-                    className="font-mono text-[8px] tracking-[0.2em] uppercase px-2.5 py-1 rounded-full"
-                    style={{
-                      background: "rgba(134,239,172,0.07)",
-                      border: "1px solid rgba(134,239,172,0.18)",
-                      color: "rgba(134,239,172,0.75)",
-                    }}
-                  >
-                    ● {entry.status}
-                  </span>
-                </motion.div>
-              )}
+                  ● {entry.status || entry.rightPanel?.status || "COMPLETED"}
+                </span>
+              </div>
 
-              {/* Degree */}
-              <h3
-                className="font-geist font-[700] text-white leading-tight mb-1"
-                style={{ fontSize: "clamp(19px, 2.2vw, 26px)", letterSpacing: "-0.02em" }}
-              >
+              {/* Title & Stream */}
+              <h3 className="font-geist font-[700] text-white text-[18px] sm:text-[22px] tracking-tight mb-0.5 leading-tight">
                 {entry.degree}
               </h3>
-
-              {/* Stream */}
-              <p
-                className="font-geist text-[14px] sm:text-[15px] mb-4"
-                style={{ color: "rgba(255,255,255,0.45)" }}
-              >
+              <p className="font-geist text-[13px] text-white/50 mb-3">
                 {entry.stream}
               </p>
 
-              {/* Metadata pills row */}
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { label: entry.institution },
-                  { label: entry.years },
-                  { label: entry.location },
-                ].map((m) => (
-                  <span
-                    key={m.label}
-                    className="inline-flex items-center font-mono text-[10px] tracking-[0.06em] px-3 py-1.5 rounded-full"
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      color: "rgba(255,255,255,0.38)",
-                    }}
-                  >
-                    {m.label}
-                  </span>
-                ))}
+              {/* Info Tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {[entry.institution, entry.years, entry.location].map(
+                  (label) => (
+                    <span
+                      key={label}
+                      className="font-mono text-[9px] tracking-[0.05em] px-2.5 py-1 bg-white/[0.03] border border-white/10 text-white/50"
+                    >
+                      {label}
+                    </span>
+                  ),
+                )}
               </div>
             </div>
 
-            {/* Index badge */}
+            {/* Index Badge */}
             <div
-              className="flex-shrink-0 w-10 h-10 rounded-none flex items-center justify-center self-start"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
+              className={`flex-shrink-0 w-8 h-8 flex items-center justify-center border transition-colors duration-300 ${
+                active
+                  ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400"
+                  : "bg-white/[0.04] border-white/10 text-white/30"
+              }`}
             >
-              <span
-                className="font-mono text-[10px] tracking-[0.1em]"
-                style={{ color: "rgba(255,255,255,0.28)" }}
-              >
+              <span className="font-mono text-[10px] font-bold tracking-[0.1em]">
                 {entry.index}
               </span>
             </div>
           </div>
 
-          {/* ── Divider ── */}
-          <div
-            className="mb-6 sm:mb-7"
-            style={{ height: "1px", background: "rgba(255,255,255,0.05)" }}
-          />
+          <div className="mb-5 h-px bg-white/5" />
 
-          {/* ── Two-panel content row ── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <LeftPanel panel={entry.leftPanel} inView={inView} cardIndex={index} />
-            <RightPanel panel={entry.rightPanel} inView={inView} cardIndex={index} />
+          {/* Side-by-Side Panels */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {/* Left Panel */}
+            <div className="flex flex-col h-full bg-[#111312] border border-white/5 p-4 sm:p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <div
+                  className={`w-[2.5px] h-[12px] ${active ? "bg-emerald-400" : "bg-white/20"}`}
+                />
+                <span className="font-mono text-[8px] tracking-[0.2em] uppercase text-white/40">
+                  {entry.leftPanel.title}
+                </span>
+              </div>
+              <ul className="flex flex-col gap-1.5">
+                {entry.leftPanel.items.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span
+                      className={`mt-1.5 w-1 h-1 flex-shrink-0 ${active ? "bg-emerald-400/80" : "bg-white/20"}`}
+                    />
+                    <span className="font-geist text-[12px] text-white/60 leading-tight">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right Panel */}
+            <div className="flex flex-col h-full bg-[#111312] border border-white/5">
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
+                <span className="font-mono text-[8px] tracking-[0.2em] uppercase text-white/40">
+                  {entry.rightPanel.title}
+                </span>
+                <span
+                  className={`font-mono text-[8px] tracking-[0.15em] uppercase px-1.5 py-0.5 border ${
+                    active
+                      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                      : "bg-white/5 border-white/10 text-white/40"
+                  }`}
+                >
+                  ● {entry.rightPanel.status}
+                </span>
+              </div>
+
+              {/* Score bar */}
+              {entry.rightPanel.score && (
+                <div className="flex items-center gap-3.5 px-4 py-3 border-b border-white/5">
+                  <div>
+                    <div className="font-geist font-[800] text-white text-[22px] sm:text-[26px] leading-none">
+                      {entry.rightPanel.score}
+                    </div>
+                    <div className="font-mono text-[8px] tracking-[0.15em] uppercase text-white/30 mt-0.5">
+                      {entry.rightPanel.scoreLabel}
+                    </div>
+                  </div>
+                  <div className="flex-1 h-1 bg-white/5 overflow-hidden">
+                    <div className="h-full bg-emerald-400/80 w-[86%]" />
+                  </div>
+                </div>
+              )}
+
+              {/* Item Rows */}
+              <div className="flex flex-col gap-0 flex-1 px-4 py-2.5">
+                {entry.rightPanel.items.map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2.5 py-1.5 border-b border-white/[0.03] last:border-none"
+                  >
+                    <span
+                      className={`w-[2px] h-[10px] ${active ? "bg-emerald-400/70" : "bg-white/20"}`}
+                    />
+                    <span className="font-geist text-[12px] text-white/50 leading-tight">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>
     </motion.article>
-  );
-}
-
-// ─── Vertical timeline connector ─────────────────────────────────────────────
-function TimelineConnector({ inView }) {
-  return (
-    <motion.div
-      className="absolute left-[9px] top-0 bottom-0 w-px pointer-events-none"
-      initial={{ scaleY: 0 }}
-      animate={inView ? { scaleY: 1 } : { scaleY: 0 }}
-      transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        background: "rgba(255,255,255,0.06)",
-        transformOrigin: "top center",
-      }}
-    />
   );
 }
 
@@ -621,12 +700,17 @@ export default function EducationSection() {
 
   const inView = useInView(sectionRef, { once: true, margin: "-60px" });
   const headingInView = useInView(headingRef, { once: true, margin: "-40px" });
-  const timelineInView = useInView(timelineRef, { once: true, margin: "-40px" });
-  const [activeEducationIndex, setActiveEducationIndex] = useState(-1);
+  const timelineInView = useInView(timelineRef, {
+    once: true,
+    margin: "-40px",
+  });
+  const [activeEducationIndex, setActiveEducationIndex] = useState(0);
+
   const { scrollYProgress: timelineProgress } = useScroll({
     target: timelineRef,
-    offset: ["start 70%", "end 45%"],
+    offset: ["start 75%", "end 50%"],
   });
+
   const timelineScaleY = useSpring(timelineProgress, {
     stiffness: 120,
     damping: 28,
@@ -635,16 +719,12 @@ export default function EducationSection() {
 
   useEffect(() => {
     const unsubscribe = timelineProgress.on("change", (latest) => {
-      if (latest <= 0.02 || latest >= 0.98) {
-        setActiveEducationIndex(-1);
-        return;
+      // Defaults to 0 (card 1) so card 1 stays highlighted immediately
+      if (latest < 0.5) {
+        setActiveEducationIndex(0);
+      } else {
+        setActiveEducationIndex(1);
       }
-
-      const nextIndex = Math.min(
-        EDUCATION.length - 1,
-        Math.floor(latest * EDUCATION.length)
-      );
-      setActiveEducationIndex(nextIndex);
     });
 
     return unsubscribe;
@@ -663,15 +743,19 @@ export default function EducationSection() {
       style={{ backgroundColor: "transparent" }}
       aria-labelledby="education-heading"
     >
-      {/* ── Top blend from TechEcosystem ── */}
       <div
         className="absolute top-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, transparent 100%)" }}
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, transparent 100%)",
+        }}
         aria-hidden="true"
       />
 
-      {/* ── Stars ── */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div
+        className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+        aria-hidden="true"
+      >
         {BG_STARS.map((s) => (
           <div
             key={s.id}
@@ -688,8 +772,10 @@ export default function EducationSection() {
         ))}
       </div>
 
-      {/* ── Ambient orbs ── */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div
+        className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+        aria-hidden="true"
+      >
         {ORBS.map((orb) => (
           <div
             key={orb.id}
@@ -707,39 +793,25 @@ export default function EducationSection() {
         ))}
       </div>
 
-      {/* ── Top radial glow ── */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none z-0"
-        aria-hidden="true"
-        style={{
-          width: "900px",
-          height: "600px",
-          background: "radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.022) 0%, transparent 70%)",
-          filter: "blur(50px)",
-        }}
-      />
-
-      {/* ── Mouse spotlight ── */}
       <div className="absolute inset-0 z-0">
         <SectionSpotlight sectionRef={sectionRef} />
       </div>
 
-      {/* ── Main content ── */}
       <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-28 sm:py-32 lg:py-[140px]">
-
-        {/* ═══ Section header — exact same pattern as TechEcosystem ═══ */}
+        {/* Header Section */}
         <div ref={headingRef} className="mb-16 sm:mb-20 lg:mb-24">
-
-          {/* Label row */}
           <motion.div
             className="flex items-center gap-3 mb-6 sm:mb-8"
             {...mp(
               { opacity: 0, y: 16 },
               headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
-              { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+              { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
             )}
           >
-            <div className="h-px w-6" style={{ background: "rgba(255,255,255,0.2)" }} />
+            <div
+              className="h-px w-6"
+              style={{ background: "rgba(255,255,255,0.2)" }}
+            />
             <span
               className="font-mono text-[10px] tracking-[0.24em] uppercase"
               style={{ color: "rgba(255,255,255,0.3)" }}
@@ -748,19 +820,19 @@ export default function EducationSection() {
             </span>
           </motion.div>
 
-          {/* Heading + description row */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-
-            {/* ── h2 — identical styling to TECHNICAL / ECOSYSTEM ── */}
             <div className="flex-shrink-0">
               <motion.h2
                 id="education-heading"
                 className="font-geist font-[800] text-white leading-[0.92] tracking-tight"
-                style={{ fontSize: "clamp(40px, 7.5vw, 90px)", letterSpacing: "-0.04em" }}
+                style={{
+                  fontSize: "clamp(40px, 7.5vw, 90px)",
+                  letterSpacing: "-0.04em",
+                }}
                 {...mp(
                   { opacity: 0, x: -30 },
                   headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 },
-                  { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }
+                  { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] },
                 )}
               >
                 ACADEMIC
@@ -776,56 +848,65 @@ export default function EducationSection() {
               </motion.h2>
             </div>
 
-            {/* Description */}
             <motion.p
-              className="mt-6 lg:mt-0 font-geist text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.75] max-w-full lg:max-w-[520px]"
+              className="mt-6 lg:mt-0 font-geist text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.75] max-w-full lg:max-w-[520px] border-l-2 border-white/20 pl-4 sm:pl-5"
               style={{ color: "rgba(255,255,255,0.38)" }}
               {...mp(
                 { opacity: 0, x: 24 },
                 headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 },
-                { duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }
+                { duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] },
               )}
             >
-              My academic journey has built a strong foundation in computer science,
-              software engineering, and problem-solving — while continuously strengthening
-              practical development skills through projects and daily practice.
+              My academic journey has built a strong foundation in computer
+              science, software engineering, and problem-solving — while
+              continuously strengthening practical development skills through
+              projects and daily practice.
             </motion.p>
           </div>
         </div>
 
-        {/* ═══ Vertical timeline + cards ═══ */}
+        {/* Vertical Timeline Container */}
         <div ref={timelineRef} className="relative">
-
-          {/* Vertical line */}
+          {/* Background Track Line (Thicker 3px width) */}
           <motion.div
-            className="absolute left-[9px] top-5 bottom-5 w-px hidden sm:block"
-            style={{ background: "rgba(255,255,255,0.06)", transformOrigin: "top" }}
+            className="absolute left-[9px] top-6 bottom-6 w-[3px] hidden sm:block -translate-x-1/2"
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              transformOrigin: "top",
+            }}
             initial={reduced ? {} : { scaleY: 0 }}
-            animate={reduced ? {} : timelineInView ? { scaleY: 1 } : { scaleY: 0 }}
+            animate={
+              reduced ? {} : timelineInView ? { scaleY: 1 } : { scaleY: 0 }
+            }
             transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           />
 
+          {/* Active Green Progress Line (Thicker 3px with higher glow) */}
           <motion.div
-            className="absolute left-[9px] top-5 bottom-5 w-px hidden sm:block"
+            className="absolute left-[9px] top-6 bottom-6 w-[3px] hidden sm:block -translate-x-1/2"
             style={{
               scaleY: reduced ? 1 : timelineScaleY,
-              background: "linear-gradient(to bottom, rgba(134,239,172,0.95), rgba(34,197,94,0.45))",
-              boxShadow: "0 0 14px rgba(34,197,94,0.45)",
+              background:
+                "linear-gradient(to bottom, rgba(134,239,172,1), rgba(34,197,94,0.85))",
+              boxShadow:
+                "0 0 18px rgba(34,197,94,0.7), 0 0 36px rgba(34,197,94,0.35)",
               transformOrigin: "top",
             }}
           />
 
-          {/* Timeline items */}
+          {/* Timeline Cards Row */}
           <div className="flex flex-col gap-10 sm:gap-12">
             {EDUCATION.map((entry, i) => (
               <div key={entry.id} className="flex items-start gap-6 sm:gap-8">
-
-                {/* Timeline dot — hidden on very small mobile */}
-                <div className="hidden sm:flex flex-col items-center pt-1 flex-shrink-0" style={{ width: "20px" }}>
-                  <TimelineDot
+                {/* Square Timeline Node */}
+                <div
+                  className="hidden sm:flex flex-col items-center pt-2 flex-shrink-0"
+                  style={{ width: "22px" }}
+                >
+                  <TimelineSquareNode
                     inView={timelineInView}
                     delay={0.35 + i * 0.22}
-                    active={activeEducationIndex === i}
+                    active={activeEducationIndex >= i}
                   />
                 </div>
 
@@ -843,32 +924,30 @@ export default function EducationSection() {
           </div>
         </div>
 
-        {/* ── Bottom accent ── */}
+        {/* Bottom Accent Line */}
         <motion.div
           className="mt-20 sm:mt-24 flex items-center gap-6"
-          {...mp(
-            { opacity: 0 },
-            inView ? { opacity: 1 } : { opacity: 0 },
-            { duration: 1.2, delay: 1.1 }
-          )}
+          {...mp({ opacity: 0 }, inView ? { opacity: 1 } : { opacity: 0 }, {
+            duration: 1.2,
+            delay: 1.1,
+          })}
         >
-          <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.045)" }} />
+          <div
+            className="flex-1 h-px"
+            style={{ background: "rgba(255,255,255,0.045)" }}
+          />
           <span
             className="font-mono text-[10px] tracking-[0.22em] uppercase whitespace-nowrap"
             style={{ color: "rgba(255,255,255,0.18)" }}
           >
             Learning never stops
           </span>
-          <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.045)" }} />
+          <div
+            className="flex-1 h-px"
+            style={{ background: "rgba(255,255,255,0.045)" }}
+          />
         </motion.div>
       </div>
-
-      {/* ── Bottom fade ── */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to top, rgba(6,6,6,0.25) 0%, transparent 100%)" }}
-        aria-hidden="true"
-      />
     </section>
   );
 }

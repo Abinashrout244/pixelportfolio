@@ -8,7 +8,7 @@ export default function Hero({ isLoaded }) {
   return (
     <section
       id="hero"
-      className="hero-section relative w-full h-screen overflow-hidden flex items-center justify-center bg-transparent"
+      className="hero-section relative w-full h-screen overflow-hidden flex items-center justify-center bg-transparent cursor-none"
     >
       <BackgroundName />
 

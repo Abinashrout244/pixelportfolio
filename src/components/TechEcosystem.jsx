@@ -26,10 +26,46 @@ const BG_STARS = Array.from({ length: 50 }, (_, i) => ({
 
 // ─── Floating ambient orbs ────────────────────────────────────────────────────
 const AMBIENT_ORBS = [
-  { id: 0, left: "10%",  top: "20%",  w: 320, h: 320, alpha: 0.016, dur: 22, delay: 0   },
-  { id: 1, left: "70%",  top: "50%",  w: 280, h: 280, alpha: 0.013, dur: 28, delay: -10 },
-  { id: 2, left: "45%",  top: "80%",  w: 240, h: 240, alpha: 0.011, dur: 18, delay: -6  },
-  { id: 3, left: "85%",  top: "15%",  w: 180, h: 180, alpha: 0.009, dur: 32, delay: -20 },
+  {
+    id: 0,
+    left: "10%",
+    top: "20%",
+    w: 320,
+    h: 320,
+    alpha: 0.016,
+    dur: 22,
+    delay: 0,
+  },
+  {
+    id: 1,
+    left: "70%",
+    top: "50%",
+    w: 280,
+    h: 280,
+    alpha: 0.013,
+    dur: 28,
+    delay: -10,
+  },
+  {
+    id: 2,
+    left: "45%",
+    top: "80%",
+    w: 240,
+    h: 240,
+    alpha: 0.011,
+    dur: 18,
+    delay: -6,
+  },
+  {
+    id: 3,
+    left: "85%",
+    top: "15%",
+    w: 180,
+    h: 180,
+    alpha: 0.009,
+    dur: 32,
+    delay: -20,
+  },
 ];
 
 // ─── Tech category data ───────────────────────────────────────────────────────
@@ -38,7 +74,8 @@ const CATEGORIES = [
     id: "frontend",
     index: "01",
     title: "Frontend Frameworks",
-    description: "Building interactive, accessible, and performant user interfaces.",
+    description:
+      "Building interactive, accessible, and performant user interfaces.",
     pills: [
       "React",
       "Next.js",
@@ -54,7 +91,8 @@ const CATEGORIES = [
     id: "styling",
     index: "02",
     title: "Styling & UI",
-    description: "Pixel-perfect interfaces with modern CSS systems and design tokens.",
+    description:
+      "Pixel-perfect interfaces with modern CSS systems and design tokens.",
     pills: [
       "Tailwind CSS",
       "CSS Modules",
@@ -69,7 +107,8 @@ const CATEGORIES = [
     id: "backend",
     index: "03",
     title: "Backend & Databases",
-    description: "Scalable server-side architectures and cloud-native data solutions.",
+    description:
+      "Scalable server-side architectures and cloud-native data solutions.",
     pills: [
       "Node.js",
       "Express",
@@ -85,7 +124,8 @@ const CATEGORIES = [
     id: "devtools",
     index: "04",
     title: "Performance & DevTools",
-    description: "Shipping production-grade software with professional tooling and workflows.",
+    description:
+      "Shipping production-grade software with professional tooling and workflows.",
     pills: [
       "Git",
       "GitHub",
@@ -130,10 +170,14 @@ function TechPill({ label, index, inView }) {
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
-      className="inline-flex items-center cursor-pointer select-none rounded-full px-3.5 py-1.5 font-mono text-[11px] tracking-[0.08em] uppercase outline-none"
+      className="bg-white/[0.04] border border-white/[0.08] px-4 py-2 font-mono text-[10px] sm:text-[13px] uppercase  text-white/80 transition-colors duration-200 hover:border-white/20 hover:text-white"
       style={{
-        background: hovered ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.04)",
-        border: hovered ? "1px solid rgba(255,255,255,0.18)" : "1px solid rgba(255,255,255,0.08)",
+        background: hovered
+          ? "rgba(255,255,255,0.07)"
+          : "rgba(255,255,255,0.04)",
+        border: hovered
+          ? "1px solid rgba(255,255,255,0.18)"
+          : "1px solid rgba(255,255,255,0.08)",
         color: hovered ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)",
         boxShadow: hovered
           ? "0 0 12px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.08)"
@@ -160,7 +204,8 @@ function CardMouseGlow({ active, position }) {
           width: "280px",
           height: "280px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255,255,255,0.055) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(255,255,255,0.055) 0%, transparent 70%)",
           transform: `translate(${position.x - 140}px, ${position.y - 140}px)`,
           opacity: active ? 1 : 0,
           transition: "opacity 0.35s ease",
@@ -231,7 +276,8 @@ function CategoryCard({ category, index, inView }) {
             ? "1px solid rgba(255,255,255,0.13)"
             : "1px solid rgba(255,255,255,0.07)",
           transition: "background 0.35s ease, border-color 0.35s ease",
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.2)",
+          boxShadow:
+            "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.2)",
         }}
       >
         {/* Mouse glow overlay */}
@@ -250,13 +296,16 @@ function CategoryCard({ category, index, inView }) {
         />
 
         {/* Card content wrapper */}
-        <div className="flex flex-col h-full p-8 sm:p-10 gap-6">
+        <div className="flex flex-col h-full p-8 sm:p-10 gap-6 bg-gradient-to-b from-[#161616] to-[#0c0c0c]">
           {/* Header row */}
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
               <h3
                 className="font-geist font-[700] text-white leading-tight mb-2"
-                style={{ fontSize: "clamp(18px, 2vw, 22px)", letterSpacing: "-0.01em" }}
+                style={{
+                  fontSize: "clamp(18px, 2vw, 22px)",
+                  letterSpacing: "-0.01em",
+                }}
               >
                 {category.title}
               </h3>
@@ -387,9 +436,7 @@ export default function TechEcosystem() {
   }, []);
 
   const motionProps = (initial, animate, transition) =>
-    reducedMotion
-      ? {}
-      : { initial, animate, transition };
+    reducedMotion ? {} : { initial, animate, transition };
 
   return (
     <section
@@ -472,17 +519,15 @@ export default function TechEcosystem() {
 
       {/* ── Main content ── */}
       <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-28 sm:py-32 lg:py-[140px]">
-
         {/* ── Section header ── */}
         <div ref={headingRef} className="mb-16 sm:mb-20 lg:mb-24">
-
           {/* Top row: label */}
           <motion.div
             className="flex items-center gap-3 mb-6 sm:mb-8"
             {...motionProps(
               { opacity: 0, y: 16 },
               headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
-              { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+              { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
             )}
           >
             <div
@@ -500,7 +545,6 @@ export default function TechEcosystem() {
           {/* Desktop: heading left + description right */}
           {/* Mobile: heading then description below */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-
             {/* Main heading */}
             <div className="flex-shrink-0">
               <motion.h2
@@ -513,7 +557,7 @@ export default function TechEcosystem() {
                 {...motionProps(
                   { opacity: 0, x: -30 },
                   headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 },
-                  { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }
+                  { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] },
                 )}
               >
                 TECHNICAL
@@ -531,12 +575,12 @@ export default function TechEcosystem() {
 
             {/* Description */}
             <motion.p
-              className="mt-6 lg:mt-0 font-geist text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.75] max-w-full lg:max-w-[460px]"
+              className="mt-6 lg:mt-0 font-geist text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.75] max-w-full lg:max-w-[460px] border-l-2 border-white/20 pl-4 sm:pl-5"
               style={{ color: "rgba(255,255,255,0.38)" }}
               {...motionProps(
                 { opacity: 0, x: 24 },
                 headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 },
-                { duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }
+                { duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] },
               )}
             >
               A curated collection of the technologies I work with daily — from
@@ -568,7 +612,7 @@ export default function TechEcosystem() {
           {...motionProps(
             { opacity: 0 },
             inView ? { opacity: 1 } : { opacity: 0 },
-            { duration: 1.2, delay: 1.0 }
+            { duration: 1.2, delay: 1.0 },
           )}
         >
           <div
@@ -592,7 +636,8 @@ export default function TechEcosystem() {
       <div
         className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
         style={{
-          background: "linear-gradient(to top, rgba(6,6,6,0.25) 0%, transparent 100%)",
+          background:
+            "linear-gradient(to top, rgba(6,6,6,0.25) 0%, transparent 100%)",
         }}
         aria-hidden="true"
       />
