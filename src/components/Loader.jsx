@@ -238,7 +238,9 @@ const Loader = ({ onComplete }) => {
           </div>
 
           <div className="flex flex-col items-end gap-2 font-mono">
-            <span className={`text-2xl font-extralight tracking-widest  text-gray-300 `}>
+            <span
+              className={`text-2xl font-extralight tracking-widest  text-gray-300 `}
+            >
               {progress.toString().padStart(3, "0")}%
             </span>
             <div className="w-32 h-[1px] bg-white/5 overflow-hidden relative">
@@ -255,4 +257,3 @@ const Loader = ({ onComplete }) => {
 };
 
 export default Loader;
-

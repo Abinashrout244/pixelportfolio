@@ -5,6 +5,7 @@ import TechEcosystem from "../components/TechEcosystem";
 import EducationSection from "../components/EducationSection";
 import FeaturedProjects from "../components/FeaturedProjects";
 import PreFooterCTA from "./PreFooterCTA";
+import LuxuryFooter from "../components/LuxryFooter";
 
 export default function Home({ isLoaded }) {
   return (
@@ -15,6 +16,7 @@ export default function Home({ isLoaded }) {
       <EducationSection />
       <FeaturedProjects />
       <PreFooterCTA />
+      <LuxuryFooter />
     </div>
   );
 }

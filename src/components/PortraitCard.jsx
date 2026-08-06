@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import portrait from "../assets/profile.png";
-
+import { FiMapPin, FiGlobe } from "react-icons/fi";
 export default function PortraitCard({ isLoaded }) {
   return (
     <div className="hidden lg:flex w-[45%] items-center justify-center z-10 relative">
@@ -54,14 +54,16 @@ export default function PortraitCard({ isLoaded }) {
           </div>
 
           {/* ── Bottom-left info overlay ── */}
-          <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-[10px] tracking-[0.15em] text-white/60 uppercase">
-                📍 India
-              </span>
-              <span className="font-mono text-[10px] tracking-[0.15em] text-white/40 uppercase">
-                UTC +5:30
-              </span>
+
+          <div className="absolute bottom-4 left-4 z-10">
+            <div className="flex items-center gap-3 px-3.5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300 hover:bg-black/60 hover:border-white/20">
+              {/* Active Status Pulse Dot */}
+
+              <div className="flex items-center gap-2 font-mono text-[11px] tracking-wider text-white/90">
+                <span className="flex items-center gap-1 font-medium uppercase">
+                  <FiMapPin className="w-3 h-3 text-[#39FF88]" /> India
+                </span>
+              </div>
             </div>
           </div>
         </div>
