@@ -867,9 +867,9 @@ export default function EducationSection() {
 
         {/* Vertical Timeline Container */}
         <div ref={timelineRef} className="relative">
-          {/* Background Track Line (Thicker 3px width) */}
+          {/* Background Track Line (Thicker 3px width) — now visible on every screen size */}
           <motion.div
-            className="absolute left-[9px] top-6 bottom-6 w-[3px] hidden sm:block -translate-x-1/2"
+            className="absolute left-[9px] top-6 bottom-6 w-[3px] block -translate-x-1/2"
             style={{
               background: "rgba(255,255,255,0.08)",
               transformOrigin: "top",
@@ -881,9 +881,9 @@ export default function EducationSection() {
             transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          {/* Active Green Progress Line (Thicker 3px with higher glow) */}
+          {/* Active Green Progress Line (Thicker 3px with higher glow) — now visible on every screen size */}
           <motion.div
-            className="absolute left-[9px] top-6 bottom-6 w-[3px] hidden sm:block -translate-x-1/2"
+            className="absolute left-[9px] top-6 bottom-6 w-[3px] block -translate-x-1/2"
             style={{
               scaleY: reduced ? 1 : timelineScaleY,
               background:
@@ -897,10 +897,10 @@ export default function EducationSection() {
           {/* Timeline Cards Row */}
           <div className="flex flex-col gap-10 sm:gap-12">
             {EDUCATION.map((entry, i) => (
-              <div key={entry.id} className="flex items-start gap-6 sm:gap-8">
-                {/* Square Timeline Node */}
+              <div key={entry.id} className="flex items-start gap-4 sm:gap-8">
+                {/* Square Timeline Node — now visible on every screen size */}
                 <div
-                  className="hidden sm:flex flex-col items-center pt-2 flex-shrink-0"
+                  className="flex flex-col items-center pt-2 flex-shrink-0"
                   style={{ width: "22px" }}
                 >
                   <TimelineSquareNode

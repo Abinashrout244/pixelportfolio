@@ -110,23 +110,8 @@ function SectionSpotlight({ sectionRef }) {
 
 // ─── Individual Tech Pill ───────────────────────────────────────────────────
 function TechPill({ label }) {
-  const [hovered, setHovered] = useState(false);
   return (
-    <span
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="bg-white/[0.04] border border-white/[0.08] px-4 py-2 font-mono text-[12px] sm:text-[13px] uppercase tracking-[1px] text-white/80 transition-colors duration-200 hover:border-white/20 hover:text-white"
-      style={{
-        background: hovered
-          ? "rgba(255,255,255,0.08)"
-          : "rgba(255,255,255,0.03)",
-        border: hovered
-          ? "1px solid rgba(255,255,255,0.2)"
-          : "1px solid rgba(255,255,255,0.08)",
-        color: hovered ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.6)",
-        transition: "all 0.2s ease",
-      }}
-    >
+    <span className="inline-flex items-center justify-center  bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 px-2.5 py-1 sm:px-3.5 sm:py-1.5 font-mono text-[10px] sm:text-[12px] uppercase tracking-wider text-white/60 hover:text-white/95 transition-all duration-200 select-none whitespace-nowrap">
       {label}
     </span>
   );
