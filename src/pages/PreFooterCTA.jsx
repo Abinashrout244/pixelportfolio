@@ -256,7 +256,7 @@ export function PreFooterCTA() {
       {/* ── Exact Replaced Contact Modal ── */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-[999] flex items-start justify-center pt-16 sm:pt-24 p-4 overflow-y-auto">
+          <div className="fixed inset-0 z-[999] flex items-center sm:items-start justify-center pt-4 sm:pt-24 p-4 overflow-y-auto">
             {/* Overlay Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -274,7 +274,7 @@ export function PreFooterCTA() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-[450px] max-h-[90vh] my-auto bg-[#0c0f0d] border border-white/10 p-6 sm:p-8 z-10 rounded-none shadow-2xl text-white overflow-y-auto"
+              className="relative w-full max-w-[450px] max-h-[85vh] sm:max-h-[90vh] my-auto bg-[#0c0f0d] border border-white/10 p-6 sm:p-8 z-10 rounded-none shadow-2xl text-white overflow-y-auto"
             >
               {/* Top Subtle Ambient Glow */}
               <div className="absolute top-0 left-1/4 w-[200px] h-[120px] bg-emerald-500/10 rounded-full blur-[70px] pointer-events-none" />
@@ -313,7 +313,10 @@ export function PreFooterCTA() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-6 sm:gap-10"
+                >
                   {/* NAME FIELD */}
                   <div>
                     <label className="block font-mono text-[10px] tracking-[0.15em] uppercase text-white/70 font-bold mb-1">
