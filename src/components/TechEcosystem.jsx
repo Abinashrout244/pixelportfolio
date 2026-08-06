@@ -170,7 +170,7 @@ function TechPill({ label, index, inView }) {
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
-      className="bg-white/[0.04] border border-white/[0.08] px-4 py-2 font-mono text-[10px] sm:text-[13px] uppercase  text-white/80 transition-colors duration-200 hover:border-white/20 hover:text-white"
+      className="bg-white/[0.04] border border-white/[0.08] px-3 py-1.5 sm:px-4 sm:py-2 font-mono text-[10px] sm:text-[13px] uppercase  text-white/80 transition-colors duration-200 hover:border-white/20 hover:text-white"
       style={{
         background: hovered
           ? "rgba(255,255,255,0.07)"
@@ -183,7 +183,7 @@ function TechPill({ label, index, inView }) {
           ? "0 0 12px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.08)"
           : "none",
         transition: "all 0.22s ease",
-        minHeight: "36px",
+        minHeight: "32px",
       }}
     >
       {label}
@@ -285,7 +285,7 @@ function CategoryCard({ category, index, inView }) {
 
         {/* Top shimmer */}
         <div
-          className="absolute top-0 left-10 right-10 h-px pointer-events-none"
+          className="absolute top-0 left-8 right-8 sm:left-10 sm:right-10 h-px pointer-events-none"
           style={{
             background:
               "linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent)",
@@ -296,21 +296,21 @@ function CategoryCard({ category, index, inView }) {
         />
 
         {/* Card content wrapper */}
-        <div className="flex flex-col h-full p-8 sm:p-10 gap-6 bg-gradient-to-b from-[#161616] to-[#0c0c0c]">
+        <div className="flex flex-col h-full p-5 sm:p-8 lg:p-10 gap-4 sm:gap-6 bg-gradient-to-b from-[#161616] to-[#0c0c0c]">
           {/* Header row */}
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start justify-between gap-3 sm:gap-4">
             <div className="flex-1 min-w-0">
               <h3
-                className="font-geist font-[700] text-white leading-tight mb-2"
+                className="font-geist font-[700] text-white leading-tight mb-1.5 sm:mb-2"
                 style={{
-                  fontSize: "clamp(18px, 2vw, 22px)",
+                  fontSize: "clamp(17px, 2vw, 22px)",
                   letterSpacing: "-0.01em",
                 }}
               >
                 {category.title}
               </h3>
               <p
-                className="font-geist text-[13px] leading-[1.65]"
+                className="font-geist text-[12.5px] sm:text-[13px] leading-[1.6] sm:leading-[1.65]"
                 style={{ color: "rgba(255,255,255,0.38)" }}
               >
                 {category.description}
@@ -319,7 +319,7 @@ function CategoryCard({ category, index, inView }) {
 
             {/* Category index badge */}
             <motion.div
-              className="flex-shrink-0 w-10 h-10 rounded-none flex items-center justify-center"
+              className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-none flex items-center justify-center"
               animate={{
                 background: hovered
                   ? "rgba(255,255,255,0.07)"
@@ -352,7 +352,7 @@ function CategoryCard({ category, index, inView }) {
           <div
             role="list"
             aria-label={`${category.title} technologies`}
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap gap-1.5 sm:gap-2"
           >
             {category.pills.map((pill, pillIdx) => (
               <TechPill
@@ -518,12 +518,12 @@ export default function TechEcosystem() {
       </div>
 
       {/* ── Main content ── */}
-      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-28 sm:py-32 lg:py-[140px]">
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-14 xl:px-16 py-16 sm:py-32 lg:py-[140px]">
         {/* ── Section header ── */}
-        <div ref={headingRef} className="mb-16 sm:mb-20 lg:mb-24">
+        <div ref={headingRef} className="mb-10 sm:mb-20 lg:mb-24">
           {/* Top row: label */}
           <motion.div
-            className="flex items-center gap-3 mb-6 sm:mb-8"
+            className="flex items-center gap-3 mb-5 sm:mb-8"
             {...motionProps(
               { opacity: 0, y: 16 },
               headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
@@ -549,10 +549,10 @@ export default function TechEcosystem() {
             <div className="flex-shrink-0">
               <motion.h2
                 id="tech-ecosystem-heading"
-                className="font-geist font-[800] text-white leading-[0.92] tracking-tight"
+                className="font-geist font-[800] text-white leading-[0.94] sm:leading-[0.92] tracking-tight"
                 style={{
-                  fontSize: "clamp(40px, 7.5vw, 90px)",
-                  letterSpacing: "-0.04em",
+                  fontSize: "clamp(34px, 9vw, 90px)",
+                  letterSpacing: "-0.03em",
                 }}
                 {...motionProps(
                   { opacity: 0, x: -30 },
@@ -575,7 +575,7 @@ export default function TechEcosystem() {
 
             {/* Description */}
             <motion.p
-              className="mt-6 lg:mt-0 font-geist text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.75] max-w-full lg:max-w-[460px] border-l-2 border-white/20 pl-4 sm:pl-5"
+              className="mt-4 sm:mt-6 lg:mt-0 font-geist text-[14px] sm:text-[16px] lg:text-[17px] leading-[1.7] sm:leading-[1.75] max-w-full lg:max-w-[460px] border-l-2 border-white/20 pl-4 sm:pl-5"
               style={{ color: "rgba(255,255,255,0.38)" }}
               {...motionProps(
                 { opacity: 0, x: 24 },
@@ -592,7 +592,7 @@ export default function TechEcosystem() {
 
         {/* ── Cards grid ── */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8"
           role="list"
           aria-label="Technical categories"
         >
@@ -608,7 +608,7 @@ export default function TechEcosystem() {
 
         {/* ── Bottom accent rule ── */}
         <motion.div
-          className="mt-20 sm:mt-24 flex items-center gap-6"
+          className="mt-12 sm:mt-24 flex items-center gap-4 sm:gap-6"
           {...motionProps(
             { opacity: 0 },
             inView ? { opacity: 1 } : { opacity: 0 },
@@ -620,7 +620,7 @@ export default function TechEcosystem() {
             style={{ background: "rgba(255,255,255,0.045)" }}
           />
           <span
-            className="font-mono text-[10px] tracking-[0.22em] uppercase whitespace-nowrap"
+            className="font-mono text-[9px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.22em] uppercase whitespace-nowrap"
             style={{ color: "rgba(255,255,255,0.18)" }}
           >
             And always learning
