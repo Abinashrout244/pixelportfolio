@@ -67,9 +67,9 @@ export default function AboutMe() {
   return (
     // bg-transparent so the page-level particle/background layer shows through behind this section
     <div className="min-h-screen bg-transparent text-white font-sans antialiased selection:bg-zinc-800 selection:text-white">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12 py-12 sm:py-20 space-y-28 sm:space-y-36">
+      <div className="max-w-6xl mx-auto  px-6 sm:px-12  pt-32 ">
         {/* Navigation Back Link */}
-        <nav>
+        <nav className="pb-20">
           <Link to="/">
             <button
               href="#back"
