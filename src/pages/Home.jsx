@@ -6,6 +6,10 @@ import EducationSection from "../components/EducationSection";
 import FeaturedProjects from "../components/FeaturedProjects";
 import PreFooterCTA from "./PreFooterCTA";
 import LuxuryFooter from "../components/LuxryFooter";
+import AboutMe from "./Aboutme";
+import ConnectWithMe from "./Links";
+import WhatPowersMyWork from "./Uses";
+import Achievements from "./Achievements";
 
 export default function Home({ isLoaded }) {
   return (
@@ -15,8 +19,6 @@ export default function Home({ isLoaded }) {
       <TechEcosystem />
       <EducationSection />
       <FeaturedProjects />
-      <PreFooterCTA />
-      <LuxuryFooter />
     </div>
   );
 }
