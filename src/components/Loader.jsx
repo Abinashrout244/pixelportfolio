@@ -77,9 +77,6 @@ const Loader = ({ onComplete }) => {
   const lastName = ["R", "O", "U", "T"];
 
   // Framer Motion Variant Declarations
-  // "visible" is a function so each letter gets its own tiny delay off its index (custom prop) —
-  // that per-letter stagger is what makes the name feel like it flows in smoothly rather than
-  // snapping in as one flat block.
   const letterVariants = {
     hidden: { y: "110%", opacity: 0 },
     visible: (i) => ({
@@ -100,38 +97,25 @@ const Loader = ({ onComplete }) => {
   };
 
   // Precompute each ladder bar's own personality: width, delay, distance, duration.
-  // Center-out stagger + per-bar variance is what breaks the "uniform curtain" look
-  // and makes it read as a hand-tuned ladder rather than 24 identical blinds.
   const shutterBars = useMemo(() => {
     const center = (SHUTTER_BARS - 1) / 2;
-    // deterministic pseudo-random so it's stable across re-renders but not a clean pattern
     const seeded = (i, salt) => {
       const x = Math.sin(i * 12.9898 + salt * 78.233) * 43758.5453;
       return x - Math.floor(x);
     };
 
     return Array.from({ length: SHUTTER_BARS }).map((_, i) => {
-      const distFromCenter = Math.abs(i - center) / center; // 0 at center, 1 at edges
-
-      // Center bars lead, edges trail (a ripple, not a left-to-right wipe).
-      // distFromCenter is 0 at the middle, so the middle gets the smallest delay.
+      const distFromCenter = Math.abs(i - center) / center;
       const baseDelay = distFromCenter * 0.32;
       const jitterDelay = seeded(i, 1) * 0.1;
-
-      // Uneven travel distance per bar — this is the "not same height, like a ladder" part
-      const travel = 105 + seeded(i, 2) * 35; // 105% -> 140%
-
-      // Slower, slightly varied speed per bar so it reads as an unhurried, deliberate reveal
-      const duration = 1.0 + seeded(i, 3) * 0.5; // 1.0s -> 1.5s
-
-      // Subtle width variance so the bars themselves aren't perfectly even slats
+      const travel = 105 + seeded(i, 2) * 35;
+      const duration = 1.0 + seeded(i, 3) * 0.5;
       const growBase = 1;
-      const growVariance = seeded(i, 4) * 0.6 - 0.3; // -0.3 to +0.3
+      const growVariance = seeded(i, 4) * 0.6 - 0.3;
 
       return {
         key: i,
         delay: baseDelay + jitterDelay,
-        // All bars exit upward only — a bottom-to-top reveal, not an alternating split
         y: `-${travel}%`,
         duration,
         flexGrow: growBase + growVariance,
@@ -143,11 +127,7 @@ const Loader = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 z-[9999] overflow-hidden select-none font-sans">
-      {/* The page IS these bars, from the first frame to the last.
-          They sit at y:0 (a solid wall) through loading/explode, then in the
-          shutter phase they peel apart to their own uneven distances —
-          there is no separate solid backdrop left behind them, so what's
-          actually mounted underneath (the real app) shows through the gaps. */}
+      {/* Shutter bars — the page IS these bars from first frame to last */}
       <div className="absolute inset-0 flex z-0">
         {shutterBars.map((bar) => (
           <motion.div
@@ -172,21 +152,21 @@ const Loader = ({ onComplete }) => {
       {phase === "loading" && (
         <>
           <div
-            className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-screen"
+            className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-screen"
             style={{
               backgroundImage:
-                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+                "linear-gradient(to right, rgba(52,211,153,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(52,211,153,0.6) 1px, transparent 1px)",
               backgroundSize: "8vw 8vw",
             }}
           />
-          <div className="absolute top-12 left-10 w-24 h-[1px] bg-white/10 animate-pulse" />
-          <div className="absolute top-16 left-10 w-16 h-[1px] bg-white/5" />
+          <div className="absolute top-6 left-4 sm:top-12 sm:left-10 w-16 sm:w-24 h-[1px] bg-emerald-400/30 animate-pulse" />
+          <div className="absolute top-9 left-4 sm:top-16 sm:left-10 w-10 sm:w-16 h-[1px] bg-white/10" />
         </>
       )}
 
       {/* Main Kinetic Typography Layout Area */}
       {phase !== "shutter" && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 tracking-tighter z-10">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 sm:gap-2 tracking-tighter z-10 px-4">
           {/* 0.5s Milestone Row */}
           <div className="flex overflow-hidden py-1">
             <AnimatePresence>
@@ -198,7 +178,7 @@ const Loader = ({ onComplete }) => {
                     variants={letterVariants}
                     initial="hidden"
                     animate={phase === "explode" ? "explode" : "visible"}
-                    className="text-[12vw] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-400"
+                    className="text-[clamp(2.75rem,11vw,8rem)] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-emerald-200 drop-shadow-[0_0_25px_rgba(52,211,153,0.25)]"
                   >
                     {char}
                   </motion.span>
@@ -217,7 +197,7 @@ const Loader = ({ onComplete }) => {
                     variants={letterVariants}
                     initial="hidden"
                     animate={phase === "explode" ? "explode" : "visible"}
-                    className="text-[12vw] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-300 to-zinc-500"
+                    className="text-[clamp(2.75rem,11vw,8rem)] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-200 to-emerald-300/80 drop-shadow-[0_0_25px_rgba(52,211,153,0.2)]"
                   >
                     {char}
                   </motion.span>
@@ -229,23 +209,23 @@ const Loader = ({ onComplete }) => {
 
       {/* 2.0s Metric Loader HUD Dashboard Area */}
       {phase === "loading" && (
-        <div className="absolute bottom-12 left-10 right-10 flex justify-between items-end border-t border-white/5 pt-6 z-10">
-          <div className="flex flex-col gap-1 font-mono text-[10px] tracking-[0.3em] text-zinc-500">
-            <span className="text-zinc-400 font-medium font-sans">
-              SYS_INIT // 2026
+        <div className="absolute bottom-6 left-4 right-4 sm:bottom-10 sm:left-8 sm:right-8 md:bottom-12 md:left-10 md:right-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 sm:gap-0 border-t border-white/5 pt-4 sm:pt-6 z-10">
+          <div className="flex flex-col gap-1 font-mono text-[9px] sm:text-[10px] tracking-[0.25em] sm:tracking-[0.3em] text-zinc-500">
+            <span className="text-zinc-300 font-medium font-sans">
+              FULL-STACK DEVELOPER // 2026
             </span>
-            <span className="opacity-60">MERN_STACK_CORE</span>
+            <span className="opacity-60 text-emerald-400/70">
+              5+ YEARS BUILDING FOR THE WEB
+            </span>
           </div>
 
-          <div className="flex flex-col items-end gap-2 font-mono">
-            <span
-              className={`text-2xl font-extralight tracking-widest  text-gray-300 `}
-            >
+          <div className="flex flex-col items-start sm:items-end gap-2 font-mono w-full sm:w-auto">
+            <span className="text-xl sm:text-2xl font-extralight tracking-widest text-emerald-300/90">
               {progress.toString().padStart(3, "0")}%
             </span>
-            <div className="w-32 h-[1px] bg-white/5 overflow-hidden relative">
+            <div className="w-full sm:w-28 md:w-32 h-[1px] bg-white/5 overflow-hidden relative">
               <div
-                className="h-full bg-white transition-all duration-75 ease-out"
+                className="h-full bg-gradient-to-r from-emerald-400 to-white transition-all duration-75 ease-out"
                 style={{ width: `${progress}%` }}
               />
             </div>
