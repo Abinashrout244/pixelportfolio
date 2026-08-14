@@ -440,7 +440,7 @@ export default function TechEcosystem() {
 
   return (
     <section
-      id="tech-ecosystem"
+      id="stack"
       ref={sectionRef}
       className="relative w-full"
       style={{ backgroundColor: "transparent" }}
