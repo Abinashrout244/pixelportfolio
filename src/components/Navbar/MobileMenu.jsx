@@ -1,39 +1,41 @@
 /**
  * MobileMenu.jsx
- * ─────────────────────────────────────────────────────
  * Premium full-screen mobile navigation drawer.
  */
 
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, BookOpen, User, Monitor, Link2, MessageSquare } from "lucide-react";
+import {
+  Menu,
+  BookOpen,
+  User,
+  Monitor,
+  Link2,
+} from "lucide-react";
 import MobileHeader from "./MobileHeader";
 import MobileNavItem from "./MobileNavItem";
 
-/* ─── Navigation data ──────────────────────────────────── */
 const NAV_LINKS = [
-  { label: "Home", href: "#" },
-  { label: "Stack", href: "#stack" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { icon: User, label: "About Me", href: "#about" },
-  { icon: Monitor, label: "Uses", href: "#uses" },
-  { icon: Link2, label: "Links", href: "#links" }
+  { label: "Home", href: "/" },
+  { label: "Stack", href: "/#stack" },
+  { label: "Education", href: "/#education" },
+  { label: "Projects", href: "/#projects" },
+  { icon: BookOpen, label: "Achievements", href: "/achievements" },
+  { icon: User, label: "About Me", href: "/about" },
+  { icon: Monitor, label: "Uses", href: "/uses" },
+  { icon: Link2, label: "Links", href: "/links" },
 ];
 
-
-
-/* ─── Animation variants ───────────────────────────────── */
 const drawerVariants = {
   hidden: { x: "100%", opacity: 0.98 },
   visible: {
     x: 0,
     opacity: 1,
-    transition: { 
-      duration: 0.45, 
+    transition: {
+      duration: 0.45,
       ease: [0.22, 1, 0.36, 1],
       staggerChildren: 0.04,
-      delayChildren: 0.05
+      delayChildren: 0.05,
     },
   },
   exit: {
@@ -45,11 +47,11 @@ const drawerVariants = {
 
 const itemVariants = {
   hidden: { y: 15, opacity: 0 },
-  visible: { 
-    y: 0, 
-    opacity: 1, 
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } 
-  }
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 
 const overlayVariants = {
@@ -58,20 +60,20 @@ const overlayVariants = {
   exit: { opacity: 0, transition: { duration: 0.3, ease: "easeIn" } },
 };
 
-/**
- * @param {Object}   props
- * @param {string}   props.activeLink  - Currently active link href
- * @param {Function} props.onThemeToggle - Theme button handler
- * @param {Function} props.onDownload    - Download CV handler
- */
-export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload }) {
+export default function MobileMenu({
+  activeLink = "#",
+  currentPath = "/",
+  onThemeToggle,
+  onDownload,
+  onNavigate,
+  onOpenContactModal,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const close = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  /* ── Tactile Hamburger Handler ──────────────────────── */
   const toggleMenu = useCallback(() => {
     if (typeof navigator !== "undefined" && navigator.vibrate) {
       try {
@@ -81,7 +83,6 @@ export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload
     setIsOpen((v) => !v);
   }, []);
 
-  /* ── Keyboard: Escape closes drawer ─────────────────── */
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape" && isOpen) close();
@@ -93,7 +94,6 @@ export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, close]);
 
-  /* ── Body scroll lock ────────────────────────────────── */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -103,9 +103,21 @@ export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload
     };
   }, [isOpen]);
 
+  const handleNavigate = useCallback(
+    (href, event) => {
+      onNavigate?.(href, event);
+      close();
+    },
+    [close, onNavigate]
+  );
+
+  const handleConnect = useCallback(() => {
+    close();
+    onOpenContactModal?.();
+  }, [close, onOpenContactModal]);
+
   return (
     <>
-      {/* ── Hamburger Toggle Button ─────────────────────── */}
       <motion.button
         aria-label="Open menu"
         aria-expanded={isOpen}
@@ -134,11 +146,9 @@ export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload
         </motion.span>
       </motion.button>
 
-      {/* ── Drawer Overlay + Panel ───────────────────────── */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Dark overlay with blur */}
             <motion.div
               key="overlay"
               variants={overlayVariants}
@@ -149,7 +159,6 @@ export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload
               className="fixed inset-0 z-[9998] bg-[rgba(0,0,0,0.55)] backdrop-blur-sm"
             />
 
-            {/* Slide-in drawer */}
             <motion.nav
               key="drawer"
               id="mobile-nav-drawer"
@@ -161,41 +170,46 @@ export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload
               animate="visible"
               exit="exit"
               className={[
-                "fixed top-0 right-0 bottom-0 z-[9999]",
+                "fixed inset-y-0 right-0 z-[9999] h-[100dvh]",
                 "w-[100vw] sm:w-[420px] max-w-full",
-                "bg-[#0A0A0A] flex flex-col",
+                "bg-[#0A0A0A] flex flex-col overflow-hidden",
                 "border-l border-white/[0.06]",
                 "shadow-[0_0_80px_rgba(0,0,0,0.55)]",
               ].join(" ")}
             >
-              <div className="flex-1 overflow-y-auto px-8 py-8 flex flex-col">
-                {/* Header (Logo + Actions) */}
+              <div className="flex-1 min-h-0 overflow-y-auto px-8 py-8 flex flex-col">
                 <motion.div variants={itemVariants}>
-                  <MobileHeader onClose={close} onThemeToggle={onThemeToggle} onDownload={onDownload} />
+                  <MobileHeader
+                    onClose={close}
+                    onThemeToggle={onThemeToggle}
+                    onDownload={onDownload}
+                  />
                 </motion.div>
 
-                {/* Main Navigation Links */}
                 <motion.div variants={itemVariants} className="flex flex-col gap-6 mt-6">
                   {NAV_LINKS.map((link) => (
                     <MobileNavItem
                       key={link.label}
                       href={link.href}
                       label={link.label}
-                      isActive={activeLink === link.href}
-                      onClick={close}
+                      isActive={
+                        link.href.startsWith("/#")
+                          ? activeLink === link.href.replace("/#", "#")
+                          : currentPath === link.href
+                      }
+                      onClick={(event) => handleNavigate(link.href, event)}
                     />
                   ))}
                 </motion.div>
               </div>
 
-              {/* ── Drawer Footer: Connect Button ──────────── */}
               <motion.div
                 variants={itemVariants}
-                className="px-8 pb-8 pt-4 shrink-0 bg-[#0A0A0A]"
+                className="shrink-0 bg-[#0A0A0A] border-t border-white/[0.06] px-8 pt-4 pb-[calc(1.25rem+env(safe-area-inset-bottom))]"
               >
-                <motion.a
-                  href="#contact"
-                  onClick={close}
+                <motion.button
+                  type="button"
+                  onClick={handleConnect}
                   whileHover={{ scale: 1.02, y: -3 }}
                   transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                   className={[
@@ -208,7 +222,7 @@ export default function MobileMenu({ activeLink = "#", onThemeToggle, onDownload
                   ].join(" ")}
                 >
                   Let&apos;s Connect
-                </motion.a>
+                </motion.button>
               </motion.div>
             </motion.nav>
           </>

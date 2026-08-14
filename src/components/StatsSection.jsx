@@ -200,7 +200,7 @@ export default function StatsSection() {
     <section
       id="stats"
       ref={sectionRef}
-      className="relative w-full py-16 sm:py-24 "
+      className="relative w-full py-10 sm:py-16 "
       style={{ backgroundColor: "transparent" }}
     >
       {/* ── Top Section Border Line ── */}
@@ -261,7 +261,7 @@ export default function StatsSection() {
       <MouseGlow />
 
       {/* ── Minimal 3-Column Content Layout ── */}
-      <div className="relative  z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 py-8 sm:py-12">
+      <div className="relative  z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-16 py-6 sm:py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 items-start">
           {STATS.map((stat, i) => (
             <StatItem

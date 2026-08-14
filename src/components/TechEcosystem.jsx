@@ -518,9 +518,9 @@ export default function TechEcosystem() {
       </div>
 
       {/* ── Main content ── */}
-      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-14 xl:px-16 py-16 sm:py-32 lg:py-[140px]">
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-14 xl:px-16 py-12 sm:py-20 lg:py-[120px]">
         {/* ── Section header ── */}
-        <div ref={headingRef} className="mb-10 sm:mb-20 lg:mb-24">
+        <div ref={headingRef} className="mb-8 sm:mb-16 lg:mb-24">
           {/* Top row: label */}
           <motion.div
             className="flex items-center gap-3 mb-5 sm:mb-8"

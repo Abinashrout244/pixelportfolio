@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 /* ---------------------------------------------------------------- */
 /* Inline SVG icons — stroke-based, 24x24, inherit color via currentColor */
@@ -147,25 +148,24 @@ function LinkGroup({ label, children }) {
 export default function ConnectWithMe() {
   return (
     <div className="min-h-screen bg-transparent text-white font-sans antialiased selection:bg-zinc-800 selection:text-white">
-      <div className="max-w-6xl mx-auto px-6 sm:px-12 py-12 sm:py-20">
+      <div className="max-w-6xl mx-auto  px-6 sm:px-12 pt-24  md:pt-32">
         {/* Navigation Back Link */}
         <nav className="relative z-10">
-          <a
-            href="#home"
-            className="inline-flex items-center gap-2 text-xs font-mono font-medium tracking-widest text-zinc-500 hover:text-zinc-200 transition-colors uppercase"
-          >
-            <ArrowLeftIcon width={14} height={14} /> BACK TO HOME
-          </a>
+          <Link to="/">
+            <button className="inline-flex items-center gap-2 text-xs font-mono font-medium tracking-widest text-zinc-500 hover:text-zinc-200 transition-colors uppercase">
+              <ArrowLeftIcon width={14} height={14} /> BACK TO HOME
+            </button>
+          </Link>
         </nav>
 
         {/* HEADER */}
         <header className="relative pt-10 sm:pt-16 pb-16 sm:pb-20 text-center">
-          {/* Full-width watermark, matches the rest of the site's ABINASH treatment */}
-          <span className="absolute inset-x-0 top-0 sm:top-2 text-[4.5rem] sm:text-[8rem] lg:text-[10rem] font-extrabold text-zinc-800/40 select-none pointer-events-none tracking-tighter leading-none whitespace-nowrap overflow-hidden text-center">
+          {/* Full-width watermark spanning the entire viewport */}
+          <span className="absolute  left-1/2 -translate-x-1/2 top-0 sm:top-2 w-screen text-[4.5rem] sm:text-[8rem] lg:text-[10rem] font-extrabold text-zinc-800/40 select-none pointer-events-none tracking-tighter leading-none whitespace-nowrap overflow-hidden text-center">
             ABINASH
           </span>
 
-          <div className="relative space-y-5">
+          <div className="relative space-y-5 z-10">
             <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
               NETWORK
             </span>

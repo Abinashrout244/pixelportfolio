@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2 } from "lucide-react";
 
-export function PreFooterCTA() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export function PreFooterCTA({
+  isModalOpen: isModalOpenProp,
+  onOpenModal,
+  onCloseModal,
+}) {
+  const [internalIsModalOpen, setInternalIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -11,17 +15,21 @@ export function PreFooterCTA() {
     email: "",
     message: "",
   });
+  const isControlled = typeof isModalOpenProp === "boolean";
+  const isModalOpen = isControlled ? isModalOpenProp : internalIsModalOpen;
+  const openModal = onOpenModal ?? (() => setInternalIsModalOpen(true));
+  const closeModal = onCloseModal ?? (() => setInternalIsModalOpen(false));
 
   // Handle ESC key to close modal
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape" && isModalOpen) {
-        setIsModalOpen(false);
+        closeModal();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen]);
+  }, [isModalOpen, closeModal]);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -49,7 +57,7 @@ export function PreFooterCTA() {
       setIsSubmitted(true);
       setTimeout(() => {
         setIsSubmitted(false);
-        setIsModalOpen(false);
+        closeModal();
         setFormData({ name: "", email: "", message: "" });
       }, 2000);
     }, 1200);
@@ -160,7 +168,7 @@ export function PreFooterCTA() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            onClick={() => setIsModalOpen(true)}
+            onClick={openModal}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             className="bg-[#c8cbd0] hover:bg-white text-black font-mono text-[11px] font-bold tracking-[0.2em] uppercase px-8 py-4 transition-all duration-200 rounded-none mb-20 shadow-[0_0_20px_rgba(255,255,255,0.08)]"
@@ -256,14 +264,14 @@ export function PreFooterCTA() {
       {/* ── Exact Replaced Contact Modal ── */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-[999] flex items-center sm:items-start justify-center pt-4 sm:pt-24 p-4 overflow-y-auto">
+          <div className="fixed inset-0 z-[999] flex items-center justify-center p-3 sm:p-4 sm:items-start sm:pt-24 overflow-y-auto overscroll-contain">
             {/* Overlay Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              onClick={() => setIsModalOpen(false)}
+              onClick={closeModal}
               className="fixed inset-0 bg-black/80 backdrop-blur-md "
               aria-hidden="true"
             />
@@ -274,14 +282,14 @@ export function PreFooterCTA() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-[450px] max-h-[85vh] sm:max-h-[90vh] my-auto bg-[#0c0f0d] border border-white/10 p-6 sm:p-8 z-10 rounded-none shadow-2xl text-white overflow-y-auto"
+              className="relative w-full max-w-[450px] max-h-[calc(100dvh-1.5rem)] sm:max-h-[90vh] bg-[#0c0f0d] border border-white/10 p-5 sm:p-8 z-10 rounded-none shadow-2xl text-white overflow-y-auto"
             >
               {/* Top Subtle Ambient Glow */}
               <div className="absolute top-0 left-1/4 w-[200px] h-[120px] bg-emerald-500/10 rounded-full blur-[70px] pointer-events-none" />
 
               {/* Close Button */}
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={closeModal}
                 className="absolute top-4 right-4 p-1.5 bg-black/40 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors rounded-none z-20"
                 aria-label="Close modal"
               >

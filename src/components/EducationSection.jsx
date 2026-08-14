@@ -797,9 +797,9 @@ export default function EducationSection() {
         <SectionSpotlight sectionRef={sectionRef} />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-28 sm:py-32 lg:py-[140px]">
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-16 sm:py-24 lg:py-[120px]">
         {/* Header Section */}
-        <div ref={headingRef} className="mb-16 sm:mb-20 lg:mb-24">
+        <div ref={headingRef} className="mb-12 sm:mb-20 lg:mb-24">
           <motion.div
             className="flex items-center gap-3 mb-6 sm:mb-8"
             {...mp(

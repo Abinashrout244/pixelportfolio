@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import "./App.css";
 import Loader from "./components/Loader";
@@ -10,6 +10,12 @@ import FilmGrain from "./components/FilmGrain";
 import Home from "./pages/Home";
 import ArchiveView from "./pages/ArchiveView";
 import ProjectDetailView from "./pages/ProjectDetailView";
+import PreFooterCTA from "./pages/PreFooterCTA";
+import LuxuryFooter from "./components/LuxryFooter";
+import AboutMe from "./pages/Aboutme";
+import Achievements from "./pages/Achievements";
+import Uses from "./pages/Uses";
+import Links from "./pages/Links";
 
 function AppBackground() {
   return (
@@ -28,6 +34,11 @@ function AnimatedRoutes({ loader }) {
     <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home isLoaded={loader} />} />
+        <Route path="/about" element={<AboutMe />} />
+        <Route path="/achievements" element={<Achievements />} />
+        <Route path="/achviments" element={<Navigate to="/achievements" replace />} />
+        <Route path="/uses" element={<Uses />} />
+        <Route path="/links" element={<Links />} />
         <Route path="/projects" element={<ArchiveView />} />
         <Route path="/projects/:slug" element={<ProjectDetailView />} />
       </Routes>
@@ -36,7 +47,10 @@ function AnimatedRoutes({ loader }) {
 }
 
 function App() {
+  // Check sessionStorage so refreshing or direct navigation won't re-trigger
+  // if you only want it once per session, or keep standard useState for once per reload.
   const [loader, setLoader] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   // Initialize Lenis smooth scrolling
   useEffect(() => {
@@ -56,7 +70,7 @@ function App() {
         }
         requestAnimationFrame(raf);
       } catch (e) {
-        // Lenis not available, graceful fallback
+        // Lenis fallback
       }
     };
 
@@ -65,25 +79,34 @@ function App() {
     }
 
     return () => {
-      if (lenis) lenis.destroy();
+      if (lenis) lenis?.destroy();
     };
   }, [loader]);
 
   return (
     <BrowserRouter>
       <div className="relative bg-[#0B0B0B] min-h-screen">
-        <AnimatePresence initial={false}>
-          {!loader && <Loader onComplete={() => setLoader(true)} />}
-        </AnimatePresence>
+        {/* Render loader only when loader state is false. 
+            Handle any exit fade animation inside the Loader component itself. */}
+        {!loader && <Loader onComplete={() => setLoader(true)} />}
 
         <AppBackground />
 
-        {/* Navbar fades in after loader completes */}
-        {loader && <Navbar />}
+        {/* Navbar shows after initial load */}
+        {loader && (
+          <Navbar onOpenContactModal={() => setIsContactModalOpen(true)} />
+        )}
 
         <div className="relative z-10">
           <AnimatedRoutes loader={loader} />
         </div>
+
+        <PreFooterCTA
+          isModalOpen={isContactModalOpen}
+          onOpenModal={() => setIsContactModalOpen(true)}
+          onCloseModal={() => setIsContactModalOpen(false)}
+        />
+        <LuxuryFooter />
       </div>
     </BrowserRouter>
   );

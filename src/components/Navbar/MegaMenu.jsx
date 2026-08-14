@@ -1,22 +1,3 @@
-/**
- * MegaMenu.jsx
- * ─────────────────────────────────────────────────────
- * Floating mega-menu dropdown triggered by hovering "More".
- *
- * Anti-flicker strategy:
- * - A single unified hover zone covers both the trigger text and
- *   the dropdown panel — managed by `onMouseEnter` / `onMouseLeave`
- *   on the wrapper <div>, so moving the cursor between them never
- *   triggers a close.
- *
- * Features:
- * - AnimatePresence for smooth mount/unmount
- * - Framer Motion: opacity, y, scale with custom ease
- * - 2-column MenuCard grid with staggered children
- * - 800px wide, auto height, #111111 background
- * - Tablet responsive: 650px
- */
-
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -28,38 +9,34 @@ import {
   ChevronDown,
 } from "lucide-react";
 import MenuCard from "./MenuCard";
+import { NavLink } from "react-router-dom";
 
 /* ─── Dropdown content definition ─────────────────────── */
 const MENU_ITEMS = [
   {
     icon: MessageSquare,
-    title: "Guestbook",
+    title: "Achievements",
     description: "Let me know you were here",
-    href: "#guestbook",
+    href: "/achievements",
   },
-  {
-    icon: BookOpen,
-    title: "Blog",
-    description: "Thoughts on code and craft",
-    href: "#blog",
-  },
+
   {
     icon: User,
     title: "About Me",
     description: "The story behind the code",
-    href: "#about",
+    href: "/about",
   },
   {
     icon: Monitor,
     title: "Uses",
     description: "A peek into my setup",
-    href: "#uses",
+    href: "/uses",
   },
   {
     icon: Link2,
     title: "Links",
     description: "All my social links",
-    href: "#links",
+    href: "/links",
   },
 ];
 
@@ -93,20 +70,13 @@ const dropdownVariants = {
   },
 };
 
-/**
- * @param {Object}   props
- * @param {boolean}  props.isOpen          - Controlled open state
- * @param {Function} props.onMouseEnter    - Hover enter handler
- * @param {Function} props.onMouseLeave    - Hover leave handler
- * @param {boolean}  props.isActive        - Whether any "More" child is active
- */
-export default function MegaMenu({ isOpen, onMouseEnter, onMouseLeave, isActive = false }) {
+export default function MegaMenu({
+  isOpen,
+  onMouseEnter,
+  onMouseLeave,
+  isActive = false,
+}) {
   return (
-    /*
-     * Unified hover zone: wraps both the trigger label and the dropdown panel.
-     * Mouse enter/leave is handled here rather than on individual children,
-     * so cursor movement between trigger and panel is seamless.
-     */
     <div
       className="relative flex flex-col items-start"
       onMouseEnter={onMouseEnter}
@@ -138,7 +108,10 @@ export default function MegaMenu({ isOpen, onMouseEnter, onMouseLeave, isActive 
       {/* Active underline indicator */}
       <motion.span
         className="absolute -bottom-1 left-0 right-0 h-px bg-white"
-        animate={{ scaleX: isActive || isOpen ? 1 : 0, opacity: isActive || isOpen ? 1 : 0 }}
+        animate={{
+          scaleX: isActive || isOpen ? 1 : 0,
+          opacity: isActive || isOpen ? 1 : 0,
+        }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         style={{ originX: "50%" }}
       />
@@ -157,7 +130,7 @@ export default function MegaMenu({ isOpen, onMouseEnter, onMouseLeave, isActive 
               // Positioning — left-aligned with the trigger
               "absolute top-[calc(100%+20px)] right-0",
               // Size
-        "w-[650px] xl:w-[650px] lg:w-[500px] sm:w-[90vw]",
+              "w-[650px] xl:w-[650px] lg:w-[500px] sm:w-[90vw]",
               // Scroll on smaller screens, auto height on desktop
               "max-h-[60vh] lg:max-h-[70vh] xl:max-h-none overflow-y-auto xl:overflow-visible",
               // Background & border
@@ -173,17 +146,20 @@ export default function MegaMenu({ isOpen, onMouseEnter, onMouseLeave, isActive 
             ].join(" ")}
           >
             {/* 2-column grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {MENU_ITEMS.map((item, i) => (
-                <MenuCard
-                  key={item.title}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                  href={item.href}
-                  index={i}
-                />
-              ))}
+            {/* 1. Grid must stretch its items (default, but be explicit) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+              <div className="h-full">
+                <NavLink to={MENU_ITEMS[0].href}>
+                  <MenuCard {...MENU_ITEMS[0]} index={0} />
+                </NavLink>
+              </div>
+              <div className="flex flex-col gap-4">
+                {MENU_ITEMS.slice(1).map((item, i) => (
+                  <NavLink to={item.href}>
+                    <MenuCard key={item.title} {...item} index={i + 1} />
+                  </NavLink>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}

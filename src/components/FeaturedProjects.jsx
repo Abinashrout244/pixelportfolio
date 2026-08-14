@@ -418,9 +418,9 @@ export default function FeaturedProjects() {
       <SectionSpotlight sectionRef={sectionRef} />
 
       {/* ── Main content ── */}
-      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-28 sm:py-32 lg:py-[140px]">
+      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-16 sm:py-24 lg:py-[120px]">
         {/* Header exact match to TechEcosystem / Education */}
-        <div ref={headingRef} className="mb-24 lg:mb-32 relative">
+        <div ref={headingRef} className="mb-16 sm:mb-20 lg:mb-32 relative">
           <motion.div
             className="flex items-center gap-3 mb-6 sm:mb-8"
             {...mp(
@@ -499,7 +499,7 @@ export default function FeaturedProjects() {
 
         {/* Bottom CTA to Archive */}
         <motion.div
-          className="mt-32 flex justify-center"
+          className="mt-20 sm:mt-28 flex justify-center"
           {...mp(
             { opacity: 0, y: 20 },
             inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
