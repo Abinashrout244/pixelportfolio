@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Keep chatbot scrolling inside its message panel without showing a scrollbar. */
+.chat-scroll-area {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.chat-scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   * {
     margin: 0;
@@ -49,7 +61,7 @@
 
 /* Hero cursor hide */
 .hero-section {
-  cursor: none;
+  cursor: auto;
 }
 
 /* Glow effect */
