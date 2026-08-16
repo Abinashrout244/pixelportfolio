@@ -1,11 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { X, Moon, Download } from "lucide-react";
-
-/**
- * TactileIconButton
- * Reusable icon button with scale spring + rotation + vibration on click
- */
+import { X, Download } from "lucide-react";
 export function TactileIconButton({ icon: Icon, onClick, ariaLabel }) {
   const handleClick = (e) => {
     // Attempt to trigger vibration if supported
@@ -56,8 +51,12 @@ export default function MobileHeader({ onClose, onThemeToggle, onDownload }) {
       </span>
 
       <div className="flex items-center gap-3">
-        <TactileIconButton icon={Moon} ariaLabel="Toggle theme" onClick={onThemeToggle} />
-        <TactileIconButton icon={Download} ariaLabel="Download CV" onClick={onDownload} />
+        {/* <TactileIconButton icon={Moon} ariaLabel="Toggle theme" onClick={onThemeToggle} /> */}
+        <TactileIconButton
+          icon={Download}
+          ariaLabel="Download CV"
+          onClick={onDownload}
+        />
         <TactileIconButton icon={X} ariaLabel="Close menu" onClick={onClose} />
       </div>
     </div>
