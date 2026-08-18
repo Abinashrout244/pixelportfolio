@@ -10,7 +10,7 @@ export const PROJECTS = [
     description:
       "A full-stack real-time chat application built with the MERN stack (MongoDB, Express.js, React, Node.js) and Socket.io for instant messaging. Features user authentication, profile management, and live chat with online status updates.",
     image:
-      "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774341/ChatGPT_Image_Aug_15_2026_11_22_08_AM_s8yw4a.png",
     tech: [
       "React + Vite",
       "Framer Motion + GSAP",
@@ -44,7 +44,10 @@ export const PROJECTS = [
     role: "Full Stack Developer",
     duration: "3 Months",
     gallery: [
-      "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786772632/Screenshot_2026-08-15_110741_sansme.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786772647/Screenshot_2026-08-15_111111_rc6efz.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786772647/Screenshot_2026-08-15_111124_wtw3km.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786772648/Screenshot_2026-08-15_111144_xm13tw.png",
     ],
   },
 
@@ -59,7 +62,7 @@ export const PROJECTS = [
     description:
       "I developed a full-stack Note Taking application where users can securely create, edit, and delete notes. The app includes authentication, protected routes, and real-time data management using modern MERN stack technologies.",
     image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774343/ChatGPT_Image_Aug_15_2026_11_26_52_AM_jjvei4.png",
     tech: [
       "React + Vite",
       "Tailwind CSS",
@@ -92,51 +95,57 @@ export const PROJECTS = [
     role: "Full Stack Developer",
     duration: "2 Months",
     gallery: [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773181/Screenshot_2026-08-15_111837_p7ouf0.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773181/Screenshot_2026-08-15_111818_ler8hg.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773182/Screenshot_2026-08-15_112045_kabg4u.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773182/Screenshot_2026-08-15_111857_eh8jan.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773183/Screenshot_2026-08-15_112009_zvknhi.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773231/Screenshot_2026-08-15_112055_xwdjkq.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773231/Screenshot_2026-08-15_112125_tlstvk.png",
     ],
   },
 
-  {
-    id: "netflix-clone",
-    slug: "netflix-clone",
-    title: "Netflix_Clone",
-    category: "WEB APPLICATION",
-    date: "2025",
-    shortDescription:
-      "A Netflix-inspired streaming platform using React, Firebase, Tailwind CSS, and the TMDB API.",
-    description:
-      "I developed a Netflix-inspired streaming platform using modern web technologies, integrating data from The Movie Database (TMDb) API to dynamically fetch and display movies and TV shows.",
-    image:
-      "https://images.unsplash.com/photo-1586899028174-e7098604235b?q=80&w=2000&auto=format&fit=crop",
-    tech: ["HTML", "Tailwind CSS", "React + Vite", "Firebase", "TMDB API"],
-    liveUrl:
-      "https://netflix-clone-jiun-kxtb9q9ot-abinash-routs-projects.vercel.app/",
-    githubUrl: "https://github.com/Abinashrout244/Netflix_clone",
-    featured: true,
-    problem:
-      "Building a movie streaming interface requires dynamic movie data, authentication, responsive layouts, and efficient API integration.",
-    solution:
-      "Created a Netflix-inspired interface using React and Tailwind CSS while integrating TMDB API for dynamic movie and TV show data and Firebase for authentication.",
-    features: [
-      "Dynamic movie and TV show data",
-      "TMDB API integration",
-      "Firebase authentication",
-      "Responsive Netflix-inspired UI",
-    ],
-    challenges:
-      "Working with external movie APIs and creating a responsive streaming-style interface with large amounts of dynamic content.",
-    learnings:
-      "Learned more about API integration, Firebase authentication, React component architecture, and responsive UI development.",
-    futureImprovements:
-      "Planning to add watchlists, personalized recommendations, advanced search, and improved video playback functionality.",
-    status: "COMPLETED",
-    platform: "Web",
-    role: "Frontend Developer",
-    duration: "2 Months",
-    gallery: [
-      "https://images.unsplash.com/photo-1586899028174-e7098604235b?q=80&w=2000&auto=format&fit=crop",
-    ],
-  },
+  // {
+  //   id: "netflix-clone",
+  //   slug: "netflix-clone",
+  //   title: "Netflix_Clone",
+  //   category: "WEB APPLICATION",
+  //   date: "2025",
+  //   shortDescription:
+  //     "A Netflix-inspired streaming platform using React, Firebase, Tailwind CSS, and the TMDB API.",
+  //   description:
+  //     "I developed a Netflix-inspired streaming platform using modern web technologies, integrating data from The Movie Database (TMDb) API to dynamically fetch and display movies and TV shows.",
+  //   image:
+  //     "https://images.unsplash.com/photo-1586899028174-e7098604235b?q=80&w=2000&auto=format&fit=crop",
+  //   tech: ["HTML", "Tailwind CSS", "React + Vite", "Firebase", "TMDB API"],
+  //   liveUrl:
+  //     "https://netflix-clone-jiun-kxtb9q9ot-abinash-routs-projects.vercel.app/",
+  //   githubUrl: "https://github.com/Abinashrout244/Netflix_clone",
+  //   featured: true,
+  //   problem:
+  //     "Building a movie streaming interface requires dynamic movie data, authentication, responsive layouts, and efficient API integration.",
+  //   solution:
+  //     "Created a Netflix-inspired interface using React and Tailwind CSS while integrating TMDB API for dynamic movie and TV show data and Firebase for authentication.",
+  //   features: [
+  //     "Dynamic movie and TV show data",
+  //     "TMDB API integration",
+  //     "Firebase authentication",
+  //     "Responsive Netflix-inspired UI",
+  //   ],
+  //   challenges:
+  //     "Working with external movie APIs and creating a responsive streaming-style interface with large amounts of dynamic content.",
+  //   learnings:
+  //     "Learned more about API integration, Firebase authentication, React component architecture, and responsive UI development.",
+  //   futureImprovements:
+  //     "Planning to add watchlists, personalized recommendations, advanced search, and improved video playback functionality.",
+  //   status: "COMPLETED",
+  //   platform: "Web",
+  //   role: "Frontend Developer",
+  //   duration: "2 Months",
+  //   gallery: [
+  //     "https://images.unsplash.com/photo-1586899028174-e7098604235b?q=80&w=2000&auto=format&fit=crop",
+  //   ],
+  // },
 
   {
     id: "ec-shopcart",
@@ -149,7 +158,7 @@ export const PROJECTS = [
     description:
       "ShopCart is a simple and user-friendly shopping website that allows users to browse products, view details, and manage their cart with a clean and modern interface.",
     image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774317/ChatGPT_Image_Aug_15_2026_11_33_45_AM_qmcgyf.png",
     tech: ["HTML", "Tailwind CSS", "React + Vite", "Firebase"],
     liveUrl: "https://avi-ec-vmhw.vercel.app/",
     githubUrl: "https://github.com/Abinashrout244/AVI-Ec",
@@ -175,7 +184,10 @@ export const PROJECTS = [
     role: "Frontend Developer",
     duration: "1.5 Months",
     gallery: [
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773606/Screenshot_2026-08-15_112740_nhbc8y.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773601/Screenshot_2026-08-15_112906_a5tgoy.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773603/Screenshot_2026-08-15_112805_znpofc.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773606/Screenshot_2026-08-15_112838_xi8gek.png",
     ],
   },
 
@@ -190,7 +202,7 @@ export const PROJECTS = [
     description:
       "A charming Flower Shop website offering a variety of fresh blooms, elegant bouquets, and seasonal arrangements with a simple, user-friendly browsing experience.",
     image:
-      "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774308/ChatGPT_Image_Aug_15_2026_11_35_51_AM_q2ju3s.png",
     tech: [
       "Tailwind CSS",
       "React + Vite",
@@ -222,50 +234,53 @@ export const PROJECTS = [
     role: "Frontend Developer",
     duration: "1 Month",
     gallery: [
-      "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773843/Screenshot_2026-08-15_113045_npmhy2.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773845/Screenshot_2026-08-15_113126_rljw9u.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773846/Screenshot_2026-08-15_113136_sszjis.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773847/Screenshot_2026-08-15_113117_jjbvfq.png",
     ],
   },
 
-  {
-    id: "tictactoe",
-    slug: "tictactoe",
-    title: "TicTacToe",
-    category: "GAME APPLICATION",
-    date: "2025",
-    shortDescription:
-      "A simple Tic-Tac-Toe game with clean UI, smooth gameplay, and instant win detection.",
-    description:
-      "A simple Tic-Tac-Toe game built with clean UI and smooth gameplay, allowing two players to compete with instant win detection.",
-    image:
-      "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?q=80&w=2000&auto=format&fit=crop",
-    tech: ["HTML", "Tailwind CSS", "React + Vite"],
-    liveUrl: "https://tic-tac-toe-app-v0.vercel.app/",
-    githubUrl: "https://github.com/Abinashrout244/Tic-Tac-Toe-app-v0",
-    featured: false,
-    problem:
-      "Create a simple browser-based game that provides an interactive two-player experience with immediate game results.",
-    solution:
-      "Built a lightweight Tic-Tac-Toe application using React with state management for turns, moves, and win detection.",
-    features: [
-      "Two-player gameplay",
-      "Instant win detection",
-      "Clean responsive UI",
-      "Interactive game board",
-    ],
-    challenges:
-      "Implementing the game logic correctly while keeping the UI simple and responsive.",
-    learnings:
-      "Improved my understanding of React state, event handling, conditional rendering, and game logic.",
-    futureImprovements:
-      "Planning to add AI gameplay, score tracking, sound effects, and different game modes.",
-    status: "COMPLETED",
-    platform: "Web",
-    role: "Frontend Developer",
-    duration: "1 Week",
-    gallery: [
-      "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?q=80&w=2000&auto=format&fit=crop",
-    ],
-  },
+  // {
+  //   id: "tictactoe",
+  //   slug: "tictactoe",
+  //   title: "TicTacToe",
+  //   category: "GAME APPLICATION",
+  //   date: "2025",
+  //   shortDescription:
+  //     "A simple Tic-Tac-Toe game with clean UI, smooth gameplay, and instant win detection.",
+  //   description:
+  //     "A simple Tic-Tac-Toe game built with clean UI and smooth gameplay, allowing two players to compete with instant win detection.",
+  //   image:
+  //     "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?q=80&w=2000&auto=format&fit=crop",
+  //   tech: ["HTML", "Tailwind CSS", "React + Vite"],
+  //   liveUrl: "https://tic-tac-toe-app-v0.vercel.app/",
+  //   githubUrl: "https://github.com/Abinashrout244/Tic-Tac-Toe-app-v0",
+  //   featured: false,
+  //   problem:
+  //     "Create a simple browser-based game that provides an interactive two-player experience with immediate game results.",
+  //   solution:
+  //     "Built a lightweight Tic-Tac-Toe application using React with state management for turns, moves, and win detection.",
+  //   features: [
+  //     "Two-player gameplay",
+  //     "Instant win detection",
+  //     "Clean responsive UI",
+  //     "Interactive game board",
+  //   ],
+  //   challenges:
+  //     "Implementing the game logic correctly while keeping the UI simple and responsive.",
+  //   learnings:
+  //     "Improved my understanding of React state, event handling, conditional rendering, and game logic.",
+  //   futureImprovements:
+  //     "Planning to add AI gameplay, score tracking, sound effects, and different game modes.",
+  //   status: "COMPLETED",
+  //   platform: "Web",
+  //   role: "Frontend Developer",
+  //   duration: "1 Week",
+  //   gallery: [
+  //     "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?q=80&w=2000&auto=format&fit=crop",
+  //   ],
+  // },
 
   {
     id: "fake-api",
@@ -278,7 +293,7 @@ export const PROJECTS = [
     description:
       "AJ Tube is a simple video-browsing platform that fetches and displays content using API data, offering a smooth and lightweight YouTube-style experience.",
     image:
-      "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774308/ChatGPT_Image_Aug_15_2026_11_40_04_AM_qwparq.png",
     tech: ["Tailwind CSS", "Framer Motion", "Lucide React", "Redux Toolkit"],
     liveUrl: "https://fa-ke-api-v0.vercel.app",
     githubUrl: "https://github.com/Abinashrout244/FAKe_API_V0",
@@ -304,48 +319,50 @@ export const PROJECTS = [
     role: "Frontend Developer",
     duration: "1 Month",
     gallery: [
-      "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=2000&auto=format&fit=crop",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773988/Screenshot_2026-08-15_113437_zjeo3e.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773988/Screenshot_2026-08-15_113453_udzkbp.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774308/ChatGPT_Image_Aug_15_2026_11_40_04_AM_qwparq.png",
     ],
   },
 
-  {
-    id: "aj-tube",
-    slug: "aj-tube",
-    title: "AJ Tube",
-    category: "VIDEO PLATFORM",
-    date: "2025",
-    shortDescription:
-      "A simple video-browsing platform offering a lightweight YouTube-style experience.",
-    description:
-      "AJ Tube is a simple video-browsing platform that fetches and displays content using API data, offering a smooth and lightweight YouTube-style experience.",
-    image:
-      "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?q=80&w=2000&auto=format&fit=crop",
-    tech: ["HTML", "Tailwind CSS", "JavaScript"],
-    liveUrl: "https://abinashrout244.github.io/AJ_Tube_clone/",
-    githubUrl: "https://github.com/Abinashrout244/AJ_Tube_clone",
-    featured: false,
-    problem:
-      "Build a lightweight video browsing experience using frontend technologies and API-based content.",
-    solution:
-      "Created a YouTube-inspired video browsing interface using HTML, Tailwind CSS, and JavaScript.",
-    features: [
-      "Video browsing interface",
-      "API-based content",
-      "Responsive layout",
-      "YouTube-style UI",
-    ],
-    challenges:
-      "Creating a responsive video browsing interface while handling dynamically loaded content with JavaScript.",
-    learnings:
-      "Strengthened my fundamentals in JavaScript, API handling, DOM manipulation, and responsive UI development.",
-    futureImprovements:
-      "Planning to add user authentication, video search, categories, playlists, and a backend system.",
-    status: "COMPLETED",
-    platform: "Web",
-    role: "Frontend Developer",
-    duration: "1 Month",
-    gallery: [
-      "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?q=80&w=2000&auto=format&fit=crop",
-    ],
-  },
+  // {
+  //   id: "aj-tube",
+  //   slug: "aj-tube",
+  //   title: "AJ Tube",
+  //   category: "VIDEO PLATFORM",
+  //   date: "2025",
+  //   shortDescription:
+  //     "A simple video-browsing platform offering a lightweight YouTube-style experience.",
+  //   description:
+  //     "AJ Tube is a simple video-browsing platform that fetches and displays content using API data, offering a smooth and lightweight YouTube-style experience.",
+  //   image:
+  //     "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?q=80&w=2000&auto=format&fit=crop",
+  //   tech: ["HTML", "Tailwind CSS", "JavaScript"],
+  //   liveUrl: "https://abinashrout244.github.io/AJ_Tube_clone/",
+  //   githubUrl: "https://github.com/Abinashrout244/AJ_Tube_clone",
+  //   featured: false,
+  //   problem:
+  //     "Build a lightweight video browsing experience using frontend technologies and API-based content.",
+  //   solution:
+  //     "Created a YouTube-inspired video browsing interface using HTML, Tailwind CSS, and JavaScript.",
+  //   features: [
+  //     "Video browsing interface",
+  //     "API-based content",
+  //     "Responsive layout",
+  //     "YouTube-style UI",
+  //   ],
+  //   challenges:
+  //     "Creating a responsive video browsing interface while handling dynamically loaded content with JavaScript.",
+  //   learnings:
+  //     "Strengthened my fundamentals in JavaScript, API handling, DOM manipulation, and responsive UI development.",
+  //   futureImprovements:
+  //     "Planning to add user authentication, video search, categories, playlists, and a backend system.",
+  //   status: "COMPLETED",
+  //   platform: "Web",
+  //   role: "Frontend Developer",
+  //   duration: "1 Month",
+  //   gallery: [
+  //     "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?q=80&w=2000&auto=format&fit=crop",
+  //   ],
+  // },
 ];
