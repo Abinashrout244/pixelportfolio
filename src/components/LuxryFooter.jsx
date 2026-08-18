@@ -53,11 +53,38 @@ const RESOURCE_LINKS = [
   "Certificates",
   "Open Source",
 ];
+const c = "ffffff";
 const SOCIALS = [
-  { icon: FiMail, label: "email", href: "mailto:hello@example.com" },
-  { icon: FaLinkedinIn, label: "linkedin", href: "https://linkedin.com" },
-  { icon: SiGithub, label: "github", href: "https://github.com" },
-  { icon: SiX, label: "twitter", href: "https://twitter.com" },
+  {
+    icon: `https://img.icons8.com/?size=100&id=BrU2BBoRXiWq&format=png&color=${c}`,
+    label: "Instagram",
+    href: "https://www.instagram.com/frequency._0.001",
+  },
+  {
+    icon: `https://img.icons8.com/?size=100&id=efFfwotdkiU5&format=png&color=${c}`,
+    label: "GitHub",
+    href: "https://github.com/Abinashrout244",
+  },
+  {
+    icon: `https://img.icons8.com/?size=100&id=13963&format=png&color=${c}`,
+    label: "Twitter",
+    href: "https://x.com/AbinashRout2251",
+  },
+  {
+    icon: `https://img.icons8.com/?size=100&id=108786&format=png&color=${c}`,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/abinash-rout-274285322",
+  },
+  {
+    icon: `https://img.icons8.com/?size=100&id=9L16NypUzu38&format=png&color=${c}`,
+    label: "LeetCode",
+    href: "https://leetcode.com/u/Abinash_90/",
+  },
+  {
+    icon: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+    label: "WhatsApp",
+    href: "https://wa.me/918249281685?text=Hi%20Binash,%20I%20found%20your%20portfolio.",
+  },
 ];
 
 export default function LuxuryFooter() {
@@ -81,7 +108,10 @@ export default function LuxuryFooter() {
   }, []);
 
   return (
-    <footer id="site-footer" className="relative w-full bg-[#050505] text-[#A3A3A3] font-sans overflow-hidden py-16 sm:py-24 border-t border-white/[0.08] selection:bg-white selection:text-black">
+    <footer
+      id="site-footer"
+      className="relative w-full bg-[#050505] text-[#A3A3A3] font-sans overflow-hidden py-16 sm:py-24 border-t border-white/[0.08] selection:bg-white selection:text-black"
+    >
       <style>{`
         .bg-noise {
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
@@ -174,23 +204,26 @@ export default function LuxuryFooter() {
                 Connect
               </span>
               <div className="flex items-center gap-3 flex-wrap">
-                {SOCIALS.map((item, idx) => {
-                  const Icon = item.icon;
-                  return (
-                    <Magnetic key={idx} distance={0.3}>
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={item.label}
-                        className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
-                      >
-                        <Icon className="w-4 h-4" />
-                      </a>
-                    </Magnetic>
-                  );
-                })}
-              </div>
+    {SOCIALS.map((item, idx) => {
+    return (
+      <Magnetic key={idx} distance={0.3}>
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={item.label}
+          className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
+        >
+          <img
+            src={item.icon}
+            alt={item.label}
+            className="w-4 h-4 object-contain"
+          />
+        </a>
+      </Magnetic>
+    );
+  })}
+</div>
             </div>
 
             <motion.div
