@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { Link, useNavigate } from "react-router-dom";
+import { QrCode } from "lucide-react";
 import { PROJECTS } from "../data/projectsData";
+import { usePortfolioQR } from "../context/PortfolioQRContext";
 
 // ─── Deterministic RNG ───────────────────────────────────────────────────────
 const rng = (n, salt) => {
@@ -76,9 +78,12 @@ function SectionSpotlight() {
 }
 
 // ─── Archive Grid Card ───────────────────────────────────────────────────────
- function ArchiveCard({ project, index = 0, reduced = false }) {
+function ArchiveCard({ project, index = 0, reduced = false }) {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
+  const { openQRModal } = usePortfolioQR();
+  const hasLiveUrl =
+    typeof project?.liveUrl === "string" && project.liveUrl.trim() && project.liveUrl !== "#";
 
   // Auto-formatted project number (e.g., "01")
   const projectNumber = index < 9 ? `0${index + 1}` : `${index + 1}`;
@@ -131,9 +136,7 @@ function SectionSpotlight() {
   };
 
   const handleClick = () => {
-    if (project?.liveUrl && project.liveUrl !== '#') {
-      window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
-    } else if (project?.slug) {
+    if (project?.slug) {
       navigate(`/projects/${project.slug}`);
     }
   };
@@ -242,6 +245,26 @@ function SectionSpotlight() {
               {item}
             </motion.span>
           ))}
+
+          {hasLiveUrl && (
+            <button
+              type="button"
+              onClick={() =>
+                openQRModal({
+                  title: "Scan to Preview",
+                  description: "Scan to preview on your mobile",
+                  projectName: project.title,
+                  value: project.liveUrl,
+                  downloadFilename: `${project?.slug || "project"}-preview-qr.png`,
+                })
+              }
+              className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] px-4 py-2 font-mono text-[12px] sm:text-[13px] uppercase tracking-[1px] text-white/80 transition-colors duration-200 hover:border-white/20 hover:text-white hover:bg-white/[0.08]"
+              aria-label={`Scan to preview ${project.title}`}
+            >
+              <QrCode size={14} />
+              Scan to Preview
+            </button>
+          )}
         </motion.div>
       </motion.div>
     </section>
