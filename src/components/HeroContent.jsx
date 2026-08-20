@@ -41,17 +41,17 @@ const slideUp = {
 
 export default function HeroContent({ isLoaded }) {
   return (
-    <div className="flex flex-col justify-center z-10 w-full lg:w-[55%] px-6 lg:px-0">
+    <div className="flex flex-col justify-center z-10 w-full lg:w-[55%] px-0 sm:px-2 lg:px-0 text-center lg:text-left items-center lg:items-start">
       {/* ── Labels Row ── */}
       <motion.div
-        className="flex items-center gap-4 mb-8"
+        className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-6 sm:mb-8"
         variants={fadeIn}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
         custom={0.2}
       >
         <span
-          className="font-mono text-[11px] tracking-[0.15em] uppercase text-text-secondary border border-white/[0.08] px-4 py-1.5 rounded-none"
+          className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase text-text-secondary border border-white/[0.08] px-3.5 sm:px-4 py-1.5 rounded-none"
         >
           Frontend Engineer
         </span>
@@ -62,8 +62,8 @@ export default function HeroContent({ isLoaded }) {
 
       {/* ── Hero Title ── */}
       <motion.h1
-        className="font-geist font-[800] text-text-primary leading-[0.9] tracking-[-0.03em] mb-8 relative"
-        style={{ fontSize: "clamp(72px, 8vw, 140px)" }}
+        className="font-geist font-[800] text-text-primary leading-[0.88] tracking-[-0.04em] mb-6 sm:mb-8 relative"
+        style={{ fontSize: "clamp(56px, 16vw, 140px)" }}
         variants={fadeUp}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
@@ -84,7 +84,7 @@ export default function HeroContent({ isLoaded }) {
 
       {/* ── Description ── */}
       <motion.p
-        className="text-text-secondary text-[18px] sm:text-[20px] leading-relaxed max-w-[650px] mb-10 font-geist font-normal"
+        className="text-text-secondary text-[15px] sm:text-[18px] lg:text-[20px] leading-relaxed max-w-[620px] mb-8 sm:mb-10 font-geist font-normal"
         variants={fadeIn}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
@@ -97,7 +97,7 @@ export default function HeroContent({ isLoaded }) {
 
       {/* ── CTA Buttons ── */}
       <motion.div
-        className="flex items-center gap-4 flex-wrap"
+        className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap"
         variants={slideUp}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
@@ -107,7 +107,7 @@ export default function HeroContent({ isLoaded }) {
         <a
           href="#projects"
           id="cta-view-projects"
-          className="group font-mono text-[12px] tracking-[0.12em] uppercase px-7 py-3.5 bg-white text-[#0B0B0B] rounded-none transition-all duration-300 glow-soft-hover hover:bg-white/90"
+          className="group font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase px-5 sm:px-7 py-3 bg-white text-[#0B0B0B] rounded-none transition-all duration-300 glow-soft-hover hover:bg-white/90"
         >
           View Projects
         </a>
@@ -118,7 +118,7 @@ export default function HeroContent({ isLoaded }) {
           target="_blank"
           rel="noopener noreferrer"
           id="cta-github"
-          className="group font-mono text-[12px] tracking-[0.12em] uppercase px-7 py-3.5 border border-white/[0.12] text-text-primary rounded-none transition-all duration-300 hover:border-white/30 glow-soft-hover"
+          className="group font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase px-5 sm:px-7 py-3 border border-white/[0.12] text-text-primary rounded-none transition-all duration-300 hover:border-white/30 glow-soft-hover"
         >
           GitHub
         </a>
