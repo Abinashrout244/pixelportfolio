@@ -24,39 +24,39 @@ function ArrowLeftIcon(props) {
 /* ---------------------------------------------------------------- */
 
 const sections = [
+  // {
+  //   index: "01",
+  //   title: "Setup.",
+  //   subtitle: "The Hardware",
+  //   items: [
+  //     {
+  //       title: "MSI Alpha 15 B5EX",
+  //       meta: "RYZEN 7 5800H · RX 6600M · 16GB DDR4 · 512GB NVME",
+  //       description:
+  //         "My daily driver laptop. The AMD Advantage combo handles Next.js builds, browser DevTools, and the occasional game without throttling.",
+  //     },
+  //     {
+  //       title: 'Dell S2721QS 27" 4K',
+  //       meta: "3840x2160 · IPS",
+  //       description:
+  //         "External display for the extra vertical room. Crisp text makes long coding sessions easier on the eyes.",
+  //     },
+  //     {
+  //       title: "Kreo Swarm",
+  //       meta: "STARLING LINEAR SWITCHES · WIRELESS · WHITE/PURPLE",
+  //       description:
+  //         "Smooth linears with zero pre-travel. The wireless freedom keeps the desk clean, and the white-purple colourway looks sharp under RGB.",
+  //     },
+  //     {
+  //       title: "Logitech MX Master 3S",
+  //       meta: "8K DPI · QUIET CLICKS",
+  //       description:
+  //         "The horizontal scroll wheel alone makes wide spreadsheets and timelines bearable.",
+  //     },
+  //   ],
+  // },
   {
     index: "01",
-    title: "Setup.",
-    subtitle: "The Hardware",
-    items: [
-      {
-        title: "MSI Alpha 15 B5EX",
-        meta: "RYZEN 7 5800H · RX 6600M · 16GB DDR4 · 512GB NVME",
-        description:
-          "My daily driver laptop. The AMD Advantage combo handles Next.js builds, browser DevTools, and the occasional game without throttling.",
-      },
-      {
-        title: 'Dell S2721QS 27" 4K',
-        meta: "3840x2160 · IPS",
-        description:
-          "External display for the extra vertical room. Crisp text makes long coding sessions easier on the eyes.",
-      },
-      {
-        title: "Kreo Swarm",
-        meta: "STARLING LINEAR SWITCHES · WIRELESS · WHITE/PURPLE",
-        description:
-          "Smooth linears with zero pre-travel. The wireless freedom keeps the desk clean, and the white-purple colourway looks sharp under RGB.",
-      },
-      {
-        title: "Logitech MX Master 3S",
-        meta: "8K DPI · QUIET CLICKS",
-        description:
-          "The horizontal scroll wheel alone makes wide spreadsheets and timelines bearable.",
-      },
-    ],
-  },
-  {
-    index: "02",
     title: "Tools.",
     subtitle: "What I Reach For",
     items: [
@@ -87,18 +87,18 @@ const sections = [
     ],
   },
   {
-    index: "03",
+    index: "02",
     title: "Stack.",
     subtitle: "What I Build With",
     items: [
       {
-        title: "Next.js",
+        title: "React.js",
         meta: "FRAMEWORK",
         description:
           "The App Router, server components, and server actions cover almost everything I need to ship.",
       },
       {
-        title: "TypeScript",
+        title: "JavaAcript",
         meta: "LANGUAGE",
         description:
           "Non-negotiable at this point. The safety net pays for itself the moment a project grows past a few files.",
@@ -122,7 +122,7 @@ const sections = [
           "Flexible document storage for projects where the schema is still finding its shape.",
       },
       {
-        title: "Vercel",
+        title: "Vercel ,Netlify & Render",
         meta: "HOSTING",
         description:
           "Git push, get a deploy. Preview URLs on every PR make reviewing changes painless.",
@@ -130,15 +130,15 @@ const sections = [
     ],
   },
   {
-    index: "04",
+    index: "03",
     title: "Apps.",
     subtitle: "Daily Flow",
     items: [
       {
-        title: "PowerToys",
-        meta: "UTILITIES",
+        title: "ChatGPT",
+        meta: "AI ASSISTANT",
         description:
-          "FancyZones for window tiling, PowerToys Run as a launcher, and Color Picker for grabbing hex values on the fly.",
+          "AI-powered assistant for coding, debugging, learning, brainstorming, writing, and solving problems with natural language.",
       },
       {
         title: "Notion",
@@ -153,7 +153,7 @@ const sections = [
           "Lo-fi and instrumental playlists are the soundtrack to most things I build.",
       },
       {
-        title: "Brave",
+        title: "Chrome",
         meta: "BROWSER",
         description:
           "Fast, privacy-first, and Chromium-based so all my dev extensions work out of the box.",
