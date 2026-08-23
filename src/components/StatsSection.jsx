@@ -57,7 +57,7 @@ const ORBS = [
 const STATS = [
   {
     id: "projects",
-    number: 15,
+    number: 7,
     suffix: "+",
     label: "PROJECTS SHIPPED & BUILT",
     description:
@@ -65,7 +65,7 @@ const STATS = [
   },
   {
     id: "dsa",
-    number: 500,
+    number: 100,
     suffix: "+",
     label: "DSA PROBLEMS SOLVED",
     description:
@@ -73,7 +73,7 @@ const STATS = [
   },
   {
     id: "stacks",
-    number: 25,
+    number: 18,
     suffix: "+",
     label: "TECH STACKS & TOOLS",
     description:
