@@ -78,8 +78,6 @@ const CATEGORIES = [
       "Building interactive, accessible, and performant user interfaces.",
     pills: [
       "React",
-      "Next.js",
-      "TypeScript",
       "JavaScript",
       "Framer Motion",
       "Redux Toolkit",
@@ -98,7 +96,6 @@ const CATEGORIES = [
       "CSS Modules",
       "Responsive Design",
       "Glassmorphism",
-      "GSAP",
       "Styled Components",
       "Figma",
     ],
@@ -134,7 +131,9 @@ const CATEGORIES = [
       "Vercel",
       "Netlify",
       "npm / pnpm",
-      "Linux CLI",
+      "Cursor",
+      "Antigravity",
+      "MongoDB Compass",
     ],
   },
 ];
