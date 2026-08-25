@@ -122,13 +122,13 @@ function TechPill({ label, index, isOpen }) {
       className="px-2.5 py-1 rounded-md font-mono text-[10px] sm:text-[11px] font-medium tracking-wider transition-all duration-200 select-none cursor-default"
       style={{
         background: hovered
-          ? "rgba(255, 77, 77, 0.18)"
+          ? "rgba(52, 211, 153, 0.18)"
           : "rgba(255, 255, 255, 0.05)",
         border: hovered
-          ? "1px solid rgba(255, 77, 77, 0.5)"
+          ? "1px solid rgba(52, 211, 153, 0.5)"
           : "1px solid rgba(255, 255, 255, 0.09)",
         color: hovered ? "#ffffff" : "rgba(255, 255, 255, 0.7)",
-        boxShadow: hovered ? "0 0 12px rgba(255, 77, 77, 0.25)" : "none",
+        boxShadow: hovered ? "0 0 12px rgba(52, 211, 153, 0.25)" : "none",
       }}
     >
       {label}
@@ -184,24 +184,24 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
         background: "linear-gradient(180deg, #18181b 0%, #0d0d0f 100%)",
         border:
           hovered && isOpen
-            ? "1px solid rgba(255, 77, 77, 0.55)"
+            ? "1px solid rgba(52, 211, 153, 0.55)"
             : "1px solid rgba(255, 255, 255, 0.1)",
         boxShadow:
           hovered && isOpen
-            ? "0 0 35px rgba(255, 77, 77, 0.3), 0 20px 50px rgba(0, 0, 0, 0.95)"
+            ? "0 0 35px rgba(52, 211, 153, 0.3), 0 20px 50px rgba(0, 0, 0, 0.95)"
             : "0 15px 35px rgba(0, 0, 0, 0.85)",
         transition: "border-color 0.3s ease, box-shadow 0.3s ease",
       }}
     >
       <div className="p-5 sm:p-6 flex flex-col h-full gap-3 relative z-10">
-        {/* Top Header Row with Red HUD Chips */}
+        {/* Top Header Row with Green HUD Chips */}
         <div className="flex items-center justify-between">
-          <span className="px-2 py-0.5 rounded-full font-mono text-[9px] sm:text-[10px] font-bold text-[#ff4d4d] bg-[#ff4d4d]/10 border border-[#ff4d4d]/30">
+          <span className="px-2 py-0.5 rounded-full font-mono text-[9px] sm:text-[10px] font-bold text-[#34d399] bg-[#34d399]/10 border border-[#34d399]/30">
             {category.tag}
           </span>
-          <span className="font-mono text-[9.5px] sm:text-[10px] tracking-wider text-[#ff4d4d] flex items-center gap-1.5">
+          <span className="font-mono text-[9.5px] sm:text-[10px] tracking-wider text-[#34d399] flex items-center gap-1.5">
             {category.match}
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#ff4d4d] shadow-[0_0_6px_#ff4d4d]" />
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#34d399] shadow-[0_0_6px_#34d399]" />
           </span>
         </div>
 
@@ -228,8 +228,8 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
         </div>
       </div>
 
-      {/* Red Corner Status Dot */}
-      <div className="absolute bottom-2.5 right-2.5 w-1.5 h-1.5 rounded-full bg-[#ff4d4d] shadow-[0_0_8px_#ff4d4d]" />
+      {/* Green Corner Status Dot */}
+      <div className="absolute bottom-2.5 right-2.5 w-1.5 h-1.5 rounded-full bg-[#34d399] shadow-[0_0_8px_#34d399]" />
     </motion.article>
   );
 }
@@ -252,11 +252,11 @@ function CyberFolderTrigger({ isOpen, onClick }) {
           background: "linear-gradient(180deg, #18181b 0%, #0d0d0f 100%)",
           border:
             hovered || isOpen
-              ? "1px solid rgba(255, 77, 77, 0.65)"
+              ? "1px solid rgba(52, 211, 153, 0.65)"
               : "1px solid rgba(255, 255, 255, 0.12)",
           boxShadow:
             hovered || isOpen
-              ? "0 0 45px rgba(255, 77, 77, 0.35), 0 20px 50px rgba(0, 0, 0, 0.95)"
+              ? "0 0 45px rgba(52, 211, 153, 0.35), 0 20px 50px rgba(0, 0, 0, 0.95)"
               : "0 15px 35px rgba(0, 0, 0, 0.85)",
         }}
         aria-expanded={isOpen}
@@ -268,7 +268,7 @@ function CyberFolderTrigger({ isOpen, onClick }) {
             background: "#111113",
             borderColor:
               hovered || isOpen
-                ? "rgba(255, 77, 77, 0.5)"
+                ? "rgba(52, 211, 153, 0.5)"
                 : "rgba(255, 255, 255, 0.15)",
           }}
         />
@@ -280,11 +280,11 @@ function CyberFolderTrigger({ isOpen, onClick }) {
             style={{
               background:
                 hovered || isOpen
-                  ? "rgba(255, 77, 77, 0.18)"
+                  ? "rgba(52, 211, 153, 0.18)"
                   : "rgba(255, 255, 255, 0.05)",
               border:
                 hovered || isOpen
-                  ? "1px solid rgba(255, 77, 77, 0.5)"
+                  ? "1px solid rgba(52, 211, 153, 0.5)"
                   : "1px solid rgba(255, 255, 255, 0.12)",
             }}
           >
@@ -299,7 +299,7 @@ function CyberFolderTrigger({ isOpen, onClick }) {
           </div>
 
           <div className="flex flex-col items-center">
-            <span className="font-mono text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#ff4d4d] drop-shadow-[0_0_10px_rgba(255,77,77,0.4)]">
+            <span className="font-mono text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#34d399] drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
               ARCHIVE_SLOTS
             </span>
             <span className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/40 mt-0.5">
@@ -343,7 +343,7 @@ export default function TechEcosystem() {
         </span>
       </div>
 
-      {/* ── Red Atmospheric Glow (Visible when open) ── */}
+      {/* ── Green Atmospheric Glow (Visible when open) ── */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-0"
         initial={{ opacity: 0 }}
@@ -351,7 +351,7 @@ export default function TechEcosystem() {
         transition={{ duration: 0.7 }}
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255, 30, 30, 0.22) 0%, rgba(180, 10, 10, 0.08) 50%, transparent 80%)",
+            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(16, 185, 129, 0.22) 0%, rgba(6, 78, 59, 0.1) 50%, transparent 80%)",
           filter: "blur(60px)",
         }}
       />
@@ -361,7 +361,7 @@ export default function TechEcosystem() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] pointer-events-none z-0"
         style={{
           background:
-            "radial-gradient(circle, rgba(255, 50, 50, 0.26) 0%, rgba(255, 50, 50, 0.04) 55%, transparent 70%)",
+            "radial-gradient(circle, rgba(52, 211, 153, 0.26) 0%, rgba(52, 211, 153, 0.04) 55%, transparent 70%)",
           filter: "blur(75px)",
         }}
       />
