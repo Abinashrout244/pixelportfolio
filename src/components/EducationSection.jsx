@@ -223,7 +223,7 @@ function SectionSpotlight({ sectionRef }) {
           height: "750px",
           transform: "translate(-50%, -50%)",
           background:
-            "radial-gradient(circle, rgba(255, 77, 77, 0.08) 0%, rgba(239, 68, 68, 0.02) 40%, transparent 70%)",
+            "radial-gradient(circle, rgba(52, 211, 153, 0.08) 0%, rgba(16, 185, 129, 0.02) 40%, transparent 70%)",
           filter: "blur(50px)",
           transition: "left 0.2s ease, top 0.2s ease",
           pointerEvents: "none",
@@ -249,9 +249,9 @@ function TimelineSquareNode({ inView, delay = 0, active = false }) {
           width: "22px",
           height: "22px",
           border: active
-            ? "1px solid rgba(255, 77, 77, 0.6)"
+            ? "1px solid rgba(52, 211, 153, 0.6)"
             : "1px solid rgba(255, 255, 255, 0.18)",
-          background: active ? "rgba(255, 77, 77, 0.1)" : "transparent",
+          background: active ? "rgba(52, 211, 153, 0.1)" : "transparent",
         }}
         animate={{
           scale: active ? [1, 1.6, 1] : [1, 1.4, 1],
@@ -269,13 +269,13 @@ function TimelineSquareNode({ inView, delay = 0, active = false }) {
         className="rounded-none border"
         animate={{
           backgroundColor: active
-            ? "rgba(255, 77, 77, 1)"
+            ? "rgba(52, 211, 153, 1)"
             : "rgba(255, 255, 255, 0.85)",
           borderColor: active
-            ? "rgba(255, 77, 77, 0.9)"
+            ? "rgba(52, 211, 153, 0.9)"
             : "rgba(255, 255, 255, 0.3)",
           boxShadow: active
-            ? "0 0 16px rgba(255, 77, 77, 0.8), 0 0 32px rgba(255, 77, 77, 0.4)"
+            ? "0 0 16px rgba(52, 211, 153, 0.8), 0 0 32px rgba(52, 211, 153, 0.4)"
             : "0 0 10px rgba(255, 255, 255, 0.3)",
         }}
         style={{ width: "10px", height: "10px" }}
@@ -346,14 +346,14 @@ function EducationCard({ entry, index, inView, active }) {
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      {/* ── Exact Red Neon Backdrop Blur Glow ── */}
+      {/* ── Exact Green Neon Backdrop Blur Glow ── */}
       <div
         className="absolute -inset-4 rounded-none pointer-events-none transition-all duration-500"
         style={{
           background:
             hovered || active
-              ? "radial-gradient(circle at 50% 50%, rgba(255, 77, 77, 0.28) 0%, rgba(239, 68, 68, 0.1) 50%, transparent 75%)"
-              : "radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.05) 0%, transparent 70%)",
+              ? "radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.28) 0%, rgba(16, 185, 129, 0.1) 50%, transparent 75%)"
+              : "radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 70%)",
           filter: "blur(32px)",
           opacity: hovered ? 1 : active ? 0.85 : 0.2,
           transform: hovered ? "scale(1.03)" : "scale(0.98)",
@@ -369,17 +369,17 @@ function EducationCard({ entry, index, inView, active }) {
         }}
         className="relative rounded-none overflow-hidden bg-gradient-to-b from-[#141414] to-[#0a0a0a] transition-all duration-300"
       >
-        {/* Dynamic Red Border */}
+        {/* Dynamic Green Border */}
         <div
           className="absolute inset-0 rounded-none pointer-events-none transition-colors duration-300 z-20"
           style={{
             border:
               hovered || active
-                ? "1px solid rgba(255, 77, 77, 0.5)"
+                ? "1px solid rgba(52, 211, 153, 0.5)"
                 : "1px solid rgba(255, 255, 255, 0.08)",
             boxShadow:
               hovered || active
-                ? "0 0 35px rgba(255, 77, 77, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
+                ? "0 0 35px rgba(52, 211, 153, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
                 : "inset 0 1px 0 rgba(255, 255, 255, 0.05)",
           }}
         />
@@ -390,7 +390,7 @@ function EducationCard({ entry, index, inView, active }) {
           style={{
             background:
               active || hovered
-                ? "linear-gradient(90deg, transparent, rgba(255, 77, 77, 0.8), transparent)"
+                ? "linear-gradient(90deg, transparent, rgba(52, 211, 153, 0.8), transparent)"
                 : "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent)",
           }}
         />
@@ -402,7 +402,7 @@ function EducationCard({ entry, index, inView, active }) {
             background: hovered
               ? `radial-gradient(400px circle at ${
                   (x.get() + 0.5) * 100
-                }% ${(y.get() + 0.5) * 100}%, rgba(255, 77, 77, 0.08) 0%, transparent 80%)`
+                }% ${(y.get() + 0.5) * 100}%, rgba(52, 211, 153, 0.08) 0%, transparent 80%)`
               : "none",
           }}
         />
@@ -419,7 +419,7 @@ function EducationCard({ entry, index, inView, active }) {
                     entry.status === "CURRENTLY PURSUING" ||
                     entry.rightPanel?.status === "ACTIVE" ||
                     active
-                      ? "bg-[#ff4d4d]/10 border-[#ff4d4d]/30 text-[#ff4d4d]"
+                      ? "bg-[#34d399]/10 border-[#34d399]/30 text-[#34d399]"
                       : "bg-white/5 border-white/10 text-white/50"
                   }`}
                 >
@@ -454,7 +454,7 @@ function EducationCard({ entry, index, inView, active }) {
             <div
               className={`flex-shrink-0 w-8 h-8 flex items-center justify-center border rounded-none transition-colors duration-300 ${
                 active
-                  ? "bg-[#ff4d4d]/10 border-[#ff4d4d]/40 text-[#ff4d4d] shadow-[0_0_12px_rgba(255,77,77,0.3)]"
+                  ? "bg-[#34d399]/10 border-[#34d399]/40 text-[#34d399] shadow-[0_0_12px_rgba(52,211,153,0.3)]"
                   : "bg-white/[0.04] border-white/10 text-white/30"
               }`}
             >
@@ -473,7 +473,7 @@ function EducationCard({ entry, index, inView, active }) {
               <div className="flex items-center gap-2 mb-3">
                 <div
                   className={`w-[2.5px] h-[12px] rounded-none ${
-                    active ? "bg-[#ff4d4d]" : "bg-white/20"
+                    active ? "bg-[#34d399]" : "bg-white/20"
                   }`}
                 />
                 <span className="font-mono text-[8px] tracking-[0.2em] uppercase text-white/40">
@@ -485,7 +485,7 @@ function EducationCard({ entry, index, inView, active }) {
                   <li key={item} className="flex items-start gap-2">
                     <span
                       className={`mt-1.5 w-1 h-1 rounded-none flex-shrink-0 ${
-                        active ? "bg-[#ff4d4d]/80" : "bg-white/20"
+                        active ? "bg-[#34d399]/80" : "bg-white/20"
                       }`}
                     />
                     <span className="font-geist text-[12px] text-white/60 leading-tight">
@@ -505,7 +505,7 @@ function EducationCard({ entry, index, inView, active }) {
                 <span
                   className={`font-mono text-[8px] tracking-[0.15em] uppercase px-1.5 py-0.5 border rounded-none ${
                     entry.rightPanel.status === "ACTIVE" || active
-                      ? "bg-[#ff4d4d]/10 border-[#ff4d4d]/30 text-[#ff4d4d]"
+                      ? "bg-[#34d399]/10 border-[#34d399]/30 text-[#34d399]"
                       : "bg-white/5 border-white/10 text-white/40"
                   }`}
                 >
@@ -528,7 +528,7 @@ function EducationCard({ entry, index, inView, active }) {
                     <div
                       className={`h-full rounded-none ${
                         entry.rightPanel.status === "ACTIVE" || active
-                          ? "bg-[#ff4d4d] w-[90%]"
+                          ? "bg-[#34d399] w-[90%]"
                           : "bg-white/30 w-[86%]"
                       }`}
                     />
@@ -545,7 +545,7 @@ function EducationCard({ entry, index, inView, active }) {
                   >
                     <span
                       className={`w-[2px] h-[10px] rounded-none ${
-                        active ? "bg-[#ff4d4d]/70" : "bg-white/20"
+                        active ? "bg-[#34d399]/70" : "bg-white/20"
                       }`}
                     />
                     <span className="font-geist text-[12px] text-white/50 leading-tight">
@@ -558,8 +558,8 @@ function EducationCard({ entry, index, inView, active }) {
           </div>
         </div>
 
-        {/* Red HUD Corner Accent Dot */}
-        <div className="absolute bottom-3 right-3 w-1.5 h-1.5 rounded-none bg-[#ff4d4d] shadow-[0_0_8px_#ff4d4d]" />
+        {/* Green HUD Corner Accent Dot */}
+        <div className="absolute bottom-3 right-3 w-1.5 h-1.5 rounded-none bg-[#34d399] shadow-[0_0_8px_#34d399]" />
       </motion.div>
     </motion.article>
   );
@@ -759,15 +759,15 @@ export default function EducationSection() {
             transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          {/* Active Red Neon Progress Line */}
+          {/* Active Green Neon Progress Line */}
           <motion.div
             className="absolute left-[9px] top-6 bottom-6 w-[3px] block -translate-x-1/2 rounded-none"
             style={{
               scaleY: reduced ? 1 : timelineScaleY,
               background:
-                "linear-gradient(to bottom, rgba(255,77,77,1), rgba(239,68,68,0.85))",
+                "linear-gradient(to bottom, rgba(52,211,153,1), rgba(16,185,129,0.85))",
               boxShadow:
-                "0 0 18px rgba(255,77,77,0.7), 0 0 36px rgba(239,68,68,0.35)",
+                "0 0 18px rgba(52,211,153,0.7), 0 0 36px rgba(16,185,129,0.35)",
               transformOrigin: "top",
             }}
           />
