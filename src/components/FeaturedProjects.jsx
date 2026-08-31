@@ -5,50 +5,25 @@ import {
   useMotionValue,
   useSpring,
   useTransform,
+  useScroll,
 } from "motion/react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye } from "lucide-react";
+import { Eye, ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "../data/projectsData";
 
-// ─── Deterministic RNG ───────────────────────────────────────────────────────
+// ─── Background Stars ────────────────────────────────────────────────────────
 const rng = (n, salt) => {
   const x = Math.sin(n * 12.9898 + salt * 78.233) * 43758.5453;
   return x - Math.floor(x);
 };
 
-// ─── Background stars & orbs ────────────────────────────────────────────────
-const BG_STARS = Array.from({ length: 45 }, (_, i) => ({
+const BG_STARS = Array.from({ length: 28 }, (_, i) => ({
   id: i,
   left: rng(i, 8) * 100,
   top: rng(i, 15) * 100,
   size: 0.5 + rng(i, 22) * 1.5,
-  opacity: 0.04 + rng(i, 29) * 0.09,
-  duration: 4 + rng(i, 36) * 6,
-  delay: rng(i, 43) * -8,
+  opacity: 0.03 + rng(i, 29) * 0.06,
 }));
-
-const ORBS = [
-  {
-    id: 0,
-    left: "15%",
-    top: "25%",
-    w: 320,
-    h: 320,
-    alpha: 0.015,
-    dur: 22,
-    delay: 0,
-  },
-  {
-    id: 1,
-    left: "75%",
-    top: "65%",
-    w: 280,
-    h: 280,
-    alpha: 0.012,
-    dur: 28,
-    delay: -10,
-  },
-];
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -62,48 +37,158 @@ function useReducedMotion() {
   return reduced;
 }
 
-// ─── Section-level mouse spotlight ──────────────────────────────────────────
-function SectionSpotlight({ sectionRef }) {
-  const [pos, setPos] = useState({ x: 50, y: 50 });
-  const rawX = useMotionValue(50);
-  const rawY = useMotionValue(50);
-  useSpring(rawX, { stiffness: 50, damping: 22 });
-  useSpring(rawY, { stiffness: 50, damping: 22 });
+// ─── Centered Background "WORK" Watermark (Small -> Big on Scroll) ───────────
+function FixedCenterWork({ targetRef, reduced }) {
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end start"],
+  });
 
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const onMove = (e) => {
-      const rect = el.getBoundingClientRect();
-      setPos({
-        x: ((e.clientX - rect.left) / rect.width) * 100,
-        y: ((e.clientY - rect.top) / rect.height) * 100,
-      });
-    };
-    el.addEventListener("mousemove", onMove, { passive: true });
-    return () => el.removeEventListener("mousemove", onMove);
-  }, [sectionRef]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 70,
+    damping: 24,
+    mass: 0.8,
+    restDelta: 0.001,
+  });
+
+  /*
+   * WORK animation
+   *
+   * 0.00  → section approaching
+   * 0.15  → WORK becomes visible
+   * 0.50  → strongest / clearest point
+   * 0.85  → starts fading
+   * 1.00  → section leaving
+   */
+
+  const opacity = useTransform(
+    smoothProgress,
+    [0, 0.12, 0.28, 0.5, 0.72, 0.88, 1],
+    [0, 0.35, 0.72, 0.95, 0.72, 0.35, 0],
+  );
+
+  /*
+   * Start slightly smaller → grow → hold → gently shrink
+   */
+  const scale = useTransform(
+    smoothProgress,
+    [0, 0.2, 0.45, 0.7, 1],
+    [0.72, 0.9, 1, 0.98, 0.82],
+  );
+
+  /*
+   * Small horizontal movement makes the word feel alive
+   * without destroying the centered layout.
+   */
+  const x = useTransform(smoothProgress, [0, 0.5, 1], ["-2%", "0%", "2%"]);
+
+  /*
+   * Slight blur while entering/leaving.
+   * Completely sharp around the center.
+   */
+  const blur = useTransform(
+    smoothProgress,
+    [0, 0.2, 0.45, 0.55, 0.8, 1],
+    [6, 2, 0, 0, 2, 6],
+  );
+
+  const filter = useTransform(blur, (value) => `blur(${value}px)`);
+
+  /*
+   * Letter spacing animation.
+   * Keeps the same visual style but gives the word
+   * a subtle cinematic expansion.
+   */
+  const letterSpacing = useTransform(
+    smoothProgress,
+    [0, 0.3, 0.5, 0.7, 1],
+    ["-0.01em", "-0.035em", "-0.04em", "-0.025em", "-0.01em"],
+  );
+
+  if (reduced) return null;
 
   return (
     <div
-      className="absolute inset-0 pointer-events-none overflow-hidden"
       aria-hidden="true"
+      className="
+        sticky
+        top-0
+        h-screen
+        w-full
+        pointer-events-none
+        z-0
+        flex
+        items-center
+        justify-center
+        -mb-[100vh]
+        overflow-hidden
+        select-none
+      "
     >
+      {/* Emerald atmospheric glow */}
       <div
-        style={{
-          position: "absolute",
-          left: `${pos.x}%`,
-          top: `${pos.y}%`,
-          width: "750px",
-          height: "750px",
-          transform: "translate(-50%, -50%)",
-          background:
-            "radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 60%)",
-          filter: "blur(45px)",
-          transition: "left 0.2s ease, top 0.2s ease",
-          pointerEvents: "none",
-        }}
+        className="
+          absolute
+          w-[500px]
+          sm:w-[850px]
+          h-[350px]
+          sm:h-[450px]
+          bg-emerald-950/25
+          blur-[130px]
+          rounded-full
+          pointer-events-none
+        "
       />
+
+      <motion.div
+        style={{
+          opacity,
+          scale,
+          x,
+          filter,
+        }}
+        className="
+          relative
+          w-full
+          flex
+          items-center
+          justify-center
+          pointer-events-none
+          px-4
+          will-change-transform
+        "
+      >
+        <motion.span
+          className="
+            font-geist
+            font-[900]
+            uppercase
+            select-none
+            text-transparent
+            leading-none
+            text-center
+            block
+            whitespace-nowrap
+          "
+          style={{
+            fontSize: "clamp(120px, 28vw, 440px)",
+
+            /*
+             * KEEPING YOUR ORIGINAL COLOR
+             */
+            WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.11)",
+
+            /*
+             * Same subtle emerald atmosphere
+             */
+            textShadow: "0 0 80px rgba(16, 185, 129, 0.05)",
+
+            letterSpacing,
+          }}
+        >
+          WORK
+        </motion.span>
+      </motion.div>
     </div>
   );
 }
@@ -111,41 +196,34 @@ function SectionSpotlight({ sectionRef }) {
 // ─── Individual Tech Pill ───────────────────────────────────────────────────
 function TechPill({ label }) {
   return (
-    <span className="inline-flex items-center justify-center  bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 px-2.5 py-1 sm:px-3.5 sm:py-1.5 font-mono text-[10px] sm:text-[12px] uppercase tracking-wider text-white/60 hover:text-white/95 transition-all duration-200 select-none whitespace-nowrap">
+    <span className="inline-flex items-center justify-center bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/20 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-white/60 hover:text-white transition-all duration-200 select-none">
       {label}
     </span>
   );
 }
 
-// ─── Featured Project Card ──────────────────────────────────────────────────
+// ─── Project Image Slide ────────────────────────────────────────────────────
 function ProjectImageSlide({ project, reduced, onOpen }) {
   const imageRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const lift = useMotionValue(0);
-  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [12, -12]), {
-    stiffness: 150,
-    damping: 20,
+
+  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [7, -7]), {
+    stiffness: 180,
+    damping: 24,
   });
-  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-12, 12]), {
-    stiffness: 150,
-    damping: 20,
+  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-7, 7]), {
+    stiffness: 180,
+    damping: 24,
   });
-  const translateY = useSpring(lift, { stiffness: 150, damping: 20 });
-  const borderColor =
-    {
-      "netflix-clone": "rgba(229, 9, 20, 0.7)",
-      devtinder: "rgba(96, 165, 250, 0.7)",
-      noteflow: "rgba(192, 132, 252, 0.7)",
-      shopcart: "rgba(52, 211, 153, 0.7)",
-    }[project?.slug] || "rgba(255,255,255,0.35)";
+  const translateY = useSpring(lift, { stiffness: 180, damping: 24 });
   const badgePathId = `discover-path-${project?.slug || "project"}`;
 
   const handlePointerMove = (event) => {
     const element = imageRef.current;
     if (!element || reduced) return;
-
     const bounds = element.getBoundingClientRect();
     pointerX.set((event.clientX - bounds.left) / bounds.width - 0.5);
     pointerY.set((event.clientY - bounds.top) / bounds.height - 0.5);
@@ -153,7 +231,7 @@ function ProjectImageSlide({ project, reduced, onOpen }) {
 
   const handlePointerEnter = () => {
     setHovered(true);
-    if (!reduced) lift.set(-8);
+    if (!reduced) lift.set(-6);
   };
 
   const handlePointerLeave = () => {
@@ -164,7 +242,7 @@ function ProjectImageSlide({ project, reduced, onOpen }) {
   };
 
   return (
-    <div className="w-full max-w-[1500px] border border-white/10 bg-[#18181b] p-6 sm:p-10 lg:p-14">
+    <div className="w-full border border-white/[0.08] bg-[#0c0c0e]/90 backdrop-blur-xl p-4 sm:p-7 lg:p-9 shadow-2xl">
       <div className="[perspective:1200px]">
         <motion.div
           ref={imageRef}
@@ -175,19 +253,21 @@ function ProjectImageSlide({ project, reduced, onOpen }) {
           onMouseEnter={handlePointerEnter}
           onMouseLeave={handlePointerLeave}
           onClick={onOpen}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") onOpen();
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") onOpen();
           }}
-          className="group relative aspect-[16/9] w-full cursor-pointer overflow-hidden border border-white/10 bg-black focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+          className="group relative aspect-[16/10] w-full cursor-pointer overflow-hidden border bg-black/70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/50"
           style={{
-            rotateX,
-            rotateY,
-            y: translateY,
+            rotateX: reduced ? 0 : rotateX,
+            rotateY: reduced ? 0 : rotateY,
+            y: reduced ? 0 : translateY,
             transformStyle: "preserve-3d",
-            borderColor: hovered ? borderColor : "rgba(255,255,255,0.1)",
+            borderColor: hovered
+              ? "rgba(52, 211, 153, 0.35)"
+              : "rgba(255,255,255,0.1)",
             boxShadow: hovered
-              ? "0 30px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.08)"
-              : "0 10px 30px rgba(0,0,0,0.4)",
+              ? "0 25px 55px -12px rgba(0,0,0,0.85), 0 0 45px rgba(16,185,129,0.14)"
+              : "0 10px 30px rgba(0,0,0,0.6)",
             transition: "border-color 300ms ease, box-shadow 300ms ease",
           }}
         >
@@ -196,28 +276,26 @@ function ProjectImageSlide({ project, reduced, onOpen }) {
               <motion.img
                 src={project.image}
                 alt={project?.title || "Project preview"}
-                className="relative z-10 h-full w-full object-cover"
+                className="relative z-10 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
                 loading="lazy"
-                animate={{ scale: 1 }}
-                whileHover={reduced ? undefined : { scale: 1.04 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               />
             ) : (
               <div className="flex h-full items-center justify-center font-mono text-xs uppercase tracking-[0.2em] text-white/40">
-                Image unavailable
+                Image preview unavailable
               </div>
             )}
 
-            <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
+            {/* Rotating Stamp */}
             <motion.div
-              className="absolute right-4 top-4 z-30 flex h-20 w-20 items-center justify-center sm:h-24 sm:w-24"
+              className="absolute right-3 top-3 z-30 flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center opacity-90 transition-opacity duration-300 group-hover:opacity-100"
               animate={reduced ? undefined : { rotate: 360 }}
-              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
             >
               <svg
                 viewBox="0 0 120 120"
-                className="absolute inset-0 h-full w-full fill-white"
+                className="absolute inset-0 h-full w-full fill-white/80"
               >
                 <defs>
                   <path
@@ -225,14 +303,14 @@ function ProjectImageSlide({ project, reduced, onOpen }) {
                     d="M 60,60 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0"
                   />
                 </defs>
-                <text className="font-mono text-[9px] uppercase tracking-[0.12em]">
+                <text className="font-mono text-[9px] uppercase tracking-[0.14em]">
                   <textPath href={`#${badgePathId}`}>
                     DISCOVER • OPEN • EXPLORE •{" "}
                   </textPath>
                 </text>
               </svg>
-              <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white text-black">
-                <Eye size={16} strokeWidth={2.2} />
+              <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white text-black shadow-lg">
+                <Eye size={14} strokeWidth={2.4} />
               </span>
             </motion.div>
           </div>
@@ -242,76 +320,84 @@ function ProjectImageSlide({ project, reduced, onOpen }) {
   );
 }
 
-function FeaturedProjectCard({ project, index, inView, reduced }) {
+// ─── Individual Project Card Row ────────────────────────────────────────────
+function FeaturedProjectCard({ project, index, reduced }) {
   const isImageRight = index % 2 === 0;
   const navigate = useNavigate();
+  const cardRef = useRef(null);
+  const cardInView = useInView(cardRef, { once: true, margin: "-100px" });
 
   return (
     <motion.article
-      initial={reduced ? {} : { opacity: 0, y: 50 }}
+      ref={cardRef}
+      initial={reduced ? {} : { opacity: 0, y: 40 }}
       animate={
-        reduced ? {} : inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
+        reduced ? {} : cardInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }
       }
       transition={{
         duration: 0.8,
-        delay: 0.2 + index * 0.15,
+        delay: 0.1 + index * 0.08,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`flex flex-col ${isImageRight ? "lg:flex-row" : "lg:flex-row-reverse"} gap-8 lg:gap-16 items-center`}
+      className={`relative z-20 flex flex-col ${
+        isImageRight ? "lg:flex-row" : "lg:flex-row-reverse"
+      } gap-8 lg:gap-14 xl:gap-20 items-center`}
     >
-      {/* Content Side */}
-      <div className="flex-1 w-full flex flex-col items-start z-10">
-        <div className="flex items-center gap-4 mb-6">
-          <span className="font-mono text-[12px] tracking-[0.1em] text-white/30">
+      {/* Fully Transparent Content Info */}
+      <div className="flex-1 w-full flex flex-col items-start bg-transparent border-none p-0">
+        <div className="flex items-center gap-3.5 mb-5">
+          <span className="font-mono text-[12px] tracking-[0.1em] text-white/40">
             0{index + 1}
           </span>
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/50 px-3 py-1 rounded-full border border-white/10 bg-white/5">
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-emerald-400/90 px-2.5 py-0.5 border border-emerald-500/20 bg-emerald-500/5">
             {project.category}
           </span>
-          <span className="font-mono text-[10px] tracking-[0.1em] text-white/30">
+          <span className="font-mono text-[11px] tracking-[0.1em] text-white/40">
             {project.date}
           </span>
         </div>
 
-        <h3 className="font-geist font-[800] text-white text-[32px] sm:text-[40px] leading-tight tracking-tight mb-5">
+        <h3 className="font-geist font-[800] text-white text-[28px] sm:text-[36px] lg:text-[42px] leading-[1.08] tracking-tight mb-4 drop-shadow-md">
           {project.title}
         </h3>
 
-        <p className="font-geist text-[15px] sm:text-[16px] text-white/50 leading-relaxed max-w-lg mb-8">
+        <p className="font-geist text-[15px] sm:text-[16px] text-white/70 leading-relaxed max-w-lg mb-7 drop-shadow-sm">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-10">
+        <div className="flex flex-wrap gap-2 mb-8">
           {project.tech.map((t) => (
             <TechPill key={t} label={t} />
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3.5">
           <button
             onClick={() => navigate(`/projects/${project.slug}`)}
-            className="group relative px-6 py-3 bg-white text-black font-mono text-[11px] tracking-[0.15em] uppercase rounded-none overflow-hidden transition-transform active:scale-95"
+            className="group relative px-6 py-3 bg-white text-black font-mono text-[11px] tracking-[0.15em] uppercase overflow-hidden active:scale-95 transition-transform"
           >
-            <span className="relative z-10 font-bold">Case Study</span>
-            <div className="absolute inset-0 bg-white/90 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+            <span className="relative z-10 font-bold flex items-center gap-1.5">
+              Case Study <ArrowUpRight size={13} strokeWidth={2.5} />
+            </span>
+            <div className="absolute inset-0 bg-neutral-200 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
           </button>
 
-          {project.liveUrl !== "#" && (
+          {project.liveUrl && project.liveUrl !== "#" && (
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 border border-white/10 text-white font-mono text-[11px] tracking-[0.15em] uppercase rounded-none hover:border-white/30 hover:bg-white/5 transition-colors"
+              className="px-5 py-3 border border-white/10 text-white/80 hover:text-white font-mono text-[11px] tracking-[0.15em] uppercase hover:border-white/30 hover:bg-white/[0.04] transition-colors"
             >
               Live Demo
             </a>
           )}
-          {project.githubUrl !== "#" && (
+          {project.githubUrl && project.githubUrl !== "#" && (
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3 border border-white/10 text-white font-mono text-[11px] tracking-[0.15em] uppercase rounded-none hover:border-white/30 hover:bg-white/5 transition-colors"
+              className="px-5 py-3 border border-white/10 text-white/80 hover:text-white font-mono text-[11px] tracking-[0.15em] uppercase hover:border-white/30 hover:bg-white/[0.04] transition-colors"
             >
               Source
             </a>
@@ -319,23 +405,22 @@ function FeaturedProjectCard({ project, index, inView, reduced }) {
         </div>
       </div>
 
-      {/* Image Side */}
+      {/* Project Media */}
       <div className="flex-1 w-full">
         <ProjectImageSlide
           project={project}
           reduced={reduced}
-          onOpen={() => navigate(`/projects`)}
+          onOpen={() => navigate(`/projects/${project.slug}`)}
         />
       </div>
     </motion.article>
   );
 }
 
-// ─── Main FeaturedProjects Section ────────────────────────────────────────────
+// ─── Main Featured Projects Section ───────────────────────────────────────────
 export default function FeaturedProjects() {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-60px" });
   const headingInView = useInView(headingRef, { once: true, margin: "-40px" });
   const reduced = useReducedMotion();
 
@@ -348,21 +433,13 @@ export default function FeaturedProjects() {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
-      style={{ backgroundColor: "transparent" }}
+      className="relative w-full bg-[#050507]"
       aria-labelledby="featured-projects-heading"
     >
-      {/* ── Top blend from Education ── */}
-      <div
-        className="absolute top-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, transparent 100%)",
-        }}
-        aria-hidden="true"
-      />
+      {/* ── Fixed Viewport Center Background "WORK" with dynamic scaling ── */}
+      <FixedCenterWork targetRef={sectionRef} reduced={reduced} />
 
-      {/* ── Stars & Orbs ── */}
+      {/* ── Star Background Dots ── */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         aria-hidden="true"
@@ -377,78 +454,39 @@ export default function FeaturedProjects() {
               width: `${s.size}px`,
               height: `${s.size}px`,
               opacity: s.opacity,
-              animation: `twinkle ${s.duration}s ease-in-out ${s.delay}s infinite`,
-            }}
-          />
-        ))}
-      </div>
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        aria-hidden="true"
-      >
-        {ORBS.map((orb) => (
-          <div
-            key={orb.id}
-            className="absolute rounded-full"
-            style={{
-              left: orb.left,
-              top: orb.top,
-              width: orb.w,
-              height: orb.h,
-              background: `rgba(255,255,255,${orb.alpha})`,
-              filter: "blur(70px)",
-              animation: `floatOrb ${orb.dur}s ease-in-out ${orb.delay}s infinite`,
             }}
           />
         ))}
       </div>
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none z-0">
-        <div
-          style={{
-            width: "900px",
-            height: "600px",
-            background:
-              "radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.02) 0%, transparent 70%)",
-            filter: "blur(50px)",
-          }}
-        />
-      </div>
-
-      <SectionSpotlight sectionRef={sectionRef} />
-
-      {/* ── Main content ── */}
-      <div className="relative z-10 w-full max-w-[1500px] mx-auto px-5 sm:px-8 lg:px-14 xl:px-16 py-16 sm:py-24 lg:py-[120px]">
-        {/* Header exact match to TechEcosystem / Education */}
-        <div ref={headingRef} className="mb-16 sm:mb-20 lg:mb-32 relative">
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-20 sm:py-28 lg:py-36">
+        {/* Header Block */}
+        <div ref={headingRef} className="mb-16 sm:mb-24 lg:mb-32">
           <motion.div
-            className="flex items-center gap-3 mb-6 sm:mb-8"
+            className="flex items-center gap-3 mb-6"
             {...mp(
-              { opacity: 0, y: 16 },
-              headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
+              { opacity: 0, y: 12 },
+              headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 },
               { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
             )}
           >
-            <div
-              className="h-px w-6"
-              style={{ background: "rgba(255,255,255,0.2)" }}
-            />
-            <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-white/30">
-              Projects
+            <div className="h-px w-6 bg-emerald-400/50" />
+            <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-emerald-400/80">
+              Selected Works
             </span>
           </motion.div>
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <motion.h2
               id="featured-projects-heading"
-              className="font-geist font-[800] text-white leading-[0.92] tracking-tight"
+              className="font-geist font-[800] text-white leading-[0.9] tracking-tight"
               style={{
-                fontSize: "clamp(40px, 7.5vw, 90px)",
+                fontSize: "clamp(42px, 7vw, 92px)",
                 letterSpacing: "-0.04em",
               }}
               {...mp(
-                { opacity: 0, x: -30 },
-                headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 },
+                { opacity: 0, x: -20 },
+                headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 },
                 { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] },
               )}
             >
@@ -456,7 +494,7 @@ export default function FeaturedProjects() {
               <br />
               <span
                 style={{
-                  WebkitTextStroke: "1px rgba(255,255,255,0.15)",
+                  WebkitTextStroke: "1px rgba(255,255,255,0.25)",
                   color: "transparent",
                 }}
               >
@@ -466,17 +504,17 @@ export default function FeaturedProjects() {
 
             <motion.div
               {...mp(
-                { opacity: 0, x: 24 },
-                headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 },
-                { duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] },
+                { opacity: 0, x: 20 },
+                headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 },
+                { duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] },
               )}
             >
               <Link
                 to="/projects"
-                className="group flex items-center gap-3 font-mono text-[11px] sm:text-[12px] tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors"
+                className="group inline-flex items-center gap-2.5 font-mono text-[11px] sm:text-[12px] tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors"
               >
-                Explore Full Archive
-                <span className="transform group-hover:translate-x-2 transition-transform duration-300">
+                Archive Catalogue
+                <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">
                   →
                 </span>
               </Link>
@@ -484,35 +522,34 @@ export default function FeaturedProjects() {
           </div>
         </div>
 
-        {/* ── Featured Projects List ── */}
-        <div className="flex flex-col gap-24 lg:gap-40">
+        {/* ── Foreground Scrolling Project Cards ── */}
+        <div className="relative z-20 flex flex-col gap-24 sm:gap-32 lg:gap-44">
           {featured.map((project, index) => (
             <FeaturedProjectCard
-              key={project.id}
+              key={project.id || index}
               project={project}
               index={index}
-              inView={inView}
               reduced={reduced}
             />
           ))}
         </div>
 
-        {/* Bottom CTA to Archive */}
+        {/* Footer CTA */}
         <motion.div
-          className="mt-20 sm:mt-28 flex justify-center"
+          className="mt-24 sm:mt-36 flex justify-center relative z-20"
           {...mp(
             { opacity: 0, y: 20 },
-            inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
-            { delay: 0.4, duration: 0.8 },
+            headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+            { delay: 0.3, duration: 0.8 },
           )}
         >
           <Link
             to="/projects"
-            className="group relative px-8 py-4 bg-transparent border border-white/10 overflow-hidden rounded-full font-mono text-[12px] tracking-[0.2em] uppercase hover:border-white/30 transition-colors"
+            className="group relative px-8 py-4 bg-transparent border border-white/15 hover:border-white/35 transition-colors font-mono text-[11px] tracking-[0.2em] uppercase text-white"
           >
-            <div className="absolute inset-0 bg-white/5 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             <span className="relative z-10 flex items-center gap-3">
-              View All Projects
+              Explore All Repositories
               <span className="group-hover:translate-x-1 transition-transform">
                 →
               </span>
