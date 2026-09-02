@@ -1,283 +1,178 @@
-import React, { useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import { SiGithub, SiX } from "react-icons/si";
-import { FiArrowRight, FiMail, FiMapPin } from "react-icons/fi";
-import { FaLinkedinIn } from "react-icons/fa6";
+"use client";
 
-// Magnetic Hover Wrapper
-const Magnetic = ({ children, distance = 0.3 }) => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+import React from "react";
+import { motion } from "framer-motion";
+import { SiGithub, SiInstagram, SiWhatsapp } from "react-icons/si";
+import { FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
+import { FiArrowRight, FiArrowUp } from "react-icons/fi";
 
-  const springConfig = { damping: 15, stiffness: 150 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
-
-  const handleMouseMove = (e) => {
-    const { clientX, clientY, currentTarget } = e;
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    x.set((clientX - centerX) * distance);
-    y.set((clientY - centerY) * distance);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-const NAV_LINKS = [
-  "Home",
-  "About",
-  "Stack",
-  "Projects",
-  "Experience",
-  "Contact",
-];
-const RESOURCE_LINKS = [
-  "Resume",
-  "Blog",
-  "Case Studies",
-  "Certificates",
-  "Open Source",
-];
-const c = "ffffff";
 const SOCIALS = [
   {
-    icon: `https://img.icons8.com/?size=100&id=BrU2BBoRXiWq&format=png&color=${c}`,
-    label: "Instagram",
-    href: "https://www.instagram.com/frequency._0.001",
-  },
-  {
-    icon: `https://img.icons8.com/?size=100&id=efFfwotdkiU5&format=png&color=${c}`,
+    icon: SiGithub,
     label: "GitHub",
     href: "https://github.com/Abinashrout244",
   },
   {
-    icon: `https://img.icons8.com/?size=100&id=13963&format=png&color=${c}`,
-    label: "Twitter",
-    href: "https://x.com/AbinashRout2251",
-  },
-  {
-    icon: `https://img.icons8.com/?size=100&id=108786&format=png&color=${c}`,
+    icon: FaLinkedinIn,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/abinash-rout-274285322",
   },
   {
-    icon: `https://img.icons8.com/?size=100&id=9L16NypUzu38&format=png&color=${c}`,
-    label: "LeetCode",
-    href: "https://leetcode.com/u/Abinash_90/",
+    icon: SiInstagram,
+    label: "Instagram",
+    href: "https://www.instagram.com/frequency._0.001",
   },
   {
-    icon: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+    icon: FaXTwitter,
+    label: "Twitter",
+    href: "https://x.com/AbinashRout2251",
+  },
+  {
+    icon: SiWhatsapp,
     label: "WhatsApp",
-    href: "https://wa.me/918249281685?text=Hi%20Binash,%20I%20found%20your%20portfolio.",
+    href: "https://wa.me/918249281685?text=Hi%20Abinash,%20I%20found%20your%20portfolio.",
   },
 ];
 
 export default function LuxuryFooter() {
-  const [time, setTime] = useState("");
-
-  // Live IST Clock
-  useEffect(() => {
-    const updateTime = () => {
-      const options = {
-        timeZone: "Asia/Kolkata",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-      };
-      setTime(new Intl.DateTimeFormat("en-US", options).format(new Date()));
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <footer
       id="site-footer"
-      className="relative w-full bg-[#050505] text-[#A3A3A3] font-sans overflow-hidden py-16 sm:py-24 border-t border-white/[0.08] selection:bg-white selection:text-black"
+      className="relative w-full bg-[#fbfbfb] text-[#0A0A0A] border-t border-[#E5E5E5] pt-12 selection:bg-black selection:text-white"
     >
-      <style>{`
-        .bg-noise {
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
-        }
-      `}</style>
+      {/* ================= MINIMALIST FLOATING BACK TO TOP (NO GREEN DOT) ================= */}
+      <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-50">
+        <motion.button
+          onClick={scrollToTop}
+          whileHover={{ y: -3, scale: 1.04 }}
+          whileTap={{ scale: 0.94 }}
+          aria-label="Back to top"
+          className="group relative flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-neutral-300 shadow-[0_8px_20px_rgba(0,0,0,0.06)] transition-all duration-300 hover:border-black hover:shadow-[0_12px_24px_rgba(0,0,0,0.12)]"
+        >
+          <span className="text-[11px] font-mono tracking-widest uppercase text-neutral-600 font-semibold transition-colors duration-300 group-hover:text-black">
+            TOP
+          </span>
 
-      {/* Ambient background */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#4D8DFF]/[0.03] rounded-full blur-[140px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#8B5CF6]/[0.03] rounded-full blur-[160px] pointer-events-none translate-x-1/3 translate-y-1/3" />
-      <div className="absolute inset-0 bg-noise pointer-events-none z-0" />
+          <div className="w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center transition-all duration-300 group-hover:bg-black group-hover:text-white">
+            <FiArrowUp className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" />
+          </div>
+        </motion.button>
+      </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ================= TOP CONTENT ================= */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 pt-4">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-8 gap-y-14"
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8"
         >
-          {/* Heading + CTA */}
-          <div className="sm:col-span-2 lg:col-span-5 flex flex-col gap-6">
-            <h2 className="text-5xl sm:text-7xl lg:text-8xl font-semibold tracking-tight text-white leading-[0.95]">
-              Let&apos;s{" "}
-              <span className="font-light italic text-[#39FF88]">connect.</span>
-            </h2>
-            <p className="text-sm sm:text-base leading-relaxed max-w-sm text-white/50">
-              Building digital experiences with precision, performance, and
-              modern design. Available for freelance &amp; collaborations.
-            </p>
+          {/* LEFT CONTENT */}
+          <div className="flex flex-col gap-4">
             <div>
-              <Magnetic distance={0.2}>
-                <motion.a
-                  href="#contact"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group inline-flex items-center gap-2 px-7 py-3 bg-white text-black text-sm font-medium rounded-full transition-shadow duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]"
-                >
-                  <span>Hire Me</span>
-                  <FiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </motion.a>
-              </Magnetic>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="lg:col-span-2">
-            <span className="text-xs uppercase tracking-widest text-white/40 block mb-5">
-              Navigation
-            </span>
-            <ul className="space-y-3 text-sm">
-              {NAV_LINKS.map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase()}`}
-                    className="group relative inline-flex items-center text-white/60 hover:text-white transition-colors duration-300"
-                  >
-                    <span className="transition-transform duration-300 ease-out group-hover:translate-x-1">
-                      {item}
-                    </span>
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-white transition-all duration-300 ease-out group-hover:w-full" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div className="lg:col-span-2">
-            <span className="text-xs uppercase tracking-widest text-white/40 block mb-5">
-              Resources
-            </span>
-            <ul className="space-y-3 text-sm">
-              {RESOURCE_LINKS.map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="text-white/60 hover:text-green-500 hover:font-semibold transition-colors duration-300"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social + status */}
-          <div className="sm:col-span-2 lg:col-span-3 flex flex-col gap-6">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-white/40 block mb-5">
-                Connect
+              <span className="text-[11px] uppercase tracking-[0.25em] text-[#71717a] block mb-2 font-mono font-semibold">
+                Let&apos;s Connect
               </span>
-              <div className="flex items-center gap-3 flex-wrap">
-    {SOCIALS.map((item, idx) => {
-    return (
-      <Magnetic key={idx} distance={0.3}>
-        <a
-          href={item.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={item.label}
-          className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
-        >
-          <img
-            src={item.icon}
-            alt={item.label}
-            className="w-4 h-4 object-contain"
-          />
-        </a>
-      </Magnetic>
-    );
-  })}
-</div>
+
+              <p className="text-sm text-[#52525b] leading-relaxed max-w-[260px]">
+                Building digital experiences with precision, performance, and
+                modern design.
+              </p>
             </div>
 
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-full max-w-[220px] p-4 rounded-xl bg-white/[0.03] backdrop-blur-md border border-white/[0.08] shadow-2xl"
-            >
-              <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-white/[0.06]">
-                <span className="text-xs uppercase tracking-wider text-white/50">
-                  Status
-                </span>
-                <span className="flex items-center gap-1.5 text-xs font-medium text-[#39FF88]">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#39FF88] opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#39FF88]" />
-                  </span>
-                  Online
-                </span>
-              </div>
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between items-center text-white/80">
-                  <span className="text-white/40">Location</span>
-                  <span>India</span>
-                </div>
-                <div className="flex justify-between items-center text-white/80">
-                  <span className="text-white/40">Time</span>
-                  <span className="text-[#39FF88]">{time || "--:--:--"}</span>
-                </div>
-                <div className="flex justify-between items-center text-white/80">
-                  <span className="text-white/40">Latency</span>
-                  <span>18ms</span>
-                </div>
-              </div>
-            </motion.div>
+            {/* HIRE ME BUTTON */}
+            <div>
+              <a
+                href="#contact"
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-[#0A0A0A] text-white text-xs font-semibold rounded-lg shadow-sm transition-all duration-300 hover:bg-neutral-800 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+              >
+                Hire Me
+                <FiArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </div>
+          </div>
+
+          {/* RIGHT - ANIMATED SOCIALS */}
+          <div className="flex flex-col items-start sm:items-end gap-3">
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#71717a] font-mono font-semibold">
+              Find Me On
+            </span>
+
+            <div className="flex items-center gap-2.5">
+              {SOCIALS.map(({ icon: Icon, label, href }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  whileHover={{ y: -3, scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group relative flex items-center justify-center w-10 h-10 rounded-full border border-neutral-200 bg-white text-neutral-800 transition-all duration-300 hover:border-black hover:bg-black hover:text-white shadow-sm"
+                >
+                  <Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                </motion.a>
+              ))}
+            </div>
           </div>
         </motion.div>
+      </div>
 
-        {/* Bottom row */}
-        <div className="mt-16 pt-8 border-t border-white/[0.08]">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40">
-            <div className="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
-              <span className="text-white/80 font-medium">© 2026 Abhi.</span>
-              <span className="hidden sm:inline text-white/20">•</span>
-              <span>Crafted with React, Tailwind CSS &amp; Framer Motion</span>
-            </div>
-            <div className="text-center italic text-sm text-white/60 tracking-wide">
-              Designing experiences. Engineering performance.
-            </div>
-            <div className="flex items-center gap-1.5 text-white/60">
-              <FiMapPin className="w-3.5 h-3.5 text-[#39FF88]" />
-              <span>Odisha, India</span>
-            </div>
-          </div>
-        </div>
+      {/* ================= GENTLY CROPPED WORDMARK (SUBTLE BOTTOM CUT ONLY) ================= */}
+
+      <div className="relative w-full overflow-hidden pointer-events-none select-none mt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 0.8,
+            ease: [0.16, 1, 0.3, 1],
+            delay: 0.1,
+          }}
+          className="w-full"
+        >
+          {/*
+            - viewBox="0 0 1000 135" starts at y=0 with 8px top padding so the top edge and "i" dot never cut off
+            - The bottom edge cuts at y=135 while font size is 210px, hiding ~40% of the lower letters
+          */}
+          <svg
+            viewBox="0 0 1000 155"
+            preserveAspectRatio="none"
+            className="block w-full h-auto"
+            aria-hidden="true"
+          >
+            <text
+              x="0"
+              y="12"
+              dominantBaseline="hanging"
+              textLength="1000"
+              lengthAdjust="spacingAndGlyphs"
+              className="fill-[#0A0A0A]"
+              style={{
+                fontFamily:
+                  "'Plus Jakarta Sans', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                fontSize: "205px",
+                fontWeight: 900,
+                letterSpacing: "-0.055em",
+              }}
+            >
+              abinash
+            </text>
+          </svg>
+          <span className="sr-only">abinash</span>
+        </motion.div>
       </div>
     </footer>
   );
