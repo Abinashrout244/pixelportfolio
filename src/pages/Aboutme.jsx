@@ -1,6 +1,7 @@
 import React from "react";
 import img from "../assets/profile.jpeg";
 import { Link } from "react-router-dom";
+import AboutHero from "../components/AboutHero";
 
 export default function AboutMe() {
   const beliefs = [
@@ -78,62 +79,10 @@ export default function AboutMe() {
         </nav>
 
         {/* SECTION 1: HERO / ABOUT INTRO */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          <div className="lg:col-span-7 space-y-8 relative">
-            <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase">
-              ABOUT
-            </span>
-
-            <div className="relative">
-              {/* Overlay Watermark Background Text */}
-              <span className="absolute -top-12 -left-2 text-6xl sm:text-8xl lg:text-9xl font-extrabold text-zinc-800/40 select-none pointer-events-none tracking-tight">
-                ABINASH
-              </span>
-              <h1 className="relative text-4xl sm:text-6xl font-bold tracking-tight text-white">
-                Hi, I'm Abinash.
-              </h1>
-            </div>
-
-            <div className="space-y-6 text-base sm:text-lg text-zinc-400 leading-relaxed font-normal">
-              <p>
-                I'm a Computer Science student and developer who enjoys turning
-                ideas into useful, thoughtful digital experiences. I started
-                with the fundamentals of programming and gradually moved into
-                building applications across the frontend and backend.
-              </p>
-              <p>
-                My current focus is on becoming a stronger full-stack developer
-                — working with technologies like React, JavaScript, Node.js,
-                Express, MongoDB, and Java , ADV java,SpringBoot,MicroServise
-                while continuously improving my problem-solving and DSA skills.
-              </p>
-              <p>
-                I'm still early in my journey, but that's what makes it
-                exciting. I'm constantly learning, exploring new technologies,
-                solving problems, and pushing myself to write better code and
-                build better things.
-              </p>
-            </div>
-          </div>
-
-          {/* Hero image card with ambient glow */}
-          <div className="lg:col-span-5">
-            <div className="group relative">
-              {/* Ambient glow ring, breathes slowly, intensifies on hover */}
-              <div className="absolute -inset-1 -2xl bg-gradient-to-br from-indigo-500/40 via-fuchsia-500/20 to-transparent opacity-40 blur-xl transition-all duration-500 group-hover:opacity-80 group-hover:blur-2xl animate-pulse" />
-              <div className="relative -xl overflow-hidden bg-[#18181b]/80 backdrop-blur-sm border border-zinc-800 p-2 transition-colors duration-300 group-hover:border-zinc-700">
-                <img
-                  src={img}
-                  alt="Abinash - Frontend Engineer"
-                  className="w-full h-[380px] sm:h-[460px] lg:h-[500px] object-cover object-center -lg transition-transform duration-500 group-hover:scale-[1.02]"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        <AboutHero img={img} />
 
         {/* SECTION 2: WHAT I BELIEVE */}
-        <section className="space-y-10">
+        <section className="space-y-10 pb-5">
           <div>
             <span className="text-xs font-mono text-zinc-500 tracking-wider">
               01
