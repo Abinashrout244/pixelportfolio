@@ -23,9 +23,7 @@ export default function ScrollProgress() {
         0,
       );
 
-      return scrollRange === 0
-        ? 0
-        : clamp(window.scrollY / scrollRange, 0, 1);
+      return scrollRange === 0 ? 0 : clamp(window.scrollY / scrollRange, 0, 1);
     };
 
     const paint = (progress) => {
@@ -99,7 +97,10 @@ export default function ScrollProgress() {
     return () => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
-      reducedMotion.removeEventListener?.("change", handleMotionPreferenceChange);
+      reducedMotion.removeEventListener?.(
+        "change",
+        handleMotionPreferenceChange,
+      );
       if (frameId) cancelAnimationFrame(frameId);
     };
   }, []);
@@ -114,7 +115,11 @@ export default function ScrollProgress() {
         aria-valuemax="100"
         aria-valuenow="0"
       />
-      <span ref={headRef} className="scroll-progress__head" aria-hidden="true" />
+      <span
+        ref={headRef}
+        className="scroll-progress__head"
+        aria-hidden="true"
+      />
     </div>
   );
 }
