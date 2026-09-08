@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
-import { Moon, Download } from "lucide-react";
+import { Download, QrCode } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import NavItem from "./NavItem";
@@ -8,6 +8,7 @@ import MegaMenu from "./MegaMenu";
 import MobileMenu from "./MobileMenu";
 import IconButton from "./IconButton";
 import Tooltip from "./Tooltip";
+import { usePortfolioQR } from "../../context/PortfolioQRContext";
 
 /* ─── Primary navigation links ──────────────────────────── */
 export const NAV_LINKS = [
@@ -24,6 +25,7 @@ export default function Navbar({ onOpenContactModal }) {
   const closeTimer = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const { openQRModal } = usePortfolioQR();
   const sectionIds = useRef(["hero", "stack", "education", "projects"]);
 
   useEffect(() => {
@@ -102,7 +104,7 @@ export default function Navbar({ onOpenContactModal }) {
       setActiveLink("#");
       navigate(href);
     },
-    [location.hash, location.pathname, navigate, scrollToSection]
+    [location.hash, location.pathname, navigate, scrollToSection],
   );
 
   useEffect(() => {
@@ -162,7 +164,7 @@ export default function Navbar({ onOpenContactModal }) {
   }, [getActiveSectionLink, location.pathname, location.hash]);
 
   const isMoreActive = ["/about", "/achievements", "/uses", "/links"].includes(
-    location.pathname
+    location.pathname,
   );
 
   const openContactModal = useCallback(() => {
@@ -255,14 +257,22 @@ export default function Navbar({ onOpenContactModal }) {
 
           <div className="w-px h-5 bg-white/[0.08] mx-1" />
 
-          <Tooltip content="FUN">
+          <Tooltip content="Take Me With You">
             <IconButton
-              icon={Moon}
-              label="Toggle theme"
-              onClick={() => console.log("theme toggle")}
+              icon={QrCode}
+              label="Take Me With You"
+              onClick={() =>
+                openQRModal({
+                  title: "Take My Portfolio With You",
+                  description: "One scan. Everything about me.",
+                  items: [
+                    { title: "Business Card", description: "Scan to open my digital business card.", value: "/card", downloadFilename: "abinash-business-card-qr.png" },
+                    { title: "Portfolio Share", description: "Scan to open my portfolio share page.", value: "/share", downloadFilename: "abinash-portfolio-share-qr.png" },
+                  ],
+                })
+              }
             />
           </Tooltip>
-
           <Tooltip content="Download Resume">
             <IconButton
               icon={Download}
