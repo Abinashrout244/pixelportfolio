@@ -1,19 +1,9 @@
-/**
- * MobileMenu.jsx
- * Premium full-screen mobile navigation drawer.
- */
-
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Menu,
-  BookOpen,
-  User,
-  Monitor,
-  Link2,
-} from "lucide-react";
+import { Menu, BookOpen, User, Monitor, Link2, QrCode } from "lucide-react";
 import MobileHeader from "./MobileHeader";
 import MobileNavItem from "./MobileNavItem";
+import { usePortfolioQR } from "../../context/PortfolioQRContext";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -69,6 +59,7 @@ export default function MobileMenu({
   onOpenContactModal,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { openQRModal } = usePortfolioQR();
 
   const close = useCallback(() => {
     setIsOpen(false);
@@ -108,7 +99,7 @@ export default function MobileMenu({
       onNavigate?.(href, event);
       close();
     },
-    [close, onNavigate]
+    [close, onNavigate],
   );
 
   const handleConnect = useCallback(() => {
@@ -118,33 +109,76 @@ export default function MobileMenu({
 
   return (
     <>
-      <motion.button
-        aria-label="Open menu"
-        aria-expanded={isOpen}
-        aria-controls="mobile-nav-drawer"
-        onClick={toggleMenu}
-        whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.06)" }}
-        whileTap={{ scale: 0.92 }}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
-        className={[
-          "relative flex items-center justify-center w-10 h-10",
-          "border border-white/[0.08] bg-transparent",
-          "text-[#B4B4B4] hover:text-white cursor-pointer rounded-none",
-          "focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30",
-        ].join(" ")}
-      >
-        <motion.span
-          variants={{
-            rest: { rotate: 0 },
-            hover: { rotate: 10 },
+      <div className="flex items-center gap-2">
+        <motion.button
+          aria-label="Take Me With You"
+          onClick={() =>
+            openQRModal({
+              title: "Take My Portfolio With You",
+              description: "One scan. Everything about me.",
+              items: [
+                { title: "Business Card", description: "Scan to open my digital business card.", value: "/card", downloadFilename: "abinash-business-card-qr.png" },
+                { title: "Portfolio Share", description: "Scan to open my portfolio share page.", value: "/share", downloadFilename: "abinash-portfolio-share-qr.png" },
+              ],
+            })
+          }
+          whileHover={{
+            scale: 1.04,
+            backgroundColor: "rgba(255,255,255,0.06)",
           }}
-          initial="rest"
-          whileHover="hover"
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          whileTap={{ scale: 0.92 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          className={[
+            "relative flex items-center justify-center w-10 h-10",
+            "border border-white/[0.08] bg-transparent",
+            "text-[#B4B4B4] hover:text-white cursor-pointer rounded-none",
+            "focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30",
+          ].join(" ")}
         >
-          <Menu size={18} strokeWidth={1.5} />
-        </motion.span>
-      </motion.button>
+          <motion.span
+            variants={{
+              rest: { rotate: 0 },
+              hover: { rotate: 10 },
+            }}
+            initial="rest"
+            whileHover="hover"
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <QrCode size={18} strokeWidth={1.5} />
+          </motion.span>
+        </motion.button>
+
+        <motion.button
+          aria-label="Open menu"
+          aria-expanded={isOpen}
+          aria-controls="mobile-nav-drawer"
+          onClick={toggleMenu}
+          whileHover={{
+            scale: 1.04,
+            backgroundColor: "rgba(255,255,255,0.06)",
+          }}
+          whileTap={{ scale: 0.92 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          className={[
+            "relative flex items-center justify-center w-10 h-10",
+            "border border-white/[0.08] bg-transparent",
+            "text-[#B4B4B4] hover:text-white cursor-pointer rounded-none",
+            "focus:outline-none focus-visible:ring-1 focus-visible:ring-white/30",
+          ].join(" ")}
+        >
+          <motion.span
+            variants={{
+              rest: { rotate: 0 },
+              hover: { rotate: 10 },
+            }}
+            initial="rest"
+            whileHover="hover"
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Menu size={18} strokeWidth={1.5} />
+          </motion.span>
+        </motion.button>
+      </div>
 
       <AnimatePresence>
         {isOpen && (
@@ -186,7 +220,10 @@ export default function MobileMenu({
                   />
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="flex flex-col gap-6 mt-6">
+                <motion.div
+                  variants={itemVariants}
+                  className="flex flex-col gap-6 mt-6"
+                >
                   {NAV_LINKS.map((link) => (
                     <MobileNavItem
                       key={link.label}
