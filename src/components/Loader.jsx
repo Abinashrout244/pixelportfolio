@@ -215,7 +215,7 @@ const Loader = ({ onComplete }) => {
               FULL-STACK DEVELOPER // 2026
             </span>
             <span className="opacity-60 text-emerald-400/70">
-              5+ YEARS BUILDING FOR THE WEB
+              2+ YEARS BUILDING FOR THE WEB
             </span>
           </div>
 
