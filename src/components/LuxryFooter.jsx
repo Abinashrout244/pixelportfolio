@@ -94,10 +94,11 @@ export default function LuxuryFooter() {
             {/* HIRE ME BUTTON */}
             <div>
               <a
-                href="#contact"
+                href="https://drive.google.com/file/d/1apdbjSpM7w5qHi9fRZAOTbPWvK8QK03U/view?usp=sharing"
+                target="blank"
                 className="group inline-flex items-center gap-2 px-5 py-2.5 bg-[#0A0A0A] text-white text-xs font-semibold rounded-lg shadow-sm transition-all duration-300 hover:bg-neutral-800 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
               >
-                Hire Me
+                Resume.me
                 <FiArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </div>
@@ -143,10 +144,6 @@ export default function LuxuryFooter() {
           }}
           className="w-full"
         >
-          {/*
-            - viewBox="0 0 1000 135" starts at y=0 with 8px top padding so the top edge and "i" dot never cut off
-            - The bottom edge cuts at y=135 while font size is 210px, hiding ~40% of the lower letters
-          */}
           <svg
             viewBox="0 0 1000 155"
             preserveAspectRatio="none"

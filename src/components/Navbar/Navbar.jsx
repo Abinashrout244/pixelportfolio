@@ -266,19 +266,34 @@ export default function Navbar({ onOpenContactModal }) {
                   title: "Take My Portfolio With You",
                   description: "One scan. Everything about me.",
                   items: [
-                    { title: "Business Card", description: "Scan to open my digital business card.", value: "/card", downloadFilename: "abinash-business-card-qr.png" },
-                    { title: "Portfolio Share", description: "Scan to open my portfolio share page.", value: "/share", downloadFilename: "abinash-portfolio-share-qr.png" },
+                    {
+                      title: "Business Card",
+                      description: "Scan to open my digital business card.",
+                      value: "/card",
+                      downloadFilename: "abinash-business-card-qr.png",
+                    },
+                    {
+                      title: "Portfolio Share",
+                      description: "Scan to open my portfolio share page.",
+                      value: "/share",
+                      downloadFilename: "abinash-portfolio-share-qr.png",
+                    },
                   ],
                 })
               }
             />
           </Tooltip>
           <Tooltip content="Download Resume">
-            <IconButton
-              icon={Download}
-              label="Download CV"
-              onClick={() => console.log("download CV")}
-            />
+            <a
+              href="https://drive.google.com/uc?export=download&id=1apdbjSpM7w5qHi9fRZAOTbPWvK8QK03U"
+              download="RESUME.pdf"
+            >
+              <IconButton
+                icon={Download}
+                label="Download CV"
+                onClick={() => console.log("download CV")}
+              />
+            </a>
           </Tooltip>
         </div>
 
