@@ -36,13 +36,7 @@ function IconGithub(props) {
     </svg>
   );
 }
-function IconDiscord(props) {
-  return (
-    <svg {...iconProps} {...props} fill="currentColor" stroke="none">
-      <path d="M20.3 5.4A18 18 0 0 0 15.7 4l-.3.6a13 13 0 0 1 3.9 1.5 15 15 0 0 0-11.6 0A13 13 0 0 1 11.6 4l-.3-.6a18 18 0 0 0-4.6 1.4C3.6 9 2.9 12.6 3.2 16.1a18 18 0 0 0 5.2 2.6l.8-1.3a12 12 0 0 1-1.9-.9l.4-.3a13 13 0 0 0 11 0l.4.3c-.6.4-1.2.6-1.9.9l.8 1.3a18 18 0 0 0 5.2-2.6c.4-4-.7-7.6-2.9-10.7zM9.7 14.3c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8zm4.6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8z" />
-    </svg>
-  );
-}
+
 function IconMail(props) {
   return (
     <svg {...iconProps} {...props}>
@@ -98,17 +92,48 @@ function IconArrowUpRight(props) {
     </svg>
   );
 }
+function IconInstagram(props) {
+  return (
+    <svg
+      {...iconProps}
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" />
+    </svg>
+  );
+}
 
 /* ---------------------------------------------------------------- */
 /* Data                                                             */
 /* ---------------------------------------------------------------- */
 
 const SOCIALS = [
-  { icon: IconGithub, href: "https://github.com/", label: "GitHub" },
-  { icon: IconLinkedin, href: "https://linkedin.com/", label: "LinkedIn" },
-  { icon: IconX, href: "https://x.com/", label: "X" },
-  { icon: IconDiscord, href: "#discord", label: "Discord" },
-  { icon: IconMail, href: "mailto:abinash.work@gmail.com", label: "Email" },
+  {
+    icon: IconGithub,
+    href: "https://github.com/Abinashrout244",
+    label: "GitHub",
+  },
+  {
+    icon: IconLinkedin,
+    href: "https://www.linkedin.com/in/abinash-rout-274285322",
+    label: "LinkedIn",
+  },
+  { icon: IconX, href: "https://x.com/AbinashRout2251", label: "X" },
+  { icon: IconMail, href: "mailto:abinashrout.mail@gmail.com", label: "Email" },
+  {
+    icon: IconInstagram,
+    href: "https://www.instagram.com/frequency._0.001",
+    label: "Instagram",
+  },
 ];
 
 const SERVICES = [
@@ -125,7 +150,7 @@ const SERVICES = [
     title: "GitHub",
     desc: "Open-source code & experiments",
     icon: IconGithub,
-    href: "https://github.com/",
+    href: "https://github.com/Abinashrout244",
     baseMs: 64,
   },
   {
@@ -133,32 +158,24 @@ const SERVICES = [
     title: "Resume",
     desc: "Download the latest PDF",
     icon: IconFileText,
-    href: "#resume",
+    href: "https://drive.google.com/file/d/1apdbjSpM7w5qHi9fRZAOTbPWvK8QK03U/view",
     baseMs: 21,
   },
   {
-    id: "blog",
-    title: "Blog",
-    desc: "Notes on building & shipping",
-    icon: IconRss,
-    href: "#blog",
-    baseMs: 47,
+    id: "instagram",
+    title: "Instagram",
+    desc: "Coonnect with Social",
+    icon: IconInstagram,
+    href: "https://www.instagram.com/frequency._0.001",
+    baseMs: 22,
   },
   {
     id: "uses",
     title: "Uses",
     desc: "The gear & stack behind the work",
     icon: IconWrench,
-    href: "#uses",
+    href: "/uses",
     baseMs: 29,
-  },
-  {
-    id: "guestbook",
-    title: "Guestbook",
-    desc: "Leave a note, say hello",
-    icon: IconBookOpen,
-    href: "#guestbook",
-    baseMs: 33,
   },
 ];
 
