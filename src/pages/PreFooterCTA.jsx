@@ -186,7 +186,7 @@ export function PreFooterCTA({
           >
             {/* Email */}
             <a
-              href="mailto:sunilbandwork@gmail.com"
+              href="mailto:abinashrout.mail@gmail.com"
               className="hover:text-white transition-colors flex items-center gap-1.5"
               aria-label="Email"
             >
@@ -200,7 +200,7 @@ export function PreFooterCTA({
 
             {/* Phone */}
             <a
-              href="tel:+918390685016"
+              href="tel:+918249281685"
               className="hover:text-white transition-colors flex items-center gap-1.5"
               aria-label="Phone"
             >
@@ -214,7 +214,7 @@ export function PreFooterCTA({
 
             {/* GitHub */}
             <a
-              href="https://github.com"
+              href="https://github.com/Abinashrout244"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors flex items-center gap-1.5"
@@ -230,7 +230,7 @@ export function PreFooterCTA({
 
             {/* LinkedIn */}
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/abinash-rout-274285322"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors flex items-center gap-1.5"
@@ -246,7 +246,7 @@ export function PreFooterCTA({
 
             {/* Twitter / X */}
             <a
-              href="https://x.com"
+              href="https://x.com/AbinashRout2251"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors flex items-center gap-1.5"

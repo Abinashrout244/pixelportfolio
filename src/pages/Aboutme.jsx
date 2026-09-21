@@ -96,29 +96,6 @@ export default function AboutMe() {
             ))}
           </div>
         </section>
-
-        {/* SECTION 4: CALL TO ACTION FOOTER */}
-        <section className="pt-8 border-t border-zinc-800">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="space-y-1">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Let's build something.
-              </h2>
-              <p className="text-zinc-400 text-sm sm:text-base">
-                Always up for interesting problems and good conversation.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4 w-full sm:w-auto">
-              <button className="flex-1 sm:flex-none px-6 py-3 bg-white hover:bg-zinc-200 text-black font-mono text-xs font-bold tracking-widest uppercase transition-colors ">
-                FIND ME ONLINE
-              </button>
-              <button className="flex-1 sm:flex-none px-6 py-3 bg-transparent border border-zinc-700 hover:border-zinc-400 text-zinc-300 hover:text-white font-mono text-xs font-bold tracking-widest uppercase transition-colors ">
-                SIGN GUESTBOOK
-              </button>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );
