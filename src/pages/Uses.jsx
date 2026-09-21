@@ -14,15 +14,15 @@ const sections = [
         description:
           "Home base for everything I write. Fast, lightweight, and customized.",
         image:
-          "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/32/f6/ed/32f6ed3f4963c98b45fc8c8525d5bf9f.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
-        title: "GitHub Copilot",
-        meta: "AI PAIR",
+        title: "Git & GitHub",
+        meta: "VERSION CONTROL",
         description:
-          "Handles boilerplate and speed-runs tedious logic without losing precision.",
+          "Tracks my code, manages versions, and keeps every project connected to GitHub.",
         image:
-          "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/0e/1e/00/0e1e0044584f0814dd09c01414b2ecf0.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
         title: "Postman",
@@ -30,18 +30,19 @@ const sections = [
         description:
           "Where endpoints get refined and verified before UI integration.",
         image:
-          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/21/17/77/21177732cb708594b62e5dab584bf79e.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
         title: "Figma",
         meta: "DESIGN",
         description:
-          "Pixel-level prototyping and tokens handoff before touching JSX.",
+          "Pixel-level prototyping and design handoff before touching JSX.",
         image:
-          "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/9f/4c/25/9f4c2598ee3f12d78d35065639f8e243.jpg?w=800&auto=format&fit=crop&q=80",
       },
     ],
   },
+
   {
     index: "02",
     title: "Stack.",
@@ -51,25 +52,25 @@ const sections = [
         title: "React.js",
         meta: "FRAMEWORK",
         description:
-          "Declarative UI with server components, actions, and custom hooks.",
+          "Declarative UI with reusable components, hooks, and modern React patterns.",
         image:
-          "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/79/cf/a4/79cfa41afd51324e7b12939a90008490.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
         title: "JavaScript",
         meta: "LANGUAGE",
         description:
-          "Dynamic scripting powering seamless client-side interactions.",
+          "Dynamic scripting powering seamless client-side interactions and application logic.",
         image:
-          "https://images.unsplash.com/photo-1516116211227-bbc1541334c4?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/2d/86/59/2d8659ede48a1b647788844a5049bde6.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
-        title: "Tailwind CSS",
+        title: "Tailwind CSS & Bootstrap",
         meta: "STYLING",
         description:
-          "Utility-first design tokens directly bound inside component markup.",
+          "Utility-first and component-based styling for responsive, consistent interfaces.",
         image:
-          "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/ed/8d/54/ed8d5466a4570b9df48b61b23008113c.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
         title: "Motion",
@@ -77,26 +78,44 @@ const sections = [
         description:
           "Spring physics and fluid layout transitions that breathe life into screens.",
         image:
-          "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/27/38/36/273836c7aa7f93260dca0e74364ebdeb.jpg?w=800&auto=format&fit=crop&q=80",
       },
+      {
+        title: "Node.js",
+        meta: "RUNTIME",
+        description:
+          "JavaScript runtime powering backend services, APIs, authentication, and server-side applications.",
+        image:
+          "https://i.pinimg.com/736x/7a/3a/96/7a3a96ae71960103be6187da223d6608.jpg",
+      },
+
       {
         title: "MongoDB",
         meta: "DATABASE",
         description:
           "Flexible JSON document schemas mapped via Mongoose models.",
         image:
-          "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/1200x/b7/2f/26/b72f26f18dddce00fa3f95dcd7b81b63.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
-        title: "Vercel & Render",
+        title: "Express.js",
+        meta: "SERVER",
+        description:
+          "Lightweight backend framework for building REST APIs and server-side applications.",
+        image:
+          "https://i.pinimg.com/736x/34/1e/ce/341ecee247ebe76df81f6f552f6e5527.jpg?w=800&auto=format&fit=crop&q=80",
+      },
+      {
+        title: "Vercel & Render & Netlify",
         meta: "HOSTING",
         description:
           "Continuous deployment and preview branches wired directly to GitHub.",
         image:
-          "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/03/73/f9/0373f99bdd94aa6386e82d28545733ea.jpg?w=800&auto=format&fit=crop&q=80",
       },
     ],
   },
+
   {
     index: "03",
     title: "Apps.",
@@ -106,17 +125,25 @@ const sections = [
         title: "ChatGPT",
         meta: "AI ASSISTANT",
         description:
-          "High-speed brainstorming, syntax queries, and exploratory refactors.",
+          "High-speed brainstorming, syntax queries, debugging, and exploratory refactors.",
         image:
-          "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/1200x/b3/3f/0d/b33f0d10bab5c0d68a006844f7eda264.jpg?w=800&auto=format&fit=crop&q=80",
+      },
+      {
+        title: "Perplexity",
+        meta: "Reserch ",
+        description:
+          "Fast web research, source discovery, technical exploration, and concise answers backed by online references.",
+        image:
+          "https://i.pinimg.com/736x/e4/31/92/e431924be24c7afa9a166a1448abcd9d.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
         title: "Notion",
         meta: "WORKSPACE",
         description:
-          "Architecture blueprints, client notes, and technical specs.",
+          "Architecture blueprints, learning notes, project planning, and technical specs.",
         image:
-          "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/1200x/99/7b/0a/997b0a243df40b681d8c8177724f1b45.jpg?w=800&auto=format&fit=crop&q=80",
       },
       {
         title: "Spotify",
@@ -124,15 +151,62 @@ const sections = [
         description:
           "Deep focus beats and ambient electronica for uninterrupted flow.",
         image:
-          "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1611339555312-e607c8352fd7?w=800&auto=format&fit=crop&q=80",
       },
       {
         title: "Chrome",
         meta: "DEV BROWSER",
         description:
-          "Profiling performance bottlenecks and network waterfalls.",
+          "Profiling performance bottlenecks, debugging interfaces, and inspecting network activity.",
         image:
-          "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80",
+          "https://i.pinimg.com/736x/9d/ab/f4/9dabf46ddf549a60f84bfbf37f2095b3.jpg?w=800&auto=format&fit=crop&q=80",
+      },
+    ],
+  },
+  {
+    index: "04",
+    title: "Learning.",
+    subtitle: "Currently Exploring",
+    items: [
+      {
+        title: "Java",
+        meta: "PROGRAMMING",
+        description:
+          "Building strong fundamentals in Core Java, OOP, arrays, strings, and problem-solving with DSA.",
+        image:
+          "https://i.pinimg.com/736x/fd/48/58/fd48583ec31127e991546475ecece550.jpg?w=800&auto=format&fit=crop&q=80",
+      },
+      {
+        title: "PostgreSQL",
+        meta: "DATABASE",
+        description:
+          "Practicing relational database design, SQL queries, joins, constraints, and data management.",
+        image:
+          "https://i.pinimg.com/1200x/24/77/0b/24770be77f677c2d3b8d68e678ae61b3.jpg?w=800&auto=format&fit=crop&q=80",
+      },
+      {
+        title: "Oracle SQL",
+        meta: "SQL DATABASE",
+        description:
+          "Exploring Oracle SQL, functions, string manipulation, date operations, subqueries, and database queries.",
+        image:
+          "https://i.pinimg.com/736x/af/08/a2/af08a2d052b4447ddf73cb20b8a0392a.jpg?w=800&auto=format&fit=crop&q=80",
+      },
+      {
+        title: "Supabase",
+        meta: "BACKEND / BaaS",
+        description:
+          "Learning authentication, PostgreSQL integration, APIs, and backend services for modern web applications.",
+        image:
+          "https://i.pinimg.com/736x/23/e8/31/23e83118c8a0da627903f51074317deb.jpg?w=800&auto=format&fit=crop&q=80",
+      },
+      {
+        title: "DSA",
+        meta: "PROBLEM SOLVING",
+        description:
+          "Strengthening problem-solving through arrays, strings, algorithms, data structures, and coding practice.",
+        image:
+          "https://i.pinimg.com/736x/0d/42/c5/0d42c51c82fca7b2a1360ffec4747b2a.jpg",
       },
     ],
   },
