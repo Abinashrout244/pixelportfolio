@@ -166,9 +166,9 @@ const Loader = ({ onComplete }) => {
 
       {/* Main Kinetic Typography Layout Area */}
       {phase !== "shutter" && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 sm:gap-2 tracking-tighter z-10 px-4">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-0 tracking-[-0.07em] z-10 px-4 select-none">
           {/* 0.5s Milestone Row */}
-          <div className="flex overflow-hidden py-1">
+          <div className="flex overflow-hidden py-3">
             <AnimatePresence>
               {showFirst &&
                 firstName.map((char, i) => (
@@ -178,7 +178,11 @@ const Loader = ({ onComplete }) => {
                     variants={letterVariants}
                     initial="hidden"
                     animate={phase === "explode" ? "explode" : "visible"}
-                    className="text-[clamp(2.75rem,11vw,8rem)] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-emerald-200 drop-shadow-[0_0_25px_rgba(52,211,153,0.25)]"
+                    className="font-sans uppercase font-black text-[clamp(4rem,16vw,12rem)] leading-[0.85] text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-emerald-400/80 drop-shadow-[0_0_45px_rgba(52,211,153,0.4)]"
+                    style={{
+                      fontStretch: "expanded",
+                      WebkitTextStroke: "1px rgba(255,255,255,0.15)",
+                    }}
                   >
                     {char}
                   </motion.span>
@@ -187,7 +191,7 @@ const Loader = ({ onComplete }) => {
           </div>
 
           {/* 1.3s Milestone Row */}
-          <div className="flex overflow-hidden py-1">
+          <div className="flex overflow-hidden py-3">
             <AnimatePresence>
               {showSecond &&
                 lastName.map((char, i) => (
@@ -197,7 +201,11 @@ const Loader = ({ onComplete }) => {
                     variants={letterVariants}
                     initial="hidden"
                     animate={phase === "explode" ? "explode" : "visible"}
-                    className="text-[clamp(2.75rem,11vw,8rem)] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-200 to-emerald-300/80 drop-shadow-[0_0_25px_rgba(52,211,153,0.2)]"
+                    className="font-sans uppercase font-black text-[clamp(4rem,16vw,12rem)] leading-[0.85] text-transparent bg-clip-text bg-gradient-to-b from-white/90 via-zinc-200 to-emerald-400 drop-shadow-[0_0_45px_rgba(52,211,153,0.35)]"
+                    style={{
+                      fontStretch: "expanded",
+                      WebkitTextStroke: "1px rgba(255,255,255,0.15)",
+                    }}
                   >
                     {char}
                   </motion.span>
