@@ -1,13 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1,
+      duration: 0.9,
       ease: [0.25, 0.1, 0.25, 1],
       delay,
     },
@@ -15,9 +16,10 @@ const fadeUp = {
 };
 
 const fadeIn = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: 12 },
   visible: (delay = 0) => ({
     opacity: 1,
+    y: 0,
     transition: {
       duration: 0.8,
       ease: "easeOut",
@@ -27,7 +29,7 @@ const fadeIn = {
 };
 
 const slideUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
@@ -41,42 +43,47 @@ const slideUp = {
 
 export default function HeroContent({ isLoaded }) {
   return (
-    <div className="flex flex-col justify-center z-10 w-full lg:w-[55%] px-0 sm:px-2 lg:px-0 text-center lg:text-left items-center lg:items-start">
+    <div className="flex flex-col justify-center w-full lg:max-w-[58%] xl:max-w-[62%] px-4 sm:px-6 md:px-8 lg:px-0 text-center lg:text-left items-center lg:items-start z-10 mx-auto lg:mx-0">
       {/* ── Labels Row ── */}
       <motion.div
-        className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-6 sm:mb-8"
+        className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 mb-4 sm:mb-6"
         variants={fadeIn}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
-        custom={0.2}
+        custom={0.15}
       >
-        <span
-          className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase text-text-secondary border border-white/[0.08] px-3.5 sm:px-4 py-1.5 rounded-none"
-        >
-          Frontend Engineer
+        <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] uppercase text-text-secondary border border-white/[0.1] bg-white/[0.02] backdrop-blur-sm px-3 sm:px-3.5 py-1.5 rounded-none whitespace-nowrap">
+          FULL-STACK DEVELOPER
         </span>
-        <span className="font-mono text-[11px] tracking-[0.15em] text-text-secondary/60 hidden sm:inline">
-          SYSTEM_READY: <span className="text-green-400/80">TRUE</span>
-        </span>
+        <div className="inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.15em] text-text-secondary/70 border border-transparent px-2 py-1">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34d399] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#34d399] shadow-[0_0_8px_#34d399]" />
+          </span>
+          <span>
+            SYSTEM_READY:{" "}
+            <span className="text-[#34d399] font-semibold">TRUE</span>
+          </span>
+        </div>
       </motion.div>
 
       {/* ── Hero Title ── */}
       <motion.h1
-        className="font-geist font-[800] text-text-primary leading-[0.88] tracking-[-0.04em] mb-6 sm:mb-8 relative"
-        style={{ fontSize: "clamp(56px, 16vw, 140px)" }}
+        className="font-geist font-[800] text-text-primary leading-[0.92] tracking-[-0.04em] mb-4 sm:mb-6 relative select-none"
+        style={{ fontSize: "clamp(44px, 12vw, 128px)" }}
         variants={fadeUp}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
-        custom={0.3}
+        custom={0.25}
       >
         ABINASH
-        {/* Subtle heading glow */}
+        {/* Ambient Glow */}
         <div
-          className="absolute -inset-10 pointer-events-none"
+          className="absolute -inset-x-8 -inset-y-4 pointer-events-none -z-10"
           style={{
-            background: "radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, transparent 70%)",
-            filter: "blur(40px)",
-            zIndex: -1,
+            background:
+              "radial-gradient(ellipse at center, rgba(255, 77, 77, 0.12) 0%, transparent 70%)",
+            filter: "blur(48px)",
           }}
           aria-hidden="true"
         />
@@ -84,44 +91,67 @@ export default function HeroContent({ isLoaded }) {
 
       {/* ── Description ── */}
       <motion.p
-        className="text-text-secondary text-[15px] sm:text-[18px] lg:text-[20px] leading-relaxed max-w-[620px] mb-8 sm:mb-10 font-geist font-normal"
+        className="text-text-secondary text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-[560px] lg:max-w-[580px] mb-6 sm:mb-8 font-geist font-normal text-balance"
         variants={fadeIn}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
-        custom={0.6}
+        custom={0.4}
       >
-        Crafting high-performance interfaces with precision engineering.
-        Focused on motion, interaction design, and pixel-perfect details
-        that transform digital experiences.
+        Building modern full-stack experiences with clean architecture,
+        thoughtful UI, and scalable backend systems.
       </motion.p>
 
       {/* ── CTA Buttons ── */}
       <motion.div
-        className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap"
+        className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto"
         variants={slideUp}
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
-        custom={0.8}
+        custom={0.55}
       >
-        {/* Primary */}
-        <a
-          href="#projects"
-          id="cta-view-projects"
-          className="group font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase px-5 sm:px-7 py-3 bg-white text-[#0B0B0B] rounded-none transition-all duration-300 glow-soft-hover hover:bg-white/90"
-        >
-          View Projects
-        </a>
+        {/* Primary Button */}
+        <div className="relative group">
+          {/* Animated Red Backdrop Blur Glow on Hover */}
+          <div className="absolute -inset-2 rounded-none bg-[#34d399]/30 opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100 group-hover:scale-105 pointer-events-none" />
+          <Link
+            to="/projects"
+            id="cta-view-projects"
+            className="relative inline-flex items-center justify-center font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase px-6 sm:px-7 py-3 sm:py-3.5 bg-white text-[#0B0B0B] font-medium transition-all duration-300 hover:bg-[#34d399] hover:text-white active:scale-[0.98] text-center w-full sm:w-auto overflow-hidden border border-transparent hover:border-[#34d399]"
+          >
+            <span className="relative z-10">View Projects</span>
+            {/* Shimmer line on hover */}
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          </Link>
+        </div>
 
-        {/* Secondary */}
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="cta-github"
-          className="group font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase px-5 sm:px-7 py-3 border border-white/[0.12] text-text-primary rounded-none transition-all duration-300 hover:border-white/30 glow-soft-hover"
-        >
-          GitHub
-        </a>
+        {/* Secondary Button */}
+        <div className="relative group">
+          {/* Animated Red Backdrop Blur Glow on Hover */}
+          <div className="absolute -inset-2 rounded-none bg-[#34d399]/20 opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100 group-hover:scale-105 pointer-events-none" />
+          <a
+            href="https://github.com/Abinashrout244"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="cta-github"
+            className="relative inline-flex items-center justify-center gap-2 font-mono text-[11px] sm:text-[12px] tracking-[0.12em] uppercase px-6 sm:px-7 py-3 sm:py-3.5 border border-white/[0.12] bg-white/[0.02] backdrop-blur-sm text-text-primary transition-all duration-300 hover:border-[#34d399]/60 hover:bg-[#34d399]/[0.08] hover:text-white active:scale-[0.98] text-center w-full sm:w-auto"
+          >
+            <span>GitHub</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-3.5 h-3.5 text-text-secondary group-hover:text-[#34d399] transition-all duration-300 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              aria-hidden="true"
+            >
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </a>
+        </div>
       </motion.div>
     </div>
   );
