@@ -440,6 +440,19 @@ export default function Achievements() {
   const firstCard = achievements[0];
   const remainingCards = achievements.slice(1);
 
+  // Auto-scroll into view on mount
+  useEffect(() => {
+    // Small delay ensures layout and dynamically sized elements are settled
+    const timer = setTimeout(() => {
+      sectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section
       ref={sectionRef}
