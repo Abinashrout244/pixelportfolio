@@ -1,30 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import avi1 from "../assets/avi1.png";
+import avi from "../assets/avi.png";
+import aviimg2 from "../assets/aviimg2.jpeg";
+import desktop1 from "../assets/dekstop1.jpeg";
+import desktop23 from "../assets/dektop23.jpg";
+import desktop from "../assets/desktop.png";
+import profile from "../assets/profile.jpeg";
+import desktop4 from "../assets/desktop4.png";
+
 const DEFAULT_IMAGES = [
-  {
-    src: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&q=80",
-  },
+  { src: avi1 },
+  { src: avi },
+  { src: aviimg2 },
+  { src: desktop1 },
+  { src: desktop23 },
+  { src: desktop },
+  { src: profile },
+  { src: desktop4 },
 ];
 
 export default function RoundCarousel({
