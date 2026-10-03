@@ -25,7 +25,12 @@ function ShareAction({ to, href, label, sublabel, icon: Icon }) {
   }
 
   return (
-    <a href={href} className={sharedClass}>
+    <a
+      href={href}
+      className={sharedClass}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <div className="min-w-0">
         <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-white/40">
           {label}
@@ -41,11 +46,15 @@ export default function Share() {
   const actions = [
     { label: "Explore Portfolio", sublabel: "Go to home", to: "/" },
     { label: "Projects", sublabel: "Browse featured work", to: "/projects" },
-    { label: "GitHub", sublabel: "github.com", href: "https://github.com/" },
+    {
+      label: "GitHub",
+      sublabel: "github.com",
+      href: "https://github.com/Abinashrout244",
+    },
     {
       label: "LinkedIn",
       sublabel: "linkedin.com",
-      href: "https://linkedin.com/",
+      href: "https://www.linkedin.com/in/abinash-rout-274285322",
     },
     {
       label: "Contact Me",

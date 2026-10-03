@@ -18,8 +18,9 @@ import {
   Palette,
   FileCode2,
 } from "lucide-react";
-import { FaLinkedinIn } from "react-icons/fa6";
-import { SiGithub } from "react-icons/si";
+import { SiGithub, SiInstagram, SiWhatsapp } from "react-icons/si";
+import { FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
+
 import { PROJECTS } from "../data/projectsData";
 
 const skills = [
@@ -37,14 +38,29 @@ const skills = [
 
 const socialLinks = [
   {
-    label: "GitHub",
-    href: "https://github.com/",
     icon: SiGithub,
+    label: "GitHub",
+    href: "https://github.com/Abinashrout244",
   },
   {
-    label: "LinkedIn",
-    href: "https://linkedin.com/",
     icon: FaLinkedinIn,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/abinash-rout-274285322",
+  },
+  {
+    icon: SiInstagram,
+    label: "Instagram",
+    href: "https://www.instagram.com/frequency._0.001",
+  },
+  {
+    icon: FaXTwitter,
+    label: "Twitter",
+    href: "https://x.com/AbinashRout2251",
+  },
+  {
+    icon: SiWhatsapp,
+    label: "WhatsApp",
+    href: "https://wa.me/918249281685?text=Hi%20Abinash,%20I%20found%20your%20portfolio.",
   },
 ];
 
@@ -150,7 +166,6 @@ function SocialButton({ label, href, icon: Icon }) {
       aria-label={label}
     >
       <Icon size={15} />
-      {label}
     </a>
   );
 }
@@ -164,7 +179,12 @@ function ActionButton({ href, label, icon: Icon, filled = false }) {
 
   if (href.startsWith("mailto:")) {
     return (
-      <a href={href} className={`${base} ${styles}`} aria-label={label}>
+      <a
+        href={href}
+        target="_blank"
+        className={`${base} ${styles}`}
+        aria-label={label}
+      >
         <Icon size={15} />
         {label}
       </a>
@@ -172,7 +192,12 @@ function ActionButton({ href, label, icon: Icon, filled = false }) {
   }
 
   return (
-    <a href={href} className={`${base} ${styles}`} aria-label={label}>
+    <a
+      href={href}
+      target="_blank"
+      className={`${base} ${styles}`}
+      aria-label={label}
+    >
       <Icon size={15} />
       {label}
     </a>
@@ -272,13 +297,13 @@ export default function BusinessCard() {
             {/* Action Buttons styled to match your slate/glass theme */}
             <div className="mt-6 grid gap-3">
               <ActionButton
-                href="/assets/resume.pdf"
+                href="https://drive.google.com/file/d/1apdbjSpM7w5qHi9fRZAOTbPWvK8QK03U/view?usp=sharing"
                 label="View Resume"
                 icon={FileText}
                 className="w-full justify-center rounded-2xl bg-white/10 font-semibold text-white border border-white/15 hover:bg-white/20 transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)]"
               />
               <ActionButton
-                href="mailto:abinash.work@gmail.com"
+                href="mailto:routabinash73775@gmail.com"
                 label="Contact Me"
                 icon={Mail}
                 className="w-full justify-center rounded-2xl bg-white/[0.04] text-white/80 border border-white/10 hover:bg-white/[0.08] hover:text-white transition-all"
