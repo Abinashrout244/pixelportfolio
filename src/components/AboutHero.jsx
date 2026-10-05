@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -239,17 +240,17 @@ export default function AboutHero({ img }) {
           transition={{ delay: 0.9 }}
           className="flex flex-wrap gap-3 mt-8"
         >
+          <Link to="/projects">
+            <a className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-white text-zinc-950 text-sm font-mono font-medium transition-transform duration-200 hover:-translate-y-0.5">
+              view projects
+              <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+                →
+              </span>
+            </a>
+          </Link>
           <a
-            href="#projects"
-            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-white text-zinc-950 text-sm font-mono font-medium transition-transform duration-200 hover:-translate-y-0.5"
-          >
-            view projects
-            <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-              →
-            </span>
-          </a>
-          <a
-            href="#resume"
+            href="https://drive.google.com/file/d/1apdbjSpM7w5qHi9fRZAOTbPWvK8QK03U/view?usp=sharing"
+            target="_blank"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-zinc-700 text-zinc-300 text-sm font-mono transition-colors duration-200 hover:border-zinc-500 hover:text-white"
           >
             $ curl resume.pdf
