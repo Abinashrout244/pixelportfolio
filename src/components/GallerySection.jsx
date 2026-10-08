@@ -21,7 +21,7 @@ export default function GallerySection() {
           <span className="h-px w-7 bg-emerald-400/50" />
 
           <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-emerald-400/80">
-            03 / Visual Journal
+            03 / Personal Archive
           </span>
 
           <span className="h-px w-7 bg-emerald-400/50" />
@@ -34,7 +34,7 @@ export default function GallerySection() {
             fontSize: "clamp(52px, 8vw, 108px)",
           }}
         >
-          <span className="block text-white">Frames I keep</span>
+          <span className="block text-white">Life beyond</span>
 
           <span
             className="block text-transparent"
@@ -42,14 +42,14 @@ export default function GallerySection() {
               WebkitTextStroke: "1.5px rgba(255,255,255,0.28)",
             }}
           >
-            Coming back to
+            the code
           </span>
         </h2>
 
         {/* Description */}
         <p className="mt-8 mx-auto max-w-xl font-geist text-sm sm:text-base leading-7 text-white/40">
-          A few stills from outside the editor — the other half of how I see,
-          design, and build.
+          A glimpse into my world — the moments, spaces, and ideas behind what I
+          create and build.
         </p>
       </div>
 

@@ -1,113 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
+import { CATEGORIES } from "../data/techEcoSystem";
 
-// ─── 8 Slots Data Matching Exact Reference Layout ───────────────────────────
-const CATEGORIES = [
-  {
-    id: "frontend",
-    tag: "S01 E01",
-    match: "99% Match",
-    subHeader: "FRONTEND ARCHITECTURE",
-    title: "Frontend Frameworks",
-    description:
-      "Building interactive, accessible, and performant user interfaces.",
-    direction: { x: -80, y: -70, rotate: -3 }, // Top-Left
-    pills: ["React", "JavaScript", "Framer Motion", "Redux Toolkit", "Vite"],
-  },
-  {
-    id: "styling",
-    tag: "S01 E02",
-    match: "98% Match",
-    subHeader: "UI/UX & MOTION DESIGN",
-    title: "Styling & Design Systems",
-    description:
-      "Pixel-perfect interfaces with modern CSS systems and micro-interactions.",
-    direction: { x: 0, y: -80, rotate: 0 }, // Top-Center
-    pills: [
-      "Tailwind CSS",
-      "Bootstrap",
-      "CSS",
-      "Responsive Design",
-      "Glassmorphism",
-      "Figma",
-    ],
-  },
-  {
-    id: "backend",
-    tag: "S01 E03",
-    match: "97% Match",
-    subHeader: "SERVER-SIDE ARCHITECTURE",
-    title: "Backend Development",
-    description:
-      "Designing scalable APIs, authentication systems, and server architectures.",
-    direction: { x: 80, y: -70, rotate: 3 }, // Top-Right
-    pills: ["Node.js", "Express.js", "REST APIs", "JWT", "Socket.IO", "SSE"],
-  },
-  {
-    id: "databases",
-    tag: "S01 E04",
-    match: "97% Match",
-    subHeader: "DATA & PERSISTENCE",
-    title: "Databases & Storage",
-    description:
-      "Working with structured and document-based data stores for applications.",
-    direction: { x: -90, y: 0, rotate: -2 }, // Middle-Left
-    pills: ["MongoDB", "Mongoose", "PostgreSQL", "Firebase"],
-  },
-  {
-    id: "realtime",
-    tag: "S01 E05",
-    match: "96% Match",
-    subHeader: "REAL-TIME SYSTEMS",
-    title: "Real-Time & Streams",
-    description:
-      "Building responsive systems that synchronize data and events in real time.",
-    direction: { x: 90, y: 0, rotate: 2 }, // Middle-Right
-    pills: ["Socket.IO", "WebSockets"],
-  },
-  {
-    id: "devops",
-    tag: "S01 E06",
-    match: "100% Match",
-    subHeader: "DEVOPS & DEPLOYMENT",
-    title: "Performance & CI/CD",
-    description:
-      "Shipping production-ready software with modern automated workflows.",
-    direction: { x: -80, y: 70, rotate: -3 }, // Bottom-Left
-    pills: ["Git", "GitHub", "Vercel", "Render", "npm", "Netlify"],
-  },
-  {
-    id: "testing",
-    tag: "S01 E07",
-    match: "95% Match",
-    subHeader: "QUALITY & DEV EXPERIENCE",
-    title: "Testing & API Tools",
-    description:
-      "Debugging, testing, and validating applications throughout development.",
-    direction: { x: 0, y: 80, rotate: 0 }, // Bottom-Center
-    pills: [
-      "Postman",
-      "Jest",
-      "Chrome DevTools",
-      "ESLint",
-      "VS Code",
-      "Cursor",
-    ],
-  },
-  {
-    id: "architecture",
-    tag: "S01 E08",
-    match: "94% Match",
-    subHeader: "SOFTWARE ENGINEERING",
-    title: "Architecture & DSA",
-    description:
-      "Applying engineering principles to build maintainable scalable systems.",
-    direction: { x: 80, y: 70, rotate: 3 }, // Bottom-Right
-    pills: ["DSA", "OOP", "Clean Architecture", "Scalability"],
-  },
-];
-
-// ─── Individual HUD Pill ──────────────────────────────────────────────────────
 function TechPill({ label, index, isOpen }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -143,7 +37,12 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
   return (
     <motion.article
       id={`tech-card-${category.id}`}
-      className="relative flex flex-col w-full h-full min-h-[250px] sm:min-h-[270px] rounded-2xl overflow-hidden"
+      className={`relative flex flex-col w-full rounded-xl sm:rounded-2xl overflow-hidden transition-[border-color,box-shadow] duration-300 ${
+        // On mobile: collapsible height when closed to eliminate massive dead space
+        isOpen
+          ? "min-h-[200px] sm:min-h-[270px] flex"
+          : "hidden lg:flex min-h-[270px]"
+      }`}
       initial={{
         opacity: 0,
         x: category.direction.x,
@@ -160,8 +59,8 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
               scale: 1,
               rotate: 0,
               transition: {
-                duration: 0.65,
-                delay: 0.02 * index,
+                duration: 0.6,
+                delay: 0.03 * index,
                 ease: [0.16, 1, 0.3, 1],
               },
             }
@@ -172,7 +71,7 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
               scale: 0.78,
               rotate: category.direction.rotate,
               transition: {
-                duration: 0.4,
+                duration: 0.35,
                 ease: [0.7, 0, 0.84, 0],
               },
             }
@@ -188,18 +87,17 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
             : "1px solid rgba(255, 255, 255, 0.1)",
         boxShadow:
           hovered && isOpen
-            ? "0 0 35px rgba(52, 211, 153, 0.3), 0 20px 50px rgba(0, 0, 0, 0.95)"
-            : "0 15px 35px rgba(0, 0, 0, 0.85)",
-        transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+            ? "0 0 30px rgba(52, 211, 153, 0.28), 0 20px 40px rgba(0, 0, 0, 0.95)"
+            : "0 10px 25px rgba(0, 0, 0, 0.7)",
       }}
     >
-      <div className="p-5 sm:p-6 flex flex-col h-full gap-3 relative z-10">
+      <div className="p-4 sm:p-6 flex flex-col h-full gap-2 sm:gap-3 relative z-10">
         {/* Top Header Row with Green HUD Chips */}
         <div className="flex items-center justify-between">
-          <span className="px-2 py-0.5 rounded-full font-mono text-[9px] sm:text-[10px] font-bold text-[#34d399] bg-[#34d399]/10 border border-[#34d399]/30">
+          <span className="px-2 py-0.5 rounded-full font-mono text-[8.5px] sm:text-[10px] font-bold text-[#34d399] bg-[#34d399]/10 border border-[#34d399]/30">
             {category.tag}
           </span>
-          <span className="font-mono text-[9.5px] sm:text-[10px] tracking-wider text-[#34d399] flex items-center gap-1.5">
+          <span className="font-mono text-[9px] sm:text-[10px] tracking-wider text-[#34d399] flex items-center gap-1.5">
             {category.match}
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#34d399] shadow-[0_0_6px_#34d399]" />
           </span>
@@ -207,13 +105,13 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
 
         {/* Subheader & Bold Title */}
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1">
+          <p className="font-mono text-[8.5px] sm:text-[9px] uppercase tracking-[0.2em] text-white/40 mb-0.5">
             {category.subHeader}
           </p>
           <h3 className="font-geist font-[800] text-white text-base sm:text-xl tracking-tight leading-snug">
             {category.title}
           </h3>
-          <p className="font-geist text-[11.5px] sm:text-[12.5px] text-white/50 mt-1.5 leading-relaxed">
+          <p className="font-geist text-[11px] sm:text-[12.5px] text-white/50 mt-1 leading-relaxed line-clamp-2 sm:line-clamp-none">
             {category.description}
           </p>
         </div>
@@ -221,7 +119,7 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
         <div className="w-full h-px bg-white/[0.06] my-auto" />
 
         {/* Pills List */}
-        <div className="flex flex-wrap gap-1.5 mt-auto">
+        <div className="flex flex-wrap gap-1 sm:gap-1.5 mt-auto">
           {category.pills.map((pill, pillIdx) => (
             <TechPill key={pill} label={pill} index={pillIdx} isOpen={isOpen} />
           ))}
@@ -229,7 +127,7 @@ function DirectionalCategoryCard({ category, index, isOpen }) {
       </div>
 
       {/* Green Corner Status Dot */}
-      <div className="absolute bottom-2.5 right-2.5 w-1.5 h-1.5 rounded-full bg-[#34d399] shadow-[0_0_8px_#34d399]" />
+      <div className="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-[#34d399] shadow-[0_0_8px_#34d399]" />
     </motion.article>
   );
 }
@@ -239,15 +137,15 @@ function CyberFolderTrigger({ isOpen, onClick }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-3">
+    <div className="relative w-full h-full flex items-center justify-center p-1 sm:p-3">
       <motion.button
         type="button"
         onClick={onClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        whileHover={{ scale: 1.03, y: -2 }}
-        whileTap={{ scale: 0.96 }}
-        className="relative z-40 w-full max-w-[90%] sm:max-w-[85%] h-[85%] sm:h-[88%] rounded-2xl flex flex-col items-center justify-center p-5 outline-none cursor-pointer overflow-hidden transition-all duration-300"
+        whileHover={{ scale: 1.02, y: -2 }}
+        whileTap={{ scale: 0.97 }}
+        className="relative z-40 w-full max-w-full sm:max-w-[85%] min-h-[110px] sm:min-h-[220px] rounded-xl sm:rounded-2xl flex flex-row sm:flex-col items-center justify-center gap-4 sm:gap-0 p-4 sm:p-5 outline-none cursor-pointer overflow-hidden transition-all duration-300"
         style={{
           background: "linear-gradient(180deg, #18181b 0%, #0d0d0f 100%)",
           border:
@@ -256,14 +154,14 @@ function CyberFolderTrigger({ isOpen, onClick }) {
               : "1px solid rgba(255, 255, 255, 0.12)",
           boxShadow:
             hovered || isOpen
-              ? "0 0 45px rgba(52, 211, 153, 0.35), 0 20px 50px rgba(0, 0, 0, 0.95)"
-              : "0 15px 35px rgba(0, 0, 0, 0.85)",
+              ? "0 0 35px rgba(52, 211, 153, 0.3), 0 15px 35px rgba(0, 0, 0, 0.95)"
+              : "0 10px 25px rgba(0, 0, 0, 0.85)",
         }}
         aria-expanded={isOpen}
       >
-        {/* Top Folder Notch Tab */}
+        {/* Top Folder Notch Tab (Desktop only) */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-2.5 rounded-b-md border-b border-x transition-colors duration-300"
+          className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 w-24 h-2.5 rounded-b-md border-b border-x transition-colors duration-300"
           style={{
             background: "#111113",
             borderColor:
@@ -274,9 +172,9 @@ function CyberFolderTrigger({ isOpen, onClick }) {
         />
 
         {/* Center Play Capsule */}
-        <div className="flex flex-col items-center gap-2.5">
+        <div className="flex flex-row sm:flex-col items-center gap-3 sm:gap-2.5">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 shadow-lg"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 shadow-md"
             style={{
               background:
                 hovered || isOpen
@@ -289,7 +187,7 @@ function CyberFolderTrigger({ isOpen, onClick }) {
             }}
           >
             <span
-              className="inline-block transition-transform duration-300 text-base text-white ml-0.5"
+              className="inline-block transition-transform duration-300 text-sm sm:text-base text-white ml-0.5"
               style={{
                 transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
               }}
@@ -298,18 +196,18 @@ function CyberFolderTrigger({ isOpen, onClick }) {
             </span>
           </div>
 
-          <div className="flex flex-col items-center">
-            <span className="font-mono text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-[#34d399] drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
+          <div className="flex flex-col items-start sm:items-center text-left sm:text-center">
+            <span className="font-mono text-[11px] sm:text-sm font-bold tracking-[0.18em] uppercase text-[#34d399] drop-shadow-[0_0_10px_rgba(52,211,153,0.4)]">
               ARCHIVE_SLOTS
             </span>
-            <span className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/40 mt-0.5">
+            <span className="font-mono text-[8px] sm:text-[8.5px] uppercase tracking-[0.16em] text-white/40 mt-0.5">
               {isOpen ? "Collapse System" : "Click To Deploy 08 Slots"}
             </span>
           </div>
         </div>
 
-        {/* Small Bottom Accent Line */}
-        <div className="absolute bottom-3 w-10 h-1 rounded-full bg-white/20" />
+        {/* Small Bottom Accent Line (Desktop only) */}
+        <div className="hidden sm:block absolute bottom-3 w-10 h-1 rounded-full bg-white/20" />
       </motion.button>
     </div>
   );
@@ -322,9 +220,9 @@ export default function TechEcosystem() {
   return (
     <section
       id="stack"
-      className="relative w-full min-h-[1050px] lg:min-h-screen flex items-center justify-center overflow-hidden py-24 bg-black"
+      className="relative w-full min-h-[500px] lg:min-h-screen flex items-center justify-center overflow-hidden py-12 sm:py-24 bg-black"
     >
-      {/* ── Low-Opacity Background Typography ("SKILLS" / "STACK") ── */}
+      {/* ── Low-Opacity Background Typography ── */}
       <div
         className="absolute inset-0 z-0 flex flex-col items-center justify-center pointer-events-none select-none overflow-hidden"
         aria-hidden="true"
@@ -332,7 +230,7 @@ export default function TechEcosystem() {
         <span
           className="font-geist font-[900] tracking-[-0.04em] uppercase text-center"
           style={{
-            fontSize: "clamp(90px, 22vw, 340px)",
+            fontSize: "clamp(80px, 20vw, 340px)",
             lineHeight: 0.75,
             color: "rgba(255, 255, 255, 0.012)",
             WebkitTextStroke: "1px rgba(255, 255, 255, 0.05)",
@@ -343,7 +241,7 @@ export default function TechEcosystem() {
         </span>
       </div>
 
-      {/* ── Green Atmospheric Glow (Visible when open) ── */}
+      {/* ── Green Atmospheric Glow ── */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-0"
         initial={{ opacity: 0 }}
@@ -358,71 +256,86 @@ export default function TechEcosystem() {
 
       {/* ── Center Glow Behind Trigger ── */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] pointer-events-none z-0"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[300px] sm:h-[450px] pointer-events-none z-0"
         style={{
           background:
-            "radial-gradient(circle, rgba(52, 211, 153, 0.26) 0%, rgba(52, 211, 153, 0.04) 55%, transparent 70%)",
+            "radial-gradient(circle, rgba(52, 211, 153, 0.24) 0%, rgba(52, 211, 153, 0.03) 55%, transparent 70%)",
           filter: "blur(75px)",
         }}
       />
 
-      {/* ── 3x3 Matrix Grid ── */}
+      {/* ── Matrix Grid ── */}
       <div className="relative z-20 w-full max-w-[1550px] mx-auto px-4 sm:px-8 lg:px-12 flex flex-col items-center">
         <div className="relative w-full">
           <div
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 min-h-[720px] transition-all duration-500 ${
-              isOpen ? "pointer-events-auto" : "pointer-events-none"
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6 min-h-0 lg:min-h-[720px] transition-all duration-500 ${
+              isOpen
+                ? "pointer-events-auto"
+                : "pointer-events-auto lg:pointer-events-none"
             }`}
           >
-            {/* Row 1 */}
+            {/* Slot 0 */}
             <DirectionalCategoryCard
               category={CATEGORIES[0]}
               index={0}
               isOpen={isOpen}
             />
+
+            {/* Slot 1 */}
             <DirectionalCategoryCard
               category={CATEGORIES[1]}
               index={1}
               isOpen={isOpen}
             />
+
+            {/* Slot 2 */}
             <DirectionalCategoryCard
               category={CATEGORIES[2]}
               index={2}
               isOpen={isOpen}
             />
 
-            {/* Row 2 */}
+            {/* Slot 3 */}
             <DirectionalCategoryCard
               category={CATEGORIES[3]}
               index={3}
               isOpen={isOpen}
             />
 
-            {/* Center Trigger Key (Slightly smaller, centered slot) */}
-            <div className="flex items-center justify-center pointer-events-auto z-40 w-full h-full">
+            {/* 
+              CENTER TRIGGER:
+              - Mobile / Tablet: 'order-first' puts it at the top so users can toggle it instantly
+              - Desktop (lg:): 'lg:order-none' returns it to the center (slot 4) in the 3x3 grid
+            */}
+            <div className="order-first lg:order-none flex items-center justify-center pointer-events-auto z-40 w-full h-full">
               <CyberFolderTrigger
                 isOpen={isOpen}
                 onClick={() => setIsOpen((prev) => !prev)}
               />
             </div>
 
+            {/* Slot 4 */}
             <DirectionalCategoryCard
               category={CATEGORIES[4]}
               index={4}
               isOpen={isOpen}
             />
 
-            {/* Row 3 */}
+            {/* Slot 5 */}
             <DirectionalCategoryCard
               category={CATEGORIES[5]}
               index={5}
               isOpen={isOpen}
             />
+
+            {/* Slot 6 */}
             <DirectionalCategoryCard
               category={CATEGORIES[6]}
               index={6}
               isOpen={isOpen}
             />
+
+            {/* Slot 7 */}
             <DirectionalCategoryCard
               category={CATEGORIES[7]}
               index={7}

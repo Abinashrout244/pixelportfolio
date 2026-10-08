@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 /* ---------------------------------------------------------------- */
 /* Icons                                                            */
@@ -210,6 +211,9 @@ function useLiveLatency(services) {
 export default function ConnectWithMe() {
   const latency = useLiveLatency(SERVICES);
   const [secondsAgo, setSecondsAgo] = useState(0);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setSecondsAgo((s) => s + 1), 1000);
@@ -220,6 +224,29 @@ export default function ConnectWithMe() {
     const vals = Object.values(latency);
     return Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
   }, [latency]);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_SUBSCRIBE_TEMPLATE_ID,
+        {
+          subscriber_email: email,
+        },
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        },
+      );
+      setIsSubscribed(true);
+      setEmail("");
+    } catch (error) {
+      console.error("Subscription failed:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="relative min-h-screen bg-[#08090a] font-sans text-white antialiased selection:bg-emerald-500/30 selection:text-white">
@@ -364,33 +391,84 @@ export default function ConnectWithMe() {
 
         {/* Subscribe */}
         <motion.div
-          whileHover={{ y: -3, borderColor: "rgba(63, 63, 70, 1)" }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          whileHover={{
+            y: -3,
+            borderColor: "rgba(63, 63, 70, 1)",
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 25,
+          }}
           className="mt-8 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 backdrop-blur-md transition-shadow duration-300 hover:shadow-xl hover:shadow-black/40 sm:p-6"
         >
-          <p className="text-sm font-semibold text-zinc-200">
-            Get notified on new posts & projects
-          </p>
-          <p className="mt-1 text-xs text-zinc-400 sm:text-[13px]">
-            No spam — just updates when something ships.
-          </p>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="mt-3.5 flex flex-col gap-2.5 sm:flex-row"
-          >
-            <input
-              type="email"
-              required
-              placeholder="you@email.com"
-              className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-zinc-900/80 px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-emerald-500/50"
-            />
-            <button
-              type="submit"
-              className="shrink-0 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400"
+          {isSubscribed ? (
+            /* SUCCESS STATE */
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-3"
             >
-              Subscribe
-            </button>
-          </form>
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500/10">
+                <svg
+                  className="h-5 w-5 text-emerald-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-zinc-200">
+                  You're subscribed!
+                </p>
+
+                <p className="mt-1 text-xs text-zinc-400 sm:text-[13px]">
+                  You'll hear from me when something new ships.
+                </p>
+              </div>
+            </motion.div>
+          ) : (
+            /* SUBSCRIBE STATE */
+            <>
+              <p className="text-sm font-semibold text-zinc-200">
+                Get notified on new posts & projects
+              </p>
+
+              <p className="mt-1 text-xs text-zinc-400 sm:text-[13px]">
+                No spam — just updates when something ships.
+              </p>
+
+              <form
+                onSubmit={handleSubscribe}
+                className="mt-3.5 flex flex-col gap-2.5 sm:flex-row"
+              >
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@email.com"
+                  className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-zinc-900/80 px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-emerald-500/50"
+                />
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="shrink-0 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSubmitting ? "Subscribing..." : "Subscribe"}
+                </button>
+              </form>
+            </>
+          )}
         </motion.div>
 
         {/* Footer */}

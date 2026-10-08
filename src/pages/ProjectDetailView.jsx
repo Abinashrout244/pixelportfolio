@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring } from "motion/react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { PROJECTS } from "../data/projectsData";
 import ProjectHero from "./ProjectHero";
+import ProjectGallery from "../components/ProjectGallery";
 
 const rng = (n, salt) => {
   const x = Math.sin(n * 12.9898 + salt * 78.233) * 43758.5453;
@@ -47,7 +48,7 @@ export default function ProjectDetailView() {
 
   return (
     <motion.div
-      className="min-h-screen relative w-full pt-24 sm:pt-28 pb-20 sm:pb-32 bg-transparent"
+      className="min-h-screen relative w-full pt-14 sm:pt-28 pb-20 sm:pb-32 bg-transparent"
       {...mp(
         { opacity: 0 },
         { opacity: 1 },
@@ -84,7 +85,7 @@ export default function ProjectDetailView() {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-10">
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5  sm:px-8 lg:px-10">
         {/* Nav Back */}
         <motion.div
           className="mb-12"
@@ -95,7 +96,7 @@ export default function ProjectDetailView() {
         >
           <Link
             to="/projects"
-            className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
+            className="group pt-12 md:pt-2 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
           >
             <span className="transform group-hover:-translate-x-1 transition-transform">
               ←
@@ -249,29 +250,7 @@ export default function ProjectDetailView() {
         </div>
 
         {/* Gallery */}
-        {project.gallery && project.gallery.length > 0 && (
-          <div className="mt-32">
-            <h3 className="font-mono text-[12px] tracking-[0.2em] uppercase text-white/40 mb-8 text-center">
-              Gallery
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
-              {project.gallery.map((img, i) => (
-                <div
-                  key={i}
-                  className="rounded-none overflow-hidden border border-white/10 bg-white/5 group cursor-pointer aspect-video relative"
-                >
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300 z-10" />
-                  <img
-                    src={img}
-                    alt={`${project.title} screenshot ${i + 1}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <ProjectGallery project={project} />
       </div>
     </motion.div>
   );

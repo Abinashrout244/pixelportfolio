@@ -11,6 +11,7 @@ import { PortfolioQRProvider } from "./context/PortfolioQRContext";
 import LiquidGlassBackground from "./components/LiquidGlassBackground";
 import Particles from "./components/Particles";
 import FilmGrain from "./components/FilmGrain";
+import ScrollProgress from "./components/ScrollProgress";
 import Home from "./pages/Home";
 import ArchiveView from "./pages/ArchiveView";
 import ProjectDetailView from "./pages/ProjectDetailView";
@@ -123,6 +124,8 @@ function AppContent() {
           {!loader && !isStandaloneCard && <Loader onComplete={() => setLoader(true)} />}
 
           {!isStandaloneCard && <AppBackground />}
+
+          {!isStandaloneCard && <ScrollProgress />}
 
           {!isStandaloneCard && <HeroChatbotButton />}
           {location.pathname === "/" && <HeroFloatingSpotifyButton />}
