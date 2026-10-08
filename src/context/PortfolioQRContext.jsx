@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
-import PortfolioQRModal from "../components/PortfolioQRModal";
+import PortfolioQRModal from "../features/PortfolioQRModal";
 
 const DEFAULT_STATE = {
   open: false,
