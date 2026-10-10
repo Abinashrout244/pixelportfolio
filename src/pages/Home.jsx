@@ -1,11 +1,11 @@
 import React from "react";
-import Hero from "../components/Hero";
-import StatsSection from "../components/StatsSection";
-import TechEcosystem from "../components/TechEcosystem";
-import EducationSection from "../components/EducationSection";
-import FeaturedProjects from "../components/FeaturedProjects";
-import RoundCarousel from "../components/RoundCarousel";
-import GallerySection from "../components/GallerySection";
+import Hero from "../features/Hero";
+import StatsSection from "../features/StatsSection";
+import TechEcosystem from "../features/TechEcosystem";
+import EducationSection from "../features/EducationSection";
+import FeaturedProjects from "../features/FeaturedProjects";
+import RoundCarousel from "../features/RoundCarousel";
+import GallerySection from "../features/GallerySection";
 
 export default function Home({ isLoaded }) {
   return (

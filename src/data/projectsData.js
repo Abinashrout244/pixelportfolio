@@ -1,3 +1,9 @@
+import note from "../assets/noteapp.png";
+import chat from "../assets/chatapp.png";
+import note from "../assets/flower.png";
+import note from "../assets/shopcart.png";
+import note from "../assets/fakeapi.png";
+
 export const PROJECTS = [
   {
     id: "realtime-chat-app",
@@ -62,7 +68,7 @@ export const PROJECTS = [
     description:
       "I developed a full-stack Note Taking application where users can securely create, edit, and delete notes. The app includes authentication, protected routes, and real-time data management using modern MERN stack technologies.",
     image:
-      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774343/ChatGPT_Image_Aug_15_2026_11_26_52_AM_jjvei4.png",
+      "https://res.cloudinary.com/dnxha9arx/image/upload/v1791573980/noteapp_hcvfwq.png",
     tech: [
       "React + Vite",
       "Tailwind CSS",

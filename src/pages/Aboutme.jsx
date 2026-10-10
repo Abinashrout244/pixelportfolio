@@ -1,8 +1,7 @@
 import React from "react";
-import img from "../assets/profile.jpeg";
+import img from "../assets/aboutprofile.jpeg";
 import { Link } from "react-router-dom";
-import AboutHero from "../components/AboutHero";
-import BeliefsCarousel from "../components/BeliefsCarousel";
+import AboutHero from "../features/AboutHero";
 
 export default function AboutMe() {
   const pathItems = [
@@ -41,7 +40,7 @@ export default function AboutMe() {
   return (
     // bg-transparent so the page-level particle/background layer shows through behind this section
     <div className="min-h-screen bg-transparent text-white font-sans antialiased selection:bg-zinc-800 selection:text-white">
-      <div className="max-w-6xl mx-auto  px-6 sm:px-12 pt-24  md:pt-32 ">
+      <div className="max-w-6xl mx-auto  px-6 sm:px-12 pt-24  md:pt-28 ">
         {/* Navigation Back Link */}
         <nav className="pb-10 md:pb-20">
           <Link to="/">
@@ -53,9 +52,6 @@ export default function AboutMe() {
 
         {/* SECTION 1: HERO / ABOUT INTRO */}
         <AboutHero img={img} />
-
-        {/* SECTION 2: WHAT I BELIEVE */}
-        <BeliefsCarousel />
 
         <section className="space-y-10">
           <div>

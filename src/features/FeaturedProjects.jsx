@@ -67,25 +67,14 @@ function FixedCenterWork({ targetRef, reduced }) {
     [0, 0.35, 0.72, 0.95, 0.72, 0.35, 0],
   );
 
-  /*
-   * Start slightly smaller → grow → hold → gently shrink
-   */
   const scale = useTransform(
     smoothProgress,
     [0, 0.2, 0.45, 0.7, 1],
     [0.72, 0.9, 1, 0.98, 0.82],
   );
 
-  /*
-   * Small horizontal movement makes the word feel alive
-   * without destroying the centered layout.
-   */
   const x = useTransform(smoothProgress, [0, 0.5, 1], ["-2%", "0%", "2%"]);
 
-  /*
-   * Slight blur while entering/leaving.
-   * Completely sharp around the center.
-   */
   const blur = useTransform(
     smoothProgress,
     [0, 0.2, 0.45, 0.55, 0.8, 1],
@@ -94,11 +83,6 @@ function FixedCenterWork({ targetRef, reduced }) {
 
   const filter = useTransform(blur, (value) => `blur(${value}px)`);
 
-  /*
-   * Letter spacing animation.
-   * Keeps the same visual style but gives the word
-   * a subtle cinematic expansion.
-   */
   const letterSpacing = useTransform(
     smoothProgress,
     [0, 0.3, 0.5, 0.7, 1],

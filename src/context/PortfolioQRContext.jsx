@@ -1,5 +1,6 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
-import PortfolioQRModal from "../features/PortfolioQRModal";
+import React, { createContext, lazy, Suspense, useCallback, useContext, useMemo, useState } from "react";
+
+const PortfolioQRModal = lazy(() => import("../features/PortfolioQRModal"));
 
 const DEFAULT_STATE = {
   open: false,
@@ -39,16 +40,18 @@ export function PortfolioQRProvider({ children }) {
   return (
     <PortfolioQRContext.Provider value={value}>
       {children}
-      <PortfolioQRModal
-        open={state.open}
-        onClose={closeQRModal}
-        title={state.title}
-        description={state.description}
-        projectName={state.projectName}
-        value={state.value}
-        downloadFilename={state.downloadFilename}
-        items={state.items}
-      />
+      <Suspense fallback={null}>
+        <PortfolioQRModal
+          open={state.open}
+          onClose={closeQRModal}
+          title={state.title}
+          description={state.description}
+          projectName={state.projectName}
+          value={state.value}
+          downloadFilename={state.downloadFilename}
+          items={state.items}
+        />
+      </Suspense>
     </PortfolioQRContext.Provider>
   );
 }

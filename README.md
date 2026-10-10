@@ -68,18 +68,77 @@ This portfolio is designed to highlight my work, experience, and skills through 
 ## 📂 Project Structure
 
 ```text
-portfolio/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── pages/
-│   ├── utils/
-│   ├── App.jsx
-│   └── main.jsx
-├── package.json
-├── vite.config.js
-└── README.md
+.
+├─ assets
+│  ├─ aboutprofile.jpeg
+│  ├─ avi.png
+│  ├─ avi1.png
+│  ├─ aviimg2.jpeg
+│  ├─ dekstop1.jpeg
+│  ├─ dektop23.jpg
+│  ├─ desktop.png
+│  ├─ desktop4.png
+│  ├─ portrait.mp4
+│  ├─ profile.jpeg
+│  └─ profile.png
+├─ context
+│  └─ PortfolioQRContext.jsx
+├─ data
+│  ├─ Achivementsdata.jsx
+│  ├─ asterAssistant.js
+│  ├─ projectsData.js
+│  └─ techEcoSystem.js
+├─ features
+│  ├─ Navbar
+│  │  ├─ IconButton.jsx
+│  │  ├─ MegaMenu.jsx
+│  │  ├─ MenuCard.jsx
+│  │  ├─ MobileHeader.jsx
+│  │  ├─ MobileImageCard.jsx
+│  │  ├─ MobileMenu.jsx
+│  │  ├─ MobileNavItem.jsx
+│  │  ├─ Navbar.jsx
+│  │  ├─ NavItem.jsx
+│  │  └─ Tooltip.jsx
+│  ├─ AboutHero.jsx
+│  ├─ BackgroundName.jsx
+│  ├─ EducationSection.jsx
+│  ├─ FeaturedProjects.jsx
+│  ├─ FilmGrain.jsx
+│  ├─ GallerySection.jsx
+│  ├─ Hero.jsx
+│  ├─ HeroChatbotButton.jsx
+│  ├─ HeroContent.jsx
+│  ├─ HeroFloatingSpotifyButton.jsx
+│  ├─ LiquidGlassBackground.jsx
+│  ├─ Loader.jsx
+│  ├─ LuxryFooter.jsx
+│  ├─ Particles.jsx
+│  ├─ PortfolioQRModal.jsx
+│  ├─ PortraitCard.jsx
+│  ├─ ProjectGallery.jsx
+│  ├─ RoundCarousel.jsx
+│  ├─ RouteTransition.jsx
+│  ├─ ScrollProgress.jsx
+│  ├─ StatsSection.jsx
+│  └─ TechEcosystem.jsx
+├─ pages
+│  ├─ Aboutme.jsx
+│  ├─ Achievements.jsx
+│  ├─ ArchiveView.jsx
+│  ├─ BusinessCard.jsx
+│  ├─ Home.jsx
+│  ├─ Links.jsx
+│  ├─ PreFooterCTA.jsx
+│  ├─ ProjectDetailView.jsx
+│  ├─ ProjectHero.jsx
+│  ├─ Share.jsx
+│  └─ Uses.jsx
+├─ utils
+│  └─ qr.js
+├─ App.css
+├─ App.jsx
+└─ main.jsx
 ```
 
 ---

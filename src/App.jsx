@@ -1,33 +1,33 @@
-import { useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import "./App.css";
-import Loader from "./components/Loader";
-import Navbar from "./components/Navbar/Navbar";
-import HeroChatbotButton from "./components/HeroChatbotButton";
-import HeroFloatingSpotifyButton from "./components/HeroFloatingSpotifyButton";
-import RouteTransition from "./components/RouteTransition";
+import Loader from "./features/Loader";
+import Navbar from "./features/Navbar/Navbar";
+import HeroChatbotButton from "./features/HeroChatbotButton";
+import HeroFloatingSpotifyButton from "./features/HeroFloatingSpotifyButton";
+import RouteTransition from "./features/RouteTransition";
 import { PortfolioQRProvider } from "./context/PortfolioQRContext";
-import LiquidGlassBackground from "./components/LiquidGlassBackground";
-import Particles from "./components/Particles";
-import FilmGrain from "./components/FilmGrain";
-import ScrollProgress from "./components/ScrollProgress";
-import Home from "./pages/Home";
-import ArchiveView from "./pages/ArchiveView";
-import ProjectDetailView from "./pages/ProjectDetailView";
-import PreFooterCTA from "./pages/PreFooterCTA";
-import LuxuryFooter from "./components/LuxryFooter";
-import AboutMe from "./pages/Aboutme";
-import Achievements from "./pages/Achievements";
-import Uses from "./pages/Uses";
-import Links from "./pages/Links";
-import Share from "./pages/Share";
-import BusinessCard from "./pages/BusinessCard";
+import Particles from "./features/Particles";
+import FilmGrain from "./features/FilmGrain";
+import ScrollProgress from "./features/ScrollProgress";
+const LiquidGlassBackground = lazy(() => import("./features/LiquidGlassBackground"));
+const Home = lazy(() => import("./pages/Home"));
+const ArchiveView = lazy(() => import("./pages/ArchiveView"));
+const ProjectDetailView = lazy(() => import("./pages/ProjectDetailView"));
+const PreFooterCTA = lazy(() => import("./pages/PreFooterCTA"));
+const LuxuryFooter = lazy(() => import("./features/LuxryFooter"));
+const AboutMe = lazy(() => import("./pages/Aboutme"));
+const Achievements = lazy(() => import("./pages/Achievements"));
+const Uses = lazy(() => import("./pages/Uses"));
+const Links = lazy(() => import("./pages/Links"));
+const Share = lazy(() => import("./pages/Share"));
+const BusinessCard = lazy(() => import("./pages/BusinessCard"));
 
 function AppBackground() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none">
-      <LiquidGlassBackground />
+      <Suspense fallback={null}><LiquidGlassBackground /></Suspense>
       <Particles />
       <FilmGrain />
     </div>
@@ -38,18 +38,20 @@ function AnimatedRoutes({ loader, location }) {
 
   return (
     <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home isLoaded={loader} />} />
-        <Route path="/about" element={<AboutMe />} />
-        <Route path="/achievements" element={<Achievements />} />
-        <Route path="/achviments" element={<Navigate to="/achievements" replace />} />
-        <Route path="/uses" element={<Uses />} />
-        <Route path="/links" element={<Links />} />
-        <Route path="/share" element={<Share />} />
-        <Route path="/card" element={<BusinessCard />} />
-        <Route path="/projects" element={<ArchiveView />} />
-        <Route path="/projects/:slug" element={<ProjectDetailView />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Home isLoaded={loader} />} />
+          <Route path="/about" element={<AboutMe />} />
+          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/achviments" element={<Navigate to="/achievements" replace />} />
+          <Route path="/uses" element={<Uses />} />
+          <Route path="/links" element={<Links />} />
+          <Route path="/share" element={<Share />} />
+          <Route path="/card" element={<BusinessCard />} />
+          <Route path="/projects" element={<ArchiveView />} />
+          <Route path="/projects/:slug" element={<ProjectDetailView />} />
+        </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 }

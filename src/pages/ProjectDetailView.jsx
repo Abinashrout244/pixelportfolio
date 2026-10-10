@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring } from "motion/react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { PROJECTS } from "../data/projectsData";
 import ProjectHero from "./ProjectHero";
-import ProjectGallery from "../components/ProjectGallery";
+import ProjectGallery from "../features/ProjectGallery";
 
 const rng = (n, salt) => {
   const x = Math.sin(n * 12.9898 + salt * 78.233) * 43758.5453;

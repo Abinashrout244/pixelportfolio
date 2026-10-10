@@ -4,10 +4,6 @@ export default function ProjectGallery({ project }) {
   // Reference for direct DOM manipulation of the scroll container
   const galleryScrollRef = useRef(null);
 
-  /**
-   * Smoothly scrolls the gallery horizontally left or right.
-   * Scrolls by 75% of the container width to show the next item cleanly.
-   */
   const scrollGallery = (direction) => {
     if (galleryScrollRef.current) {
       const scrollAmount = galleryScrollRef.current.clientWidth * 0.75;
@@ -23,14 +19,8 @@ export default function ProjectGallery({ project }) {
 
   return (
     <div className="relative mt-36">
-      {/* ------------------------------------------------------------- */}
-      {/* Background Ambient Glow: Gives a subtle cyber/emerald backlight */}
-      {/* ------------------------------------------------------------- */}
       <div className="pointer-events-none absolute -top-16 left-1/2 -z-10 h-44 w-[46rem] -translate-x-1/2  bg-emerald-500/10 blur-[130px]" />
 
-      {/* ------------------------------------------------------------- */}
-      {/* Section Header: Title, counter tag, and interactive arrows   */}
-      {/* ------------------------------------------------------------- */}
       <div className="mb-8 flex items-center justify-between border-b border-zinc-800/80 pb-4">
         {/* Status indicator + section title */}
         <div className="flex items-center gap-3">
@@ -43,7 +33,6 @@ export default function ProjectGallery({ project }) {
           </h3>
         </div>
 
-        {/* Right side controls (Total count + Prev/Next buttons) */}
         <div className="flex items-center gap-3">
           <span className="hidden font-mono text-[11px] tabular-nums text-zinc-500 sm:inline">
             [ {String(project.gallery.length).padStart(2, "0")} ARTIFACTS ]
@@ -97,9 +86,6 @@ export default function ProjectGallery({ project }) {
         </div>
       </div>
 
-      {/* ------------------------------------------------------------- */}
-      {/* Horizontal Carousel Track: Snap scroll with hidden scrollbar */}
-      {/* ------------------------------------------------------------- */}
       <div
         ref={galleryScrollRef}
         className="flex gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory scroll-smooth"
