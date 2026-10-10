@@ -209,9 +209,9 @@ npm run build
 - [x] Hover & Magnetic Interactions
 - [x] Loading Animation
 - [x] QR Profile Share
-- [ ] SEO Optimization
-- [ ] Performance Optimization
-- [ ] Deploy to Vercel
+- [x] SEO Optimization
+- [x] Performance Optimization
+- [ ] Deploy to Vercel / cloudifare
 
 ---
 
