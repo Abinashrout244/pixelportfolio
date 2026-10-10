@@ -1,8 +1,8 @@
 import note from "../assets/noteapp.png";
 import chat from "../assets/chatapp.png";
-import note from "../assets/flower.png";
-import note from "../assets/shopcart.png";
-import note from "../assets/fakeapi.png";
+import flower from "../assets/flower.png";
+import shopcart from "../assets/shopcart.png";
+import fakeapi from "../assets/fakeapi.png";
 
 export const PROJECTS = [
   {
