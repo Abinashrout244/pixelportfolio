@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../assets/aboutprofile.jpeg";
+import img from "../assets/aviabout.png";
 import { Link } from "react-router-dom";
 import AboutHero from "../features/AboutHero";
 
