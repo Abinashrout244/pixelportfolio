@@ -1,8 +1,8 @@
-import note from "../assets/noteapp.png";
-import chat from "../assets/chatapp.png";
-import flower from "../assets/flower.png";
-import shopcart from "../assets/shopcart.png";
-import fakeapi from "../assets/fakeapi.png";
+import note from "../assets/noteapp.jpg";
+import chat from "../assets/chatapp.jpg";
+import flower from "../assets/flower.jpg";
+import shopcart from "../assets/shopcart.jpg";
+import fakeapi from "../assets/fakeapi.jpg";
 
 export const PROJECTS = [
   {
@@ -16,7 +16,7 @@ export const PROJECTS = [
     description:
       "A full-stack real-time chat application built with the MERN stack (MongoDB, Express.js, React, Node.js) and Socket.io for instant messaging. Features user authentication, profile management, and live chat with online status updates.",
     image:
-      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774341/ChatGPT_Image_Aug_15_2026_11_22_08_AM_s8yw4a.png",
+      chat,
     tech: [
       "React + Vite",
       "Framer Motion + GSAP",
@@ -68,7 +68,7 @@ export const PROJECTS = [
     description:
       "I developed a full-stack Note Taking application where users can securely create, edit, and delete notes. The app includes authentication, protected routes, and real-time data management using modern MERN stack technologies.",
     image:
-      "https://res.cloudinary.com/dnxha9arx/image/upload/v1791573980/noteapp_hcvfwq.png",
+      note,
     tech: [
       "React + Vite",
       "Tailwind CSS",
@@ -164,7 +164,7 @@ export const PROJECTS = [
     description:
       "ShopCart is a simple and user-friendly shopping website that allows users to browse products, view details, and manage their cart with a clean and modern interface.",
     image:
-      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774317/ChatGPT_Image_Aug_15_2026_11_33_45_AM_qmcgyf.png",
+      shopcart,
     tech: ["HTML", "Tailwind CSS", "React + Vite", "Firebase"],
     liveUrl: "https://avi-ec-vmhw.vercel.app/",
     githubUrl: "https://github.com/Abinashrout244/AVI-Ec",
@@ -208,7 +208,7 @@ export const PROJECTS = [
     description:
       "A charming Flower Shop website offering a variety of fresh blooms, elegant bouquets, and seasonal arrangements with a simple, user-friendly browsing experience.",
     image:
-      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774308/ChatGPT_Image_Aug_15_2026_11_35_51_AM_q2ju3s.png",
+      flower,
     tech: [
       "Tailwind CSS",
       "React + Vite",
@@ -299,7 +299,7 @@ export const PROJECTS = [
     description:
       "AJ Tube is a simple video-browsing platform that fetches and displays content using API data, offering a smooth and lightweight YouTube-style experience.",
     image:
-      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774308/ChatGPT_Image_Aug_15_2026_11_40_04_AM_qwparq.png",
+      fakeapi,
     tech: ["Tailwind CSS", "Framer Motion", "Lucide React", "Redux Toolkit"],
     liveUrl: "https://fa-ke-api-v0.vercel.app",
     githubUrl: "https://github.com/Abinashrout244/FAKe_API_V0",
@@ -327,7 +327,7 @@ export const PROJECTS = [
     gallery: [
       "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773988/Screenshot_2026-08-15_113437_zjeo3e.png",
       "https://res.cloudinary.com/dnxha9arx/image/upload/v1786773988/Screenshot_2026-08-15_113453_udzkbp.png",
-      "https://res.cloudinary.com/dnxha9arx/image/upload/v1786774308/ChatGPT_Image_Aug_15_2026_11_40_04_AM_qwparq.png",
+      fakeapi,
     ],
   },
 

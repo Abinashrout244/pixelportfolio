@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import profile from "../assets/profile.png";
+import profile from "../assets/profile.jpg";
 import potrait from "../assets/portrait.mp4";
 import { FiMapPin, FiVolume2, FiVolumeX, FiRotateCcw } from "react-icons/fi";
 

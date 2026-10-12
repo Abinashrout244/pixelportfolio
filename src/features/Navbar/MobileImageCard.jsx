@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import portraitImg from "../../assets/portrait.png";
+import portraitImg from "../../assets/aviabout.jpg";
 
 /**
  * MobileImageCard

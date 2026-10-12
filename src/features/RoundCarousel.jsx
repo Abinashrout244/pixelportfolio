@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import avi1 from "../assets/avi1.png";
-import avi from "../assets/avi.png";
+import avi1 from "../assets/avi1.jpg";
+import avi from "../assets/avi.jpg";
 import aviimg2 from "../assets/aviimg2.jpeg";
 import desktop1 from "../assets/dekstop1.jpeg";
 import desktop23 from "../assets/dektop23.jpg";
-import desktop from "../assets/desktop.png";
+import desktop from "../assets/desktop.jpg";
 import profile from "../assets/profile.jpeg";
-import desktop4 from "../assets/desktop4.png";
+import desktop4 from "../assets/desktop4.jpg";
 
 const DEFAULT_IMAGES = [
   { src: avi1 },
