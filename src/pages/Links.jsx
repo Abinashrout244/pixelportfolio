@@ -113,10 +113,6 @@ function IconInstagram(props) {
   );
 }
 
-/* ---------------------------------------------------------------- */
-/* Data                                                             */
-/* ---------------------------------------------------------------- */
-
 const SOCIALS = [
   {
     icon: IconGithub,
@@ -182,10 +178,13 @@ const SERVICES = [
 
 /* ---------------------------------------------------------------- */
 
+const canHover = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
 function formatAgo(seconds) {
   if (seconds < 60) return `${seconds}s ago`;
-  const m = Math.floor(seconds / 60);
-  return `${m}m ago`;
+  return `${Math.floor(seconds / 60)}m ago`;
 }
 
 function useLiveLatency(services) {
@@ -214,6 +213,7 @@ export default function ConnectWithMe() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const hover = useMemo(canHover, []);
 
   useEffect(() => {
     const id = setInterval(() => setSecondsAgo((s) => s + 1), 1000);
@@ -232,12 +232,8 @@ export default function ConnectWithMe() {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_SUBSCRIBE_TEMPLATE_ID,
-        {
-          subscriber_email: email,
-        },
-        {
-          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-        },
+        { subscriber_email: email },
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
       );
       setIsSubscribed(true);
       setEmail("");
@@ -249,37 +245,38 @@ export default function ConnectWithMe() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#08090a] font-sans text-white antialiased selection:bg-emerald-500/30 selection:text-white">
-      {/* Texture & Glow */}
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,black_10%,transparent_75%)]" />
-      <div className="pointer-events-none fixed left-1/2 top-0 h-96 w-[44rem] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px] lg:h-[32rem] lg:w-[60rem]" />
+    <div className="relative isolate min-h-[100dvh] overflow-x-clip bg-[#08090a] font-sans text-white antialiased selection:bg-emerald-500/30 selection:text-white">
+      {/* Texture & Glow — behind everything */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_20%,black_10%,transparent_75%)]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-72 w-[22rem] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[100px] sm:h-96 sm:w-[44rem] sm:blur-[120px] lg:h-[32rem] lg:w-[60rem]" />
 
       {/* Main Container */}
-      <div className="relative mx-auto flex min-h-screen max-w-2xl flex-col px-5 pb-20 pt-24 sm:px-8 sm:pt-28">
-        {/* Profile — ID badge on a lanyard */}
+      <div className="relative z-0 mx-auto flex min-h-[100dvh] max-w-2xl flex-col px-4 pb-16 pt-24 sm:px-8 sm:pb-20 sm:pt-28">
+        {/* Profile */}
         <div className="flex flex-col items-center text-center">
           <div className="relative flex flex-col items-center">
-            {/* strap */}
             <div className="h-8 w-1.5 rounded-full bg-gradient-to-b from-zinc-800 to-zinc-700 sm:h-11" />
-            {/* swivel clip */}
             <div className="z-10 -mt-0.5 h-3.5 w-3.5 rounded-full border-2 border-zinc-600 bg-[#08090a]" />
 
-            {/* CARD WITH HOVER ANIMATION */}
             <motion.div
               initial={{ y: -36, opacity: 0, rotate: -9 }}
-              animate={{
-                y: 0,
-                opacity: 1,
-                rotate: [-3, 3, -3],
-              }}
-              whileHover={{
-                scale: 1.03,
-                y: -6,
-                borderColor: "rgba(16, 185, 129, 0.4)",
-                boxShadow:
-                  "0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 20px 2px rgba(16, 185, 129, 0.15)",
-                transition: { type: "spring", stiffness: 350, damping: 20 },
-              }}
+              animate={{ y: 0, opacity: 1, rotate: [-3, 3, -3] }}
+              whileHover={
+                hover
+                  ? {
+                      scale: 1.03,
+                      y: -6,
+                      borderColor: "rgba(16, 185, 129, 0.4)",
+                      boxShadow:
+                        "0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 20px 2px rgba(16, 185, 129, 0.15)",
+                      transition: {
+                        type: "spring",
+                        stiffness: 350,
+                        damping: 20,
+                      },
+                    }
+                  : undefined
+              }
               transition={{
                 y: { type: "spring", stiffness: 140, damping: 13, delay: 0.05 },
                 opacity: { duration: 0.35, delay: 0.05 },
@@ -291,12 +288,9 @@ export default function ConnectWithMe() {
                 },
               }}
               style={{ transformOrigin: "top center" }}
-              className="group relative -mt-px w-56 cursor-pointer overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/80 p-2.5 shadow-2xl shadow-black/60 backdrop-blur-md transition-colors duration-300 sm:w-64 sm:p-3"
+              className="group relative -mt-px w-48 cursor-pointer overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/80 p-2.5 shadow-2xl shadow-black/60 backdrop-blur-md transition-colors duration-300 min-[400px]:w-56 sm:w-64 sm:p-3"
             >
-              {/* punch hole */}
               <span className="absolute -top-2 left-1/2 z-10 h-3 w-3 -translate-x-1/2 rounded-full bg-[#08090a] ring-2 ring-zinc-700" />
-
-              {/* photo */}
               <div className="relative">
                 <div className="absolute -inset-1 rounded-xl bg-emerald-500/20 blur-md transition-all duration-300 group-hover:bg-emerald-500/30 group-hover:blur-lg" />
                 <img
@@ -309,12 +303,12 @@ export default function ConnectWithMe() {
             </motion.div>
           </div>
 
-          <p className="mt-7 max-w-md text-sm font-normal leading-relaxed text-zinc-400 sm:text-[15px]">
+          <p className="mt-7 max-w-md px-2 text-sm font-normal leading-relaxed text-zinc-400 sm:text-[15px]">
             Full-stack developer building fast, opinionated interfaces.
             Currently shipping things worth showing off.
           </p>
 
-          <div className="mt-5 flex items-center gap-2.5">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
             {SOCIALS.map((s) => {
               const Icon = s.icon;
               return (
@@ -322,7 +316,7 @@ export default function ConnectWithMe() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/70 text-zinc-400 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-zinc-900 hover:text-emerald-400 focus-visible:ring-2 focus-visible:ring-emerald-500/60"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/70 text-zinc-400 outline-none transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-zinc-900 hover:text-emerald-400 focus-visible:ring-2 focus-visible:ring-emerald-500/60 sm:h-10 sm:w-10"
                 >
                   <Icon width={16} height={16} />
                 </a>
@@ -332,7 +326,7 @@ export default function ConnectWithMe() {
         </div>
 
         {/* Status Banner */}
-        <div className="mt-10 flex items-center justify-between rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] px-5 py-3.5 backdrop-blur-sm">
+        <div className="mt-8 flex flex-col gap-1.5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] px-4 py-3.5 backdrop-blur-sm min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between sm:mt-10 sm:px-5">
           <div className="flex items-center gap-2.5">
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping" />
@@ -342,7 +336,7 @@ export default function ConnectWithMe() {
               All systems operational
             </span>
           </div>
-          <span className="font-mono text-[11px] tabular-nums text-zinc-500">
+          <span className="pl-[18px] font-mono text-[11px] tabular-nums text-zinc-500 min-[400px]:pl-0">
             {avgMs}ms avg · checked {formatAgo(secondsAgo)}
           </span>
         </div>
@@ -356,9 +350,13 @@ export default function ConnectWithMe() {
               <motion.a
                 key={s.id}
                 href={s.href}
-                whileHover={{ x: 5, backgroundColor: "rgba(39, 39, 42, 0.5)" }}
+                whileHover={
+                  hover
+                    ? { x: 5, backgroundColor: "rgba(39, 39, 42, 0.5)" }
+                    : undefined
+                }
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                className="group/row flex items-center gap-4 px-5 py-4 outline-none transition-colors duration-150 focus-visible:bg-zinc-800/40 sm:px-6 sm:py-4.5"
+                className="group/row flex items-center gap-3 px-4 py-3.5 outline-none transition-colors duration-150 active:bg-zinc-800/40 focus-visible:bg-zinc-800/40 sm:gap-4 sm:px-6 sm:py-4"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/90 text-zinc-400 transition-colors group-hover/row:border-emerald-500/40 group-hover/row:text-emerald-400">
                   <Icon width={17} height={17} />
@@ -391,23 +389,18 @@ export default function ConnectWithMe() {
 
         {/* Subscribe */}
         <motion.div
-          whileHover={{
-            y: -3,
-            borderColor: "rgba(63, 63, 70, 1)",
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 25,
-          }}
-          className="mt-8 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 backdrop-blur-md transition-shadow duration-300 hover:shadow-xl hover:shadow-black/40 sm:p-6"
+          whileHover={
+            hover ? { y: -3, borderColor: "rgba(63, 63, 70, 1)" } : undefined
+          }
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          className="mt-8 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 backdrop-blur-md transition-shadow duration-300 hover:shadow-xl hover:shadow-black/40 sm:p-6"
         >
           {isSubscribed ? (
-            /* SUCCESS STATE */
             <motion.div
+              role="status"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-3"
+              className="flex min-w-0 items-start gap-3 text-left"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500/10">
                 <svg
@@ -424,28 +417,23 @@ export default function ConnectWithMe() {
                   />
                 </svg>
               </div>
-
-              <div>
+              <div className="min-w-0 break-words">
                 <p className="text-sm font-semibold text-zinc-200">
                   You're subscribed!
                 </p>
-
                 <p className="mt-1 text-xs text-zinc-400 sm:text-[13px]">
                   You'll hear from me when something new ships.
                 </p>
               </div>
             </motion.div>
           ) : (
-            /* SUBSCRIBE STATE */
             <>
               <p className="text-sm font-semibold text-zinc-200">
                 Get notified on new posts & projects
               </p>
-
               <p className="mt-1 text-xs text-zinc-400 sm:text-[13px]">
                 No spam — just updates when something ships.
               </p>
-
               <form
                 onSubmit={handleSubscribe}
                 className="mt-3.5 flex flex-col gap-2.5 sm:flex-row"
@@ -456,13 +444,12 @@ export default function ConnectWithMe() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@email.com"
-                  className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-zinc-900/80 px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-emerald-500/50"
+                  className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-zinc-900/80 px-3.5 py-3 text-base text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-emerald-500/50 sm:py-2.5 sm:text-sm"
                 />
-
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="shrink-0 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="shrink-0 rounded-lg bg-emerald-500 px-5 py-3 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60 sm:py-2.5"
                 >
                   {isSubmitting ? "Subscribing..." : "Subscribe"}
                 </button>
